@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import {
   FacebookShareButton,
@@ -10,6 +11,8 @@ import {
   TwitterIcon,
   LineShareButton,
   LineIcon,
+  EmailShareButton,
+  EmailIcon,
 } from "react-share";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
@@ -32,8 +35,12 @@ function Detail() {
   }, []);
   return (
     <div>
-      <h2>메세지결과</h2>
       <button onClick={handleClick}>처음으로</button>
+      <h2>메세지결과</h2>
+      <Link to="/logo512.png" target="_blank" download>Download</Link>
+      <CopyToClipboard text={`https://localhost3000/result/${id}`}>
+        <button>url복사</button>
+      </CopyToClipboard>
       <br />
       <FacebookShareButton style={{ marginRight: "20px" }} url={`https://localhost3000/result/${id}`}>
         <FacebookIcon size={48} round={true} borderRadius={24}></FacebookIcon>
@@ -47,9 +54,9 @@ function Detail() {
       <LineShareButton style={{ marginRight: "20px" }} url={`https://localhost3000/result/${id}`}>
         <LineIcon size={48} round={true} borderRadius={24}></LineIcon>
       </LineShareButton>
-      <CopyToClipboard text={`https://localhost3000/result/${id}`}>
-        <button>url</button>
-      </CopyToClipboard>
+      <EmailShareButton style={{ marginRight: "20px" }} url={`https://localhost3000/result/${id}`}>
+        <EmailIcon size={48} round={true} borderRadius={24}></EmailIcon>
+      </EmailShareButton>
     </div>
   );
 }
