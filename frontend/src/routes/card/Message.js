@@ -24,7 +24,12 @@ function Message({ setMessage }) {
   return (
     <main>
       메세지 입력
-      <textarea value={text} onChange={handleChange}></textarea>
+      <textarea
+        value={text}
+        maxLength="100"
+        onChange={handleChange}
+        placeholder="메세지를 입력해주세요!"
+      ></textarea>
       <Link to="/card/edit">
         <button onClick={handleClick}>다음</button>
       </Link>
