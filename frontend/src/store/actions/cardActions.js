@@ -6,3 +6,9 @@ export const setMessage = (message) => {
     message,
   };
 };
+
+export const setTextIsVisible = () => {
+  return {
+    type: types.SET_TEXT_ISVISIBLE,
+  };
+};
