@@ -37,3 +37,10 @@ export const setBackgroundColor = (color) => {
     color,
   };
 };
+
+export const addSticker = (id) => {
+  return {
+    type: types.ADD_STICKER,
+    id,
+  };
+};

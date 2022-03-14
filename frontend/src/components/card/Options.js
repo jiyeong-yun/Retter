@@ -5,7 +5,7 @@ import {
   setMenuBackgroundIsVisible,
 } from "../../store/actions/cardActions";
 import Background from "./options/Background";
-import OptionWindow from "./OptionWindow";
+import Sticker from "./options/Sticker";
 
 function mapStateToProps({ cardReducer }) {
   return {
@@ -53,9 +53,9 @@ function Options({
           <li onClick={() => handleClick("text")}>텍스트</li>
         </ul>
       </nav>
-      {menuVisible.sticker ? <OptionWindow items={"sticker"} /> : null}
+      {menuVisible.sticker ? <Sticker /> : null}
       {menuVisible.background ? <Background /> : null}
-      {menuVisible.text ? <OptionWindow items={"text"} /> : null}
+      {menuVisible.text ? null : null}
     </section>
   );
 }

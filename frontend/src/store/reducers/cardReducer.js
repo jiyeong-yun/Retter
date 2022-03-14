@@ -6,15 +6,16 @@ const initialState = {
     background: false,
     text: false,
   },
+  background: {
+    color: "transparent",
+    image: "",
+  },
+  stickers: [],
   text: {
     message: "",
     isVisible: true,
     x: 50,
     y: 50,
-  },
-  background: {
-    color: "transparent",
-    image: "",
   },
 };
 
@@ -76,6 +77,22 @@ const cardReducer = (state = initialState, action) => {
           color: action.color,
           image: "",
         },
+      };
+
+    case types.ADD_STICKER:
+      return {
+        ...state,
+        stickers: [
+          ...state.stickers,
+          {
+            id: action.id,
+            x: 50,
+            y: 50,
+            width: 50,
+            height: 50,
+            rotate: 0,
+          },
+        ],
       };
     default:
       return state;
