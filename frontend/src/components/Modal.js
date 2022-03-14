@@ -1,7 +1,12 @@
 import ReactModal from "react-modal";
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-const Modal = ({ isOpen, onSubmit, onCancel }) => {
+import Button from '../components/button';
+
+
+const Modal = ({ isOpen, onSubmit, onCancel, className, visible, children }) => {
   const content = [
     {
       tab: "텍스트",
@@ -45,19 +50,62 @@ const Modal = ({ isOpen, onSubmit, onCancel }) => {
   // 우선은 esc나 빈칸눌러도 닫히게 함
   return (
     <ReactModal isOpen={isOpen} onRequestClose={onCancel}>
+      <ModalOverlay visible={visible} />
       <div className="Home">
         {content.map((section, index) => (
-          <button onClick={() => changeItem(index)}>{section.tab}</button>
+          <Button onClick={() => changeItem(index)}>{section.tab}</Button>
         ))}
         <div>{currentItem.content}</div>
-      </div>
-      <div>
         <button onClick={onCheck}>{selCheck ? 'Checked' : '오늘 하루 열지 않기'}</button>
-        <button onClick={handleClickSubmit}>확인</button>
-        <button onClick={handleClickCancel}>닫기</button>
+        <Button primary onClick={handleClickSubmit}>확인</Button>
+        <Button color="white" background="blue" onClick={handleClickCancel}>닫기</Button>
       </div>
     </ReactModal>
   );
 };
+
+// 모달 스타일 예시
+Modal.propTypes = {
+  visible: PropTypes.bool,
+}
+
+const ModalWrapper = styled.div`
+  box-sizing: border-box;
+  display: ${(props) => (props.visible ? 'block' : 'none')};
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1000;
+  overflow: auto;
+  outline: 0;
+`
+
+const ModalOverlay = styled.div`
+  box-sizing: border-box;
+  display: ${(props) => (props.visible ? 'block' : 'none')};
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+`
+
+const ModalInner = styled.div`
+  box-sizing: border-box;
+  position: relative;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0 auto;
+  padding: 40px 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  width: 360px;
+  max-width: 480px;
+`
 
 export default Modal;
