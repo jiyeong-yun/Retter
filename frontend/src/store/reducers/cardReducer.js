@@ -43,7 +43,7 @@ const cardReducer = (state = initialState, action) => {
       return {
         ...state,
         menuVisible: {
-          sticker: true,
+          sticker: !state.menuVisible.sticker,
           background: false,
           text: false,
         },
@@ -54,7 +54,7 @@ const cardReducer = (state = initialState, action) => {
         ...state,
         menuVisible: {
           sticker: false,
-          background: true,
+          background: !state.menuVisible.background,
           text: false,
         },
       };
@@ -65,7 +65,7 @@ const cardReducer = (state = initialState, action) => {
         menuVisible: {
           sticker: false,
           background: false,
-          text: true,
+          text: !state.menuVisible.text,
         },
       };
 
