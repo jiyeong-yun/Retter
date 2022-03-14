@@ -12,6 +12,10 @@ const initialState = {
     x: 50,
     y: 50,
   },
+  background: {
+    color: "transparent",
+    image: "",
+  },
 };
 
 const cardReducer = (state = initialState, action) => {
@@ -62,6 +66,15 @@ const cardReducer = (state = initialState, action) => {
           sticker: false,
           background: false,
           text: true,
+        },
+      };
+
+    case types.SET_BACKGROUND_COLOR:
+      return {
+        ...state,
+        background: {
+          color: action.color,
+          image: "",
         },
       };
     default:

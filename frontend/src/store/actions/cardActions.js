@@ -30,3 +30,10 @@ export const setMenuTextIsVisible = () => {
     type: types.SET_MENU_TEXT_ISVISIBLE,
   };
 };
+
+export const setBackgroundColor = (color) => {
+  return {
+    type: types.SET_BACKGROUND_COLOR,
+    color,
+  };
+};
