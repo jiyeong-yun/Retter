@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Button from '../components/button';
 
 
-const Modal = ({ isOpen, onSubmit, onCancel, className, visible, children }) => {
+function Modal({ isOpen, onSubmit, onCancel, className, visible, children }){
   const content = [
     {
       tab: "텍스트",
@@ -47,13 +47,13 @@ const Modal = ({ isOpen, onSubmit, onCancel, className, visible, children }) => 
     onCancel();
   };
 
-  // 우선은 esc나 빈칸눌러도 닫히게 함
+  // 우선은 esc나 빈칸눌러도 닫히게 함. key는 여기가 맞나..?
   return (
     <ReactModal isOpen={isOpen} onRequestClose={onCancel}>
       <ModalOverlay visible={visible} />
       <div className="Home">
         {content.map((section, index) => (
-          <Button onClick={() => changeItem(index)}>{section.tab}</Button>
+          <Button onClick={() => changeItem(index)} key={index}>{section.tab}</Button>
         ))}
         <div>{currentItem.content}</div>
         <button onClick={onCheck}>{selCheck ? 'Checked' : '오늘 하루 열지 않기'}</button>
