@@ -1,8 +1,11 @@
 import { useEffect, useState, useRef } from 'react';
 import Result from '../components/Result';
 import Modal from '../components/Modal';
+import { useCookies } from "react-cookie";
 
 function Home() {
+  
+  const [cookies, setCookie] = useCookies(["noneModal"]);
   // 모달생성 처음에 바로 뜨려면 true, 다시보지않기는 미완
   const [isOpen, setOpen] = useState(false);
   const handleClickModal = () => setOpen(true);
@@ -68,11 +71,12 @@ function Home() {
     <div>
     <div className='Modal'>
       <button onClick={handleClickModal}>튜토리얼</button>
-      <Modal
+      {cookies.noneModal ? null : 
+      <Modal setCookie={setCookie}
         isOpen={isOpen}
         onSubmit={handleModalSubmit} 
         onCancel={handleModalCancel}
-      />
+      />}
     </div>
 
     <div className='wrap'>
