@@ -18,7 +18,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 
 function Detail() {
   // 클릭하면 페이지이동
-  function handleClick(e) {
+  const handleClick = () => {
     window.location.href = "/"
   }
   // id마다 결과페이지(아직 json이 없음)

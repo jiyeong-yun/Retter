@@ -1,12 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Result from '../components/Result';
+import Modal from '../components/Modal';
 
 function Home() {
+  // 모달생성 처음에 바로 뜨려면 true, 다시보지않기는 미완
+  const [isOpen, setOpen] = useState(false);
+  const handleClickModal = () => setOpen(true);
+  const handleModalSubmit = () => setOpen(false);
+  const handleModalCancel = () => setOpen(false);
+
   // 클릭하면 페이지이동
-  function handleClick(e) {
+  const handleClick = () => {
     window.location.href = "/card"
   }
-  // 스크롤 생성, 버튼변화(css적용해야)
+
+  // 스크롤 생성, 버튼변화는 css적용해야
   const [ScrollY, setScrollY] = useState(0);
   const [BtnStatus, setBtnStatus] = useState(false);
   // 100 초과하면 버튼에 스크롤 따라오게
@@ -38,11 +46,39 @@ function Home() {
     }
   })
 
+  // 로고 효과
+  const useFadeIn = (duration = 1, delay = 0) => {
+    const element = useRef();
+    useEffect(() => {
+      if (typeof duration !== "number" || typeof delay !== "number") {
+        return;
+      }
+      if (element.current) {
+        const { current } = element;
+        current.style.transition = `opacity ${duration}s ease-in-out ${delay}s`;
+        current.style.opacity = 1;
+      }
+    }, []);
+    return { ref: element, style: { opacity: 0 } };
+  };
+  const fadeInH1 = useFadeIn(3, 1);
+  
+
   return (
+    <div>
+    <div className='Modal'>
+      <button onClick={handleClickModal}>튜토리얼</button>
+      <Modal
+        isOpen={isOpen}
+        onSubmit={handleModalSubmit} 
+        onCancel={handleModalCancel}
+      />
+    </div>
+
     <div className='wrap'>
-      <h1>Re:tter</h1>
+      <h1 {...fadeInH1}>Re:tter</h1>
       <button onClick={handleClick}>시작하기</button>
-      <service class="inner">
+      <div className="inner">
       ## TACOTRON2
 
 Attention 기반 Seq-to-Seq  TTS 모델 구조 제시
@@ -206,7 +242,8 @@ _참고_
 파이토치 https://pytorch.org/hub/nvidia_deeplearningexamples_tacotron2/
 
         <button className={BtnStatus ? "topBtn active" : "topBtn"} onClick={handleTop}>TOP</button>
-      </service>
+      </div>
+    </div>
     </div>
   );
 }
