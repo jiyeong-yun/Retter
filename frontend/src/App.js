@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./routes/Home";
 import Card from "./routes/card/Card";
+import Record from "./routes/record/Record";
 import Message from "./routes/card/Message";
 import Detail from "./routes/Detail";
 import ReactModal from 'react-modal';
@@ -13,6 +14,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/record" element={<Record />} />
         <Route path="/card">
           <Route path="" element={<Message />} />
           <Route path="edit" element={<Card />} />
