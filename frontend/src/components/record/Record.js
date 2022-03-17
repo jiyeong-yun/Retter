@@ -1,10 +1,11 @@
 import React, { useState, useCallback } from "react";
-import RecordTimer from "../../routes/record/RecordTimer";
+import RecordTimer from "./RecordTimer";
 
 const AudioRecord = () => {
   const [stream, setStream] = useState();
   const [media, setMedia] = useState();
   const [onRec, setOnRec] = useState(true);
+  // console.log(onRec)
   const [source, setSource] = useState();
   const [analyser, setAnalyser] = useState();
   const [audioUrl, setAudioUrl] = useState();
@@ -32,8 +33,8 @@ const AudioRecord = () => {
       makeSound(stream);
 
       analyser.onaudioprocess = function (e) {
-        // 3분(180초) 지나면 자동으로 음성 저장 및 녹음 중지
-        if (e.playbackTime > 180) {
+        // 20초 지나면 자동으로 음성 저장 및 녹음 중지
+        if (e.playbackTime > 21) {
           stream.getAudioTracks().forEach(function (track) {
             track.stop();
           });
@@ -84,8 +85,8 @@ const AudioRecord = () => {
 
   return (
     <div className="voice">
+      {onRec === false ? <RecordTimer /> : null}
       <button onClick={onRec ? onRecAudio : offRecAudio}>녹음</button>
-      <RecordTimer />
       <button onClick={onSubmitAudioFile}>결과 확인</button>
     </div>
   );
