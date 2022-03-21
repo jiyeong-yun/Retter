@@ -1,13 +1,17 @@
 import ReactModal from "react-modal";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Button from '../components/button';
+import { useCookies } from "react-cookie";
 
-
-function Modal({ isOpen, onSubmit, onCancel, className, visible, children }){
+function Modal({ isOpen, onSubmit, onCancel, visible }){
   const content = [
+    {
+      tab: "녹음",
+      content: "녹음하기"
+    },
     {
       tab: "텍스트",
       content: "텍스트입력"
@@ -35,30 +39,58 @@ function Modal({ isOpen, onSubmit, onCancel, className, visible, children }){
 
   const { currentItem, changeItem } = useTabs(0, content);
 
-  const [selCheck, setSelCheck] = useState(false);
-  const onCheck = () => {
-    setSelCheck(!selCheck);
-  };
+  // const [selCheck, setSelCheck] = useState(false);
+  // const onCheck = () => {
+  //   setSelCheck(!selCheck);
+  // };
 
-  const handleClickSubmit = () => {
-    onSubmit();
-  };
+  // const handleClickSubmit = () => {
+  //   onSubmit();
+  // };
   const handleClickCancel = () => {
     onCancel();
   };
 
+  // 체크시 오늘 하루 열지 않기 쿠키적용
+  const [isRemember, setRemember] = useState(false);
+  const [cookies, setCookie, removeCookie] = useCookies(["noneModal"]);
+  let now = new Date;
+  let after1m = new Date();
+
+  useEffect(() => {
+    if(cookies.noneModal !== undefined){
+      setRemember(true);
+    }
+  }, []);
+  // console.log(cookies.noneModal);
+
+  // 1분으로 했는데 이건 적용 안된듯ㅜ
+  const handleOnChange = (e) => {
+    after1m.setMinutes(now.getMinutes() +1);
+    setRemember(e.target.checked);
+    if(e.target.checked){
+      setCookie('noneModal', {path:'/', expires:after1m});
+      console.log(after1m);
+    } else {
+      removeCookie('noneModal');
+      console.log({expires:after1m});
+    }
+  }
+
+
   // 우선은 esc나 빈칸눌러도 닫히게 함. key는 여기가 맞나..?
   return (
-    <ReactModal isOpen={isOpen} onRequestClose={onCancel}>
+    <ReactModal setCookie={setCookie} isOpen={isOpen} onRequestClose={onCancel}>
       <ModalOverlay visible={visible} />
       <div className="Home">
         {content.map((section, index) => (
           <Button onClick={() => changeItem(index)} key={index}>{section.tab}</Button>
         ))}
         <div>{currentItem.content}</div>
-        <button onClick={onCheck}>{selCheck ? 'Checked' : '오늘 하루 열지 않기'}</button>
-        <Button primary onClick={handleClickSubmit}>확인</Button>
-        <Button color="white" background="blue" onClick={handleClickCancel}>닫기</Button>
+        <input type="checkBox" onChange={handleOnChange} checked={isRemember} />오늘 하루 열지 않기
+        {/* <button onClick={onCheck}>{selCheck ? 'Checked' : '오늘 하루 열지 않기'}</button> */}
+        {/* <Button color="white" background="blue" onClick={handleClickSubmit}>확인</Button> */}
+        <button onClick={handleClickCancel}>닫기</button>
       </div>
     </ReactModal>
   );
