@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./routes/Home";
+import Select from "./routes/Select";
 import Card from "./routes/card/Card";
 import Record from "./routes/record/Record";
 import Message from "./routes/card/Message";
@@ -14,6 +15,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/select" element={<Select />} />
         <Route path="/record" element={<Record />} />
         <Route path="/card">
           <Route path="" element={<Message />} />
