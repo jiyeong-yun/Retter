@@ -95,7 +95,7 @@ DATABASES = {
             # SERVER
             'default': { 
                 'ENGINE': 'django.db.backends.mysql', 
-                'NAME': 'retter server', 
+                'NAME': 'retter', 
                 'USER': 'ssafy', 
                 'PASSWORD': 'retter', 
                 'HOST': 'j6c202.p.ssafy.io', 
