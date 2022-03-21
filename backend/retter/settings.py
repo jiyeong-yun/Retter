@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-u=#p)_adgdjil+hy!qj)!d(xe_a*von6mitp8omj*ep%f=60v=
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "http://j6c202.p.ssafy.io/"
+    "j6c202.p.ssafy.io"
 ]
 
 
