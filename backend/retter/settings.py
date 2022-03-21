@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'card'
+    'card',
 ]
 
 MIDDLEWARE = [
@@ -79,14 +79,27 @@ WSGI_APPLICATION = 'retter.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'retter_db',
-        'HOST': '127.0.0.1',
-        'PORT': 27017,
-    }
-}
+DATABASES = { 
+            # LOCAL
+            # 'default': { 
+            #     'ENGINE': 'django.db.backends.mysql', 
+            #     'NAME': 'retter', 
+            #     'USER': 'ssafy', 
+            #     'PASSWORD': 'ssafy', 
+            #     'HOST': '127.0.0.1', 
+            #     'PORT': 3306, 
+            #     } 
+            
+            # SERVER
+            'default': { 
+                'ENGINE': 'django.db.backends.mysql', 
+                'NAME': 'retter server', 
+                'USER': 'ssafy', 
+                'PASSWORD': 'retter', 
+                'HOST': 'j6c202.p.ssafy.io', 
+                'PORT': 3306, 
+                } 
+            }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -130,3 +143,5 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# AUTH_USER_MODEL = 'account.User'
