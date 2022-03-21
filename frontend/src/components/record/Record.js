@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
 import RecordTimer from "./RecordTimer";
+import { Link } from "react-router-dom";
 
 const AudioRecord = () => {
   const [stream, setStream] = useState();
@@ -74,6 +75,7 @@ const AudioRecord = () => {
     source.disconnect();
   };
 
+  /*
   const onSubmitAudioFile = useCallback(() => {
     if (audioUrl) {
       console.log(URL.createObjectURL(audioUrl)); // 출력된 링크에서 녹음된 오디오 확인 가능
@@ -82,12 +84,21 @@ const AudioRecord = () => {
     const sound = new File([audioUrl], "soundBlob", { lastModified: new Date().getTime(), type: "audio" });
     console.log(sound); // File 정보 출력
   }, [audioUrl]);
+  */
+
+  const handleClick = () => {
+  };
 
   return (
     <div className="voice">
       {onRec === false ? <RecordTimer /> : null}
+      {audioUrl ? <audio src={URL.createObjectURL(audioUrl)} controls="controls" /> : null}
+      <br />
       <button onClick={onRec ? onRecAudio : offRecAudio}>녹음</button>
-      <button onClick={onSubmitAudioFile}>결과 확인</button>
+      {/* <button onClick={onSubmitAudioFile}>결과 확인</button> */}
+      <Link to="/card/edit">
+        <button onClick={handleClick}>다음</button>
+      </Link>
     </div>
   );
 };
