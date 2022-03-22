@@ -6,3 +6,4 @@ class Card(models.Model):
     audio = models.FileField(upload_to="audio",  null=True)
     image = models.ImageField(upload_to="image",  null=True)
     video = models.FileField(upload_to="video",  null=True)
+    
