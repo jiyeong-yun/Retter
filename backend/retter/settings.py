@@ -73,7 +73,9 @@ ROOT_URLCONF = 'retter.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR, 'frontend', 'build'],
+        'DIRS': [
+            'frontend/build'
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -84,6 +86,10 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+STATICFILES_DIRS = [
+    str(root.path("frontend/build/static")),
 ]
 
 WSGI_APPLICATION = 'retter.wsgi.application'
