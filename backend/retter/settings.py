@@ -26,6 +26,10 @@ SECRET_KEY = 'django-insecure-u=#p)_adgdjil+hy!qj)!d(xe_a*von6mitp8omj*ep%f=60v=
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    # LOCAL
+    "127.0.0.1",
+
+    # SERVER
     "j6c202.p.ssafy.io"
 ]
 
@@ -83,24 +87,24 @@ WSGI_APPLICATION = 'retter.wsgi.application'
 
 DATABASES = { 
             # LOCAL
-            # 'default': { 
-            #     'ENGINE': 'django.db.backends.mysql', 
-            #     'NAME': 'retter', 
-            #     'USER': 'ssafy', 
-            #     'PASSWORD': 'ssafy', 
-            #     'HOST': '127.0.0.1', 
-            #     'PORT': 3306, 
-            #     } 
-            
-            # SERVER
             'default': { 
                 'ENGINE': 'django.db.backends.mysql', 
                 'NAME': 'retter', 
                 'USER': 'ssafy', 
-                'PASSWORD': 'retter', 
-                'HOST': 'j6c202.p.ssafy.io', 
+                'PASSWORD': 'ssafy', 
+                'HOST': '127.0.0.1', 
                 'PORT': 3306, 
                 } 
+            
+            # SERVER
+            # 'default': { 
+            #     'ENGINE': 'django.db.backends.mysql', 
+            #     'NAME': 'retter', 
+            #     'USER': 'ssafy', 
+            #     'PASSWORD': 'retter', 
+            #     'HOST': 'j6c202.p.ssafy.io', 
+            #     'PORT': 3306, 
+            #     } 
             }
 
 # Password validation
