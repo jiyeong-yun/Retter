@@ -93,7 +93,5 @@ const Sticker = styled.div`
   height: ${(props) => props.sticker.height}px;
   background-color: orange;
 
-  &:hover {
-    cursor: grab;
-  }
+  cursor: grab;
 `;
