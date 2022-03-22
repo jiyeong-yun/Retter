@@ -86,11 +86,6 @@ TEMPLATES = [
     },
 ]
 
-#경로 추가
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'frontend', 'build', 'static'),
-]
-
 WSGI_APPLICATION = 'retter.wsgi.application'
 
 
@@ -166,5 +161,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
