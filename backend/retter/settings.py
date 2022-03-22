@@ -25,7 +25,13 @@ SECRET_KEY = 'django-insecure-u=#p)_adgdjil+hy!qj)!d(xe_a*von6mitp8omj*ep%f=60v=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    # LOCAL
+    "127.0.0.1",
+
+    # SERVER
+    "j6c202.p.ssafy.io"
+]
 
 
 # Application definition
@@ -80,11 +86,24 @@ WSGI_APPLICATION = 'retter.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'retter_db',
-        'HOST': '127.0.0.1',
-        'PORT': 27017,
+    # LOCAL
+    # 'default': { 
+    #     'ENGINE': 'django.db.backends.mysql', 
+    #     'NAME': 'retter', 
+    #     'USER': 'ssafy', 
+    #     'PASSWORD': 'ssafy', 
+    #     'HOST': '127.0.0.1', 
+    #     'PORT': 3306, 
+    #     } 
+    
+    # SERVER
+    'default': { 
+        'ENGINE': 'django.db.backends.mysql', 
+        'NAME': 'retter', 
+        'USER': 'ssafy', 
+        'PASSWORD': 'retter', 
+        'HOST': 'j6c202.p.ssafy.io', 
+        'PORT': 3306, 
     }
 }
 
