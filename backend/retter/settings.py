@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'card',
+    'CardConfig',
     'corsheaders',
 ]
 
@@ -54,7 +55,6 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -64,6 +64,7 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
     "http://127.0.0.1:8000",
+    "http://j6c202.p.ssafy.io"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -73,9 +74,7 @@ ROOT_URLCONF = 'retter.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            'frontend/build'
-            ],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -86,10 +85,6 @@ TEMPLATES = [
             ],
         },
     },
-]
-
-STATICFILES_DIRS = [
-    str(root.path("frontend/build/static")),
 ]
 
 WSGI_APPLICATION = 'retter.wsgi.application'
