@@ -1,5 +1,4 @@
 from wsgiref.util import FileWrapper
-from cv2 import setIdentity
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, get_list_or_404
@@ -16,6 +15,7 @@ from moviepy.editor import *
 from datetime import timedelta, datetime
 from card.serializers import CardSerializer
 from retter.settings import MEDIA_ROOT
+
 # Create your views here.
 @api_view(['GET', 'POST', 'DELETE'])
 def card_detail(request, card_id):
