@@ -2,6 +2,7 @@ import { useState } from "react";
 import { connect } from "react-redux";
 import { setMessage } from "../../store/actions/cardActions";
 import { useNavigate } from "react-router-dom";
+import { sendMessage } from "../../api/message";
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -42,6 +43,15 @@ function Message({ setMessage }) {
     preprocessedText = preprocessedText.replace(/!+/g, "!");
     preprocessedText = preprocessedText.replace(/\?+/g, "?");
 
+    const params = {
+      id: voice,
+      message: preprocessedText,
+    };
+    sendMessage(
+      params,
+      (response) => console.log(response),
+      (error) => console.log(error)
+    );
     // todo: 서버로 메세지 보내는 로직
     navigate("/card/edit");
   };
