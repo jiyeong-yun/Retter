@@ -1,7 +1,8 @@
 from wsgiref.util import FileWrapper
+from cv2 import setIdentity
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, get_list_or_404
 from django.core.files import File
 from django.http import FileResponse
 from django.core.files.storage import FileSystemStorage
@@ -12,6 +13,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from moviepy.editor import *
+from datetime import timedelta, datetime
 from card.serializers import CardSerializer
 from retter.settings import MEDIA_ROOT
 # Create your views here.
@@ -28,7 +30,7 @@ def card_detail(request, card_id):
     if request.method == 'POST':
         serializer = CardSerializer(card, data=request.data)
         serializer.image = request.FILES['image']
-        serializer.audio = request.FILES['audio']
+        # serializer.audio = request.FILES['audio']
         if serializer.is_valid(raise_exception=True):
             serializer.save(video = 'media/video/' + card_id + '.mp4')
       
@@ -51,6 +53,15 @@ def card_detail(request, card_id):
         return response
 
 
+# card_id 생성되는 코드
+@api_view(['POST'])
+def test(request):
+    serializer = CardSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
 @api_view(['GET', 'POST'])
 def voice(request, voice_num):
     if request.method == 'GET':
@@ -62,3 +73,10 @@ def voice(request, voice_num):
 @api_view(['POST'])
 def record(request):
     pass
+
+# def card_delete(request):
+#     cards = get_list_or_404(Card)
+#     for card in cards:
+#         if card.created_at.replace(tzinfo=None) + timedelta(minutes=1) <= datetime.now():
+#             card.delete()
+#             print(datetime.now())
