@@ -7,4 +7,4 @@ class CardSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Card
-        fields = ('card_id', 'image', 'audio', 'video')
+        fields = ('card_id', 'text', 'image', 'audio', 'video')
