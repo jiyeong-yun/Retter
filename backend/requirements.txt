@@ -8,11 +8,9 @@ backports.zoneinfo==0.2.1
 brotlipy==0.7.0
 cachetools==5.0.0
 certifi==2020.6.20
-cffi @ file:///C:/ci/cffi_1600699250966/work
 chardet==3.0.4
 charset-normalizer==2.0.12
 colorama==0.4.4
-cryptography @ file:///C:/ci/cryptography_1601046913206/work
 cycler==0.11.0
 decorator==4.4.2
 Django==3.2.12
@@ -28,7 +26,6 @@ google-auth-oauthlib==0.4.6
 google-pasta==0.2.0
 grpcio==1.44.0
 h5py==2.10.0
-idna @ file:///tmp/build/80754af9/idna_1593446292537/work
 imageio==2.16.1
 imageio-ffmpeg==0.4.5
 importlib-metadata==4.11.2
@@ -40,7 +37,6 @@ kiwisolver==1.3.2
 librosa==0.9.1
 llvmlite==0.38.0
 Markdown==3.3.6
--e git+https://lab.ssafy.com/s06-ai-speech-sub1/skeleton-project@d9be86a50d3216db628c8eec6e1ef73056784e63#egg=maskrcnn_benchmark&subdirectory=speak_image\ic\vqa_origin
 matplotlib==3.5.1
 moviepy==1.0.3
 mysqlclient==2.1.0
@@ -56,11 +52,8 @@ proglog==0.1.9
 protobuf==3.19.4
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
-pycparser @ file:///tmp/build/80754af9/pycparser_1594388511720/work
 pymongo==3.12.3
-pyOpenSSL @ file:///tmp/build/80754af9/pyopenssl_1594392929924/work
 pyparsing==3.0.7
-PySocks @ file:///C:/ci/pysocks_1594394709107/work
 PySoundFile==0.9.0.post1
 python-dateutil==2.8.2
 pytz==2021.3
