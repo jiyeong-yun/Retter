@@ -21,17 +21,17 @@ const initialState = {
 
 const cardReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.SET_MESSAGE:
+    case types.SET_MESSAGE: {
       return {
         ...state,
-
         text: {
           ...state.text,
           message: action.message,
         },
       };
+    }
 
-    case types.SET_TEXT_ISVISIBLE:
+    case types.SET_TEXT_ISVISIBLE: {
       return {
         ...state,
         text: {
@@ -39,8 +39,9 @@ const cardReducer = (state = initialState, action) => {
           isVisible: !state.text.isVisible,
         },
       };
+    }
 
-    case types.SET_MENU_STICKER_ISVISIBLE:
+    case types.SET_MENU_STICKER_ISVISIBLE: {
       return {
         ...state,
         menuVisible: {
@@ -49,8 +50,9 @@ const cardReducer = (state = initialState, action) => {
           text: false,
         },
       };
+    }
 
-    case types.SET_MENU_BACKGROUND_ISVISIBLE:
+    case types.SET_MENU_BACKGROUND_ISVISIBLE: {
       return {
         ...state,
         menuVisible: {
@@ -59,8 +61,9 @@ const cardReducer = (state = initialState, action) => {
           text: false,
         },
       };
+    }
 
-    case types.SET_MENU_TEXT_ISVISIBLE:
+    case types.SET_MENU_TEXT_ISVISIBLE: {
       return {
         ...state,
         menuVisible: {
@@ -69,8 +72,9 @@ const cardReducer = (state = initialState, action) => {
           text: !state.menuVisible.text,
         },
       };
+    }
 
-    case types.SET_BACKGROUND_COLOR:
+    case types.SET_BACKGROUND_COLOR: {
       return {
         ...state,
         background: {
@@ -78,22 +82,42 @@ const cardReducer = (state = initialState, action) => {
           image: "",
         },
       };
+    }
 
-    case types.ADD_STICKER:
+    case types.ADD_STICKER: {
       return {
         ...state,
         stickers: [
           ...state.stickers,
           {
             id: action.id,
-            x: 50,
-            y: 50,
+            x: 100,
+            y: 100,
             width: 50,
             height: 50,
             rotate: 0,
           },
         ],
       };
+    }
+
+    case types.REMOVE_STICKER: {
+      const newStickers = state.stickers.splice(action.index, 1);
+      return {
+        ...state,
+        stickers: newStickers,
+      };
+    }
+
+    case types.SET_STICKER_POS: {
+      const newStickers = [...state.stickers];
+      newStickers[action.index].x = action.x;
+      newStickers[action.index].y = action.y;
+      return {
+        ...state,
+        stickers: newStickers,
+      };
+    }
     default:
       return state;
   }
