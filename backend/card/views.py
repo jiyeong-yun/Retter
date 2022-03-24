@@ -13,8 +13,13 @@ from rest_framework.decorators import api_view
 
 from moviepy.editor import *
 from datetime import timedelta, datetime
-from card.serializers import CardSerializer
+from card.serializers import CardSerializer, AudioSerializer
 from retter.settings import MEDIA_ROOT
+
+from . import models
+from rest_framework.decorators import parser_classes
+from rest_framework.parsers import MultiPartParser, FormParser
+from django.http.request import QueryDict
 
 # Create your views here.
 @api_view(['GET', 'POST', 'DELETE'])
@@ -63,16 +68,48 @@ def test(request):
 
 
 @api_view(['GET', 'POST'])
-def voice(request, voice_num):
+def voice(request, card_id):
+    card = get_object_or_404(Card, pk=card_id)
+
     if request.method == 'GET':
-        pass
+        file_path = MEDIA_ROOT + "\\" + card.audio.name
+        fs = FileSystemStorage(file_path)
+        response = FileResponse(fs.open('', 'rb'), content_type = "audio/wav")
+        response['Content-Disposition'] = f'attachment; filename={file_path}'
+        
+        return response
     elif request.method == 'POST':
         pass
 
 
 @api_view(['POST'])
-def record(request):
-    pass
+@parser_classes([MultiPartParser, FormParser])
+def record(request, *args, **kwargs):
+
+        audio_data = request.data.dict()
+
+        #file_name = request.data["file_name"]
+
+        audio_data['audio'] = request.data['file_name']
+
+        audio_query_dict = QueryDict('', mutable=True)
+        audio_query_dict.update(audio_data)
+
+        audio_serializer = AudioSerializer(data = audio_query_dict)
+        if audio_serializer.is_valid(raise_exception=True):
+            audio_serializer.save()
+
+            return Response(status = status.HTTP_201_CREATED)
+        else:
+            return Response(audio_serializer.errors, status = status.HTTP_400_BAD_REQUEST)   
+
+        # file_name = request.FILES["file_name"]
+        # document = models.Card(
+        #     audio = file_name
+        # )
+        # document.save()
+
+        #documents = models.Card.objects.all()
 
 # def card_delete(request):
 #     cards = get_list_or_404(Card)

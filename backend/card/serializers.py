@@ -8,3 +8,10 @@ class CardSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Card
         fields = ('card_id', 'text', 'image', 'audio', 'video')
+
+class AudioSerializer(serializers.HyperlinkedModelSerializer):
+    audio = serializers.FileField(use_url=True)
+
+    class Meta:
+        model = Card
+        fields = ('card_id', 'audio')
