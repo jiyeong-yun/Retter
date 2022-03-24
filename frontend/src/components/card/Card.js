@@ -23,15 +23,9 @@ function CardComponent({ background, stickers, text, setStickerPos }) {
   const card = useRef();
   let pageX, pageY;
   const handleDragStart = (event) => {
-    // event.preventDefault();
-    event.target.style.cursor = "grab";
     // 커서 위치를 구하기 위해 이동 전 좌표를 저장해둠
     pageX = event.pageX;
     pageY = event.pageY;
-  };
-
-  const handleDrag = (event) => {
-    event.target.style.cursor = "grab";
   };
 
   const handleDragEnd = (event, index) => {
@@ -41,6 +35,7 @@ function CardComponent({ background, stickers, text, setStickerPos }) {
     // 마우스 커서 위치를 기억
     const shiftX = pageX - target.left;
     const shiftY = pageY - target.top;
+
     // 다음 좌표 갱신
     let nextX = event.pageX - cardRef.left - shiftX;
     let nextY = event.pageY - cardRef.top - shiftY;
@@ -54,7 +49,6 @@ function CardComponent({ background, stickers, text, setStickerPos }) {
       nextY = cardRef.height - target.height;
 
     setStickerPos(index, nextX, nextY);
-    event.target.style.cursor = "grab";
   };
 
   return (
@@ -65,7 +59,6 @@ function CardComponent({ background, stickers, text, setStickerPos }) {
           sticker={sticker}
           draggable
           onDragStart={(event) => handleDragStart(event, index)}
-          onDrag={(event) => handleDrag(event)}
           onDragEnd={(event) => handleDragEnd(event, index)}
         >
           {sticker.id}
@@ -85,7 +78,6 @@ const Card = styled.section`
 `;
 
 const Sticker = styled.div`
-  cursor: pointer;
   position: absolute;
   top: ${(props) => props.sticker.y}px;
   left: ${(props) => props.sticker.x}px;
