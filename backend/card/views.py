@@ -2,13 +2,14 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from card.models import Card
+from card.synthesis import synthesis
 
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-
-from moviepy.editor import *
-from retter.settings import MEDIA_ROOT
+from card.serializers import CardSerializer, AudioSerializer, CardCreateSerializer
+# from moviepy.editor import *
+from retter.settings import MEDIA_ROOT, MEDIA_URL
 # Create your views here.
 @api_view(['GET', 'POST', 'DELETE'])
 def card_delete(request, card_id):
@@ -41,13 +42,31 @@ def card_delete(request, card_id):
 
 
 @api_view(['GET', 'POST'])
-def voice(request, voice_num):
+def voice(request, card_id):
     if request.method == 'GET':
         pass
     elif request.method == 'POST':
-        pass
+        card
 
 
 @api_view(['POST'])
 def record(request):
     pass
+
+@api_view(["POST"])
+def create_card(request):
+    serializer = CardCreateSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+    
+    card_id = serializer.data['card_id']
+    text = serializer.data['text']
+    
+    synthesis(text, card_id)
+
+    audio = MEDIA_URL + card_id + '.wav'
+    card = get_object_or_404(Card, card_id = card_id)
+    card.audio = audio
+    card.save()
+
+    return Response(serializer.data, status=status.HTTP_200_OK)

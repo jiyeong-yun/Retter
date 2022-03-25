@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'card',
+
 ]
 
 MIDDLEWARE = [
@@ -92,7 +93,7 @@ DATABASES = {
                 'ENGINE': 'django.db.backends.mysql', 
                 'NAME': 'retter', 
                 'USER': 'ssafy', 
-                'PASSWORD': 'ssafy', 
+                'PASSWORD': 'ssafy123', 
                 'HOST': '127.0.0.1', 
                 'PORT': 3306, 
                 } 
@@ -100,11 +101,7 @@ DATABASES = {
             # SERVER
             # 'default': { 
             #     'ENGINE': 'django.db.backends.mysql', 
-<<<<<<< HEAD
-            #     'NAME': 'retter server', 
-=======
             #     'NAME': 'retter', 
->>>>>>> 2d0c69c2a90c2a48e3dd8ac04ced020a92b1f9c6
             #     'USER': 'ssafy', 
             #     'PASSWORD': 'retter', 
             #     'HOST': 'j6c202.p.ssafy.io', 
@@ -159,3 +156,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+MODEL_ROOT = os.path.join(BASE_DIR, "model")
