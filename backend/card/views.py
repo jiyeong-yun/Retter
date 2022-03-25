@@ -15,12 +15,15 @@ from rest_framework.decorators import api_view
 from moviepy.editor import *
 from datetime import timedelta, datetime
 from card.serializers import CardSerializer, AudioSerializer
+from card.task import card_delete
 from retter.settings import MEDIA_ROOT
 
 from . import models
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser, FormParser
 from django.http.request import QueryDict
+from background_task.models import Task
+from .task import card_delete
 
 import os
 import shutil
@@ -30,25 +33,34 @@ import shutil
 def card_detail(request, card_id):
     card = get_object_or_404(Card, pk=card_id)
     if request.method == 'DELETE':
-        if card_id == card.card_id:
+        if card_id == str(card.card_id).replace('-', ''):
+            shutil.rmtree(MEDIA_ROOT + '\\' + card_id)
             card.delete()
             data = {
                 'delete': f'카드 {card_id}가 삭제되었습니다.'
             }
-        return Response(data, status=status.HTTP_204_NO_CONTENT)
+            return Response(data, status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
     if request.method == 'POST':
+        if os.path.isdir(MEDIA_ROOT + "\\" + str(card.card_id).replace('-', '')) == False:
+            os.mkdir(MEDIA_ROOT + "\\" + str(card.card_id).replace('-', ''))
         serializer = CardSerializer(card, data=request.data)
         serializer.image = request.FILES['image']
-        # serializer.audio = request.FILES['audio']
+        # serializer.myvoice = request.FILES['myvoice']
         if serializer.is_valid(raise_exception=True):
-            serializer.save(video = 'media/video/' + card_id + '.mp4')
-      
-        audio_clip = AudioFileClip(MEDIA_ROOT + "\\audio\\" + card.audio.name[6:])
-        image_clip = ImageClip(MEDIA_ROOT + "\\image\\" + card.image.name[6:])
+            serializer.save(video = 'media/' + str(card.card_id).replace('-', '') + '/' + card_id + '.mp4')
+
+        if card.audio != None:
+            audio_clip = AudioFileClip(MEDIA_ROOT + '\\' + str(card.card_id).replace('-', '') + '\\' + card.audio)
+        elif card.myvoice != None:
+            audio_clip = AudioFileClip(MEDIA_ROOT + '\\' + card.myvoice.name)
+
+        image_clip = ImageClip(MEDIA_ROOT + '\\' + card.image.name)
         
         video_clip = image_clip.set_audio(audio_clip)
         video_clip.duration = audio_clip.duration
-        video_clip.write_videofile(MEDIA_ROOT + "\\video\\" + card_id + ".mp4",  codec='mpeg4', audio_codec="aac", fps=24)
+        video_clip.write_videofile(MEDIA_ROOT + '\\' + str(card.card_id).replace('-', '') + '\\' + card_id + ".mp4",  codec='mpeg4', audio_codec="aac", fps=24)
 
         # response = HttpResponse(video, content_type="video/mp4")
         # response['Content-Disposition'] = 'attachment; filename=' + card_id + '.mp4'
@@ -110,19 +122,9 @@ def record(request, *args, **kwargs):
             return Response(status = status.HTTP_201_CREATED)
         else:
             return Response(audio_serializer.errors, status = status.HTTP_400_BAD_REQUEST)  
-  
 
-        # file_name = request.FILES["file_name"]
-        # document = models.Card(
-        #     audio = file_name
-        # )
-        # document.save()
 
-        #documents = models.Card.objects.all()
-
-# def card_delete(request):
-#     cards = get_list_or_404(Card)
-#     for card in cards:
-#         if card.created_at.replace(tzinfo=None) + timedelta(minutes=1) <= datetime.now():
-#             card.delete()
-#             print(datetime.now())
+@api_view(['GET'])
+def delete_check(request):
+    card_delete(repeat=Task.DAILY)
+    return Response(status=status.HTTP_204_NO_CONTENT)

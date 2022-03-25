@@ -5,7 +5,3 @@ class CardConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'card'
     
-    # def ready(self):
-    #     if settings.SCHEDULER_DEFAULT:
-    #         from . import operator
-    #         operator.start()

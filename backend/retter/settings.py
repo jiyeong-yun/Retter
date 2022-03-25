@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'card',
     'corsheaders',
+    'background_task'
 ]
 
 MIDDLEWARE = [
@@ -97,7 +98,7 @@ DATABASES = {
             'default': { 
                 'ENGINE': 'django.db.backends.mysql', 
                 'NAME': 'retter', 
-                'USER': 'root', 
+                'USER': 'ssafy', 
                 'PASSWORD': 'ssafy', 
                 'HOST': '127.0.0.1', 
                 'PORT': 3306, 

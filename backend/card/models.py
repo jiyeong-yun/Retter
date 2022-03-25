@@ -8,6 +8,6 @@ class Card(models.Model):
     text = models.CharField(max_length=500, null=True)
     audio = models.CharField(null=True, max_length=200)
     myvoice = models.FileField(upload_to=user_directory_path,  null=True)
-    image = models.ImageField(upload_to="image",  null=True)
+    image = models.ImageField(upload_to=user_directory_path,  null=True)
     video = models.CharField(null=True, max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
