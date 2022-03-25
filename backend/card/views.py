@@ -13,7 +13,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from card.serializers import CardSerializer, AudioSerializer, CardCreateSerializer
-# from moviepy.editor import *
+
 from retter.settings import MEDIA_ROOT, MEDIA_URL
 
 
@@ -99,15 +99,16 @@ def create_card(request):
         serializer.save()
     
     card_id = serializer.data['card_id']
+    card_id = card_id.replace('-', '')
     text = serializer.data['text']
-    
-    synthesis(text, card_id)
+    voice_num = serializer.data['voice_num']
+    synthesis(text, card_id, voice_num)
 
-    audio = MEDIA_URL+'audio/' + card_id + '.wav'
+    audio = MEDIA_URL + card_id+ '/' + card_id + '.wav'
     card = get_object_or_404(Card, card_id = card_id)
     card.audio = audio
     card.save()
-
+    serializer = CardCreateSerializer(card)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 @parser_classes([MultiPartParser, FormParser])

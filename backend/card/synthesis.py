@@ -4,7 +4,8 @@ import numpy as np
 import torch
 import os
 import argparse
-from retter.settings import MODEL_ROOT
+import librosa
+from retter.settings import MODEL_ROOT, MEDIA_URL, MEDIA_ROOT
 from pydub import AudioSegment
 ## WaveGlow 프로젝트 위치 설정
 sys.path.append(MODEL_ROOT+'/waveglow/')
@@ -108,21 +109,25 @@ class Synthesizer:
         return audio_denoised.reshape(-1), self.hparams.sampling_rate
 
 
-def synthesis(text, id):
+def synthesis(text, id, voice_num):
   ## 체크포인트 설정
-  tacotron2_checkpoint = MODEL_ROOT+'/tacotron2/output/checkpoint_94000'
-  waveglow_checkpoint = MODEL_ROOT+'/waveglow/checkpoints/waveglow_28000(1)'
+  voice_num = str(voice_num)
+  tacotron2_checkpoint = MODEL_ROOT+'/tacotron2/output/' + voice_num
+  waveglow_checkpoint = MODEL_ROOT+'/waveglow/checkpoints/' + voice_num
 
   ## 음성 합성 모듈 생성
   synthesizer = Synthesizer(tacotron2_checkpoint, waveglow_checkpoint)
 
   ## 문장 생성
-  sample_text = text
-  audio, sampling_rate = synthesizer.inference(sample_text)
+  
+  audio, sampling_rate = synthesizer.inference(text)
+  if os.path.isdir(MEDIA_ROOT + '/' + id ) == False:
+    os.mkdir(MEDIA_ROOT + "/" + id)
   ## 음성 저장하기
-  sf.write('media/audio/'+ id +'.wav', audio, sampling_rate)
+  sf.write( 'media/'+id +'/'+id + '.wav', audio, sampling_rate)
   def volume_up(audio_dir, dB):
     audio = AudioSegment.from_wav(audio_dir)
     audio = audio + dB
     audio.export(audio_dir, format='wav')
-  volume_up('media/'+ id +'.wav', 20)
+  volume_up('media/'+ id +'/' + id + '.wav', 15)
+  
