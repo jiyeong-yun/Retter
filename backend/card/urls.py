@@ -6,4 +6,5 @@ urlpatterns = [
     path('api/character/<str:card_id>', views.voice),
     path('api/record/', views.record),
     path('api/test/', views.test),
+    path('delete/', views.delete_check),
 ]

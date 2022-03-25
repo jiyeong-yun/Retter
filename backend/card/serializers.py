@@ -7,7 +7,7 @@ class CardSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Card
-        fields = ('card_id', 'text', 'image', 'audio', 'video')
+        fields = ('card_id', 'text', 'image', 'audio', 'video', 'myvoice')
 
 class AudioSerializer(serializers.HyperlinkedModelSerializer):
     myvoice = serializers.FileField(use_url=True)
