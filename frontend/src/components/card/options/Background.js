@@ -34,10 +34,10 @@ function Background({ setBackgroundColor, setBackgroundImage }) {
     setBackgroundColor(color);
   };
 
-  const setImageURL = (event) => {
+  const handleChange = (event) => {
+    if (!event.target.files[0]) return;
+
     const reader = new FileReader();
-    console.log(event.target.files);
-    console.log(reader);
     reader.onload = () => setBackgroundImage(reader.result);
     reader.readAsDataURL(event.target.files[0]);
   };
@@ -50,7 +50,7 @@ function Background({ setBackgroundColor, setBackgroundImage }) {
           id="image"
           type="file"
           accept="image/*"
-          onChange={setImageURL}
+          onChange={handleChange}
         ></input>
       </ImageInput>
 
