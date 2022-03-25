@@ -1,17 +1,21 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { connect } from "react-redux";
-import { setBackgroundColor } from "../../../store/actions/cardActions";
+import {
+  setBackgroundColor,
+  setBackgroundImage,
+} from "../../../store/actions/cardActions";
 
 function mapDispatchToProps(dispatch) {
   return {
     setBackgroundColor: (color) => dispatch(setBackgroundColor(color)),
+    setBackgroundImage: (imageURL) => dispatch(setBackgroundImage(imageURL)),
   };
 }
 
 export default connect(null, mapDispatchToProps)(Background);
 
-function Background({ setBackgroundColor }) {
+function Background({ setBackgroundColor, setBackgroundImage }) {
   const [colors] = useState([
     "transparent",
     "red",
@@ -30,8 +34,26 @@ function Background({ setBackgroundColor }) {
     setBackgroundColor(color);
   };
 
+  const setImageURL = (event) => {
+    const reader = new FileReader();
+    console.log(event.target.files);
+    console.log(reader);
+    reader.onload = () => setBackgroundImage(reader.result);
+    reader.readAsDataURL(event.target.files[0]);
+  };
+
   return (
     <Option>
+      <ImageInput htmlFor="image">
+        배경 이미지 추가
+        <input
+          id="image"
+          type="file"
+          accept="image/*"
+          onChange={setImageURL}
+        ></input>
+      </ImageInput>
+
       {colors.map((color) => (
         <Color key={color} color={color} onClick={() => handleClick(color)}>
           {color === "transparent" ? "투명" : null}
@@ -56,5 +78,11 @@ const Color = styled.li`
 
   &:hover {
     border: 1px tomato solid;
+  }
+`;
+const ImageInput = styled.label`
+  cursor: pointer;
+  input {
+    display: none;
   }
 `;

@@ -52,7 +52,7 @@ function CardComponent({ background, stickers, text, setStickerPos }) {
   };
 
   return (
-    <Card color={background.color} ref={card}>
+    <Card background={background} ref={card}>
       {stickers.map((sticker, index) => (
         <Sticker
           key={index}
@@ -70,7 +70,9 @@ function CardComponent({ background, stickers, text, setStickerPos }) {
 }
 
 const Card = styled.section`
-  background-color: ${(props) => props.color};
+  background-color: ${(props) => props.background.color};
+  background-image: url(${(props) => props.background.image});
+  background-size: cover;
   position: relative;
   width: 300px;
   height: 300px;

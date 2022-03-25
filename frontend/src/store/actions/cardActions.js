@@ -38,6 +38,13 @@ export const setBackgroundColor = (color) => {
   };
 };
 
+export const setBackgroundImage = (imageURL) => {
+  return {
+    type: types.SET_BACKGROUND_IMAGE,
+    imageURL,
+  };
+};
+
 export const addSticker = (id) => {
   return {
     type: types.ADD_STICKER,
