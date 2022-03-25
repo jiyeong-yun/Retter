@@ -45,6 +45,12 @@ export const setBackgroundImage = (imageURL) => {
   };
 };
 
+export const removeBackgroundImage = () => {
+  return {
+    type: types.REMOVE_BACKGROUND_IMAGE,
+  };
+};
+
 export const addSticker = (id) => {
   return {
     type: types.ADD_STICKER,

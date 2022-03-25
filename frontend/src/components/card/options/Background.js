@@ -4,18 +4,24 @@ import { connect } from "react-redux";
 import {
   setBackgroundColor,
   setBackgroundImage,
+  removeBackgroundImage,
 } from "../../../store/actions/cardActions";
 
 function mapDispatchToProps(dispatch) {
   return {
     setBackgroundColor: (color) => dispatch(setBackgroundColor(color)),
     setBackgroundImage: (imageURL) => dispatch(setBackgroundImage(imageURL)),
+    removeBackgroundImage: () => dispatch(removeBackgroundImage()),
   };
 }
 
 export default connect(null, mapDispatchToProps)(Background);
 
-function Background({ setBackgroundColor, setBackgroundImage }) {
+function Background({
+  setBackgroundColor,
+  setBackgroundImage,
+  removeBackgroundImage,
+}) {
   const [colors] = useState([
     "transparent",
     "red",
@@ -42,8 +48,13 @@ function Background({ setBackgroundColor, setBackgroundImage }) {
     reader.readAsDataURL(event.target.files[0]);
   };
 
+  const deleteImage = () => {
+    removeBackgroundImage();
+  };
+
   return (
     <Option>
+      <DeleteButton onClick={deleteImage}>배경 삭제</DeleteButton>
       <ImageInput htmlFor="image">
         배경 이미지 추가
         <input
@@ -84,5 +95,13 @@ const ImageInput = styled.label`
   cursor: pointer;
   input {
     display: none;
+  }
+`;
+const DeleteButton = styled.button`
+  cursor: pointer;
+  border: none;
+  padding: 0.5rem 1rem;
+  &:hover {
+    background-color: lightgray;
   }
 `;

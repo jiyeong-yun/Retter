@@ -115,6 +115,19 @@ const cardReducer = (state = initialState, action) => {
       };
     }
 
+    case types.REMOVE_BACKGROUND_IMAGE: {
+      return {
+        ...state,
+        menuVisible: { ...state.menuVisible },
+        background: {
+          color: state.background.color,
+          image: "",
+        },
+        stickers: state.stickers.map((sticker) => sticker),
+        text: { ...state.text },
+      };
+    }
+
     case types.ADD_STICKER: {
       const newStickers = state.stickers.map((sticker) => sticker);
       const sticker = {
