@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from django.core.files import File
 from django.http import FileResponse
 from django.core.files.storage import FileSystemStorage
+#from backend.retter.settings import MEDIA_URL
 from card.models import Card
 
 from rest_framework import status
@@ -20,6 +21,9 @@ from . import models
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser, FormParser
 from django.http.request import QueryDict
+
+import os
+import shutil
 
 # Create your views here.
 @api_view(['GET', 'POST', 'DELETE'])
@@ -72,7 +76,11 @@ def voice(request, card_id):
     card = get_object_or_404(Card, pk=card_id)
 
     if request.method == 'GET':
-        file_path = MEDIA_ROOT + "\\" + card.audio.name
+        if card.audio == None:
+            file_path = os.path.join(MEDIA_ROOT, card.myvoice.name)
+        else:
+            file_path = card.audio
+
         fs = FileSystemStorage(file_path)
         response = FileResponse(fs.open('', 'rb'), content_type = "audio/wav")
         response['Content-Disposition'] = f'attachment; filename={file_path}'
@@ -90,7 +98,7 @@ def record(request, *args, **kwargs):
 
         #file_name = request.data["file_name"]
 
-        audio_data['audio'] = request.data['file_name']
+        audio_data['myvoice'] = request.data['file_name']
 
         audio_query_dict = QueryDict('', mutable=True)
         audio_query_dict.update(audio_data)
@@ -101,7 +109,8 @@ def record(request, *args, **kwargs):
 
             return Response(status = status.HTTP_201_CREATED)
         else:
-            return Response(audio_serializer.errors, status = status.HTTP_400_BAD_REQUEST)   
+            return Response(audio_serializer.errors, status = status.HTTP_400_BAD_REQUEST)  
+  
 
         # file_name = request.FILES["file_name"]
         # document = models.Card(

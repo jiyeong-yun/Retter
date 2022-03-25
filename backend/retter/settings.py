@@ -94,25 +94,25 @@ WSGI_APPLICATION = 'retter.wsgi.application'
 
 DATABASES = { 
             # LOCAL
+            'default': { 
+                'ENGINE': 'django.db.backends.mysql', 
+                'NAME': 'retter', 
+                'USER': 'root', 
+                'PASSWORD': 'ssafy', 
+                'HOST': '127.0.0.1', 
+                'PORT': 3306, 
+                } 
+            
+            # SERVER
             # 'default': { 
             #     'ENGINE': 'django.db.backends.mysql', 
             #     'NAME': 'retter', 
             #     'USER': 'ssafy', 
-            #     'PASSWORD': 'ssafy', 
-            #     'HOST': '127.0.0.1', 
+            #     'PASSWORD': 'retter', 
+            #     'HOST': 'j6c202.p.ssafy.io', 
             #     'PORT': 3306, 
             #     } 
-            
-            # SERVER
-            'default': { 
-                'ENGINE': 'django.db.backends.mysql', 
-                'NAME': 'retter', 
-                'USER': 'ssafy', 
-                'PASSWORD': 'retter', 
-                'HOST': 'j6c202.p.ssafy.io', 
-                'PORT': 3306, 
-                } 
-            }
+             }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
