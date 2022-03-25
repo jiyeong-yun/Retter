@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'card',
     'corsheaders',
+    'media',
+    'model',
 ]
 
 MIDDLEWARE = [
