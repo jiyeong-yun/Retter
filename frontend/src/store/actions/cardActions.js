@@ -44,3 +44,19 @@ export const addSticker = (id) => {
     id,
   };
 };
+
+export const removeSticker = (index) => {
+  return {
+    type: types.REMOVE_STICKER,
+    index,
+  };
+};
+
+export const setStickerPos = (index, x, y) => {
+  return {
+    type: types.SET_STICKER_POS,
+    index,
+    x,
+    y,
+  };
+};

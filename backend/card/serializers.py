@@ -22,3 +22,4 @@ class CardCreateSerializer(serializers.HyperlinkedModelSerializer):
         model = Card
         fields = ('text', 'voice_num', 'audio', 'card_id')
         read_only_fields = ('audio', 'card_id')
+

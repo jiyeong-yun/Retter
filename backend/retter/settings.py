@@ -46,29 +46,34 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'card',
-
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
-    #CORS
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
 ]
+
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+    "http://127.0.0.1:8000",
+    "http://j6c202.p.ssafy.io"
+]
+
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'retter.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,24 +94,25 @@ WSGI_APPLICATION = 'retter.wsgi.application'
 
 DATABASES = { 
             # LOCAL
-            'default': { 
-                'ENGINE': 'django.db.backends.mysql', 
-                'NAME': 'retter', 
-                'USER': 'ssafy', 
-                'PASSWORD': 'ssafy123', 
-                'HOST': '127.0.0.1', 
-                'PORT': 3306, 
-                } 
-            
-            # SERVER
             # 'default': { 
             #     'ENGINE': 'django.db.backends.mysql', 
             #     'NAME': 'retter', 
             #     'USER': 'ssafy', 
-            #     'PASSWORD': 'retter', 
-            #     'HOST': 'j6c202.p.ssafy.io', 
+            #     'PASSWORD': 'ssafy', 
+            #     'HOST': '127.0.0.1', 
             #     'PORT': 3306, 
             #     } 
+            
+            # SERVER
+            'default': { 
+                'ENGINE': 'django.db.backends.mysql', 
+                'NAME': 'retter', 
+                'USER': 'ssafy', 
+                'PASSWORD': 'retter', 
+                'HOST': 'j6c202.p.ssafy.io', 
+                'PORT': 3306, 
+                } 
+
             }
 
 # Password validation
@@ -156,5 +162,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
 MODEL_ROOT = os.path.join(BASE_DIR, "model")
+

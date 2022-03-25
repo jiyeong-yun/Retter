@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import { applyMiddleware, compose, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "./store/reducers";
+import { CookiesProvider } from "react-cookie";
 
 // 배포 레벨에서는 Redux Logger를 사용하지 않음
 const enhancer =
@@ -21,9 +22,11 @@ const store = createStore(rootReducer, enhancer);
 
 ReactDOM.render(
   <React.StrictMode>
+    <CookiesProvider>
     <Provider store={store}>
       <App />
     </Provider>
+    </CookiesProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

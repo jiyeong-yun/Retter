@@ -120,7 +120,7 @@ def synthesis(text, id):
   sample_text = text
   audio, sampling_rate = synthesizer.inference(sample_text)
   ## 음성 저장하기
-  sf.write('media/'+ id +'.wav', audio, sampling_rate)
+  sf.write('media/audio/'+ id +'.wav', audio, sampling_rate)
   def volume_up(audio_dir, dB):
     audio = AudioSegment.from_wav(audio_dir)
     audio = audio + dB

@@ -1,17 +1,28 @@
 import { useEffect, useState, useRef } from 'react';
 import Result from '../components/Result';
 import Modal from '../components/Modal';
+import { useCookies } from "react-cookie";
+import Button from '../components/button';
 
 function Home() {
-  // 모달생성 처음에 바로 뜨려면 true, 다시보지않기는 미완
-  const [isOpen, setOpen] = useState(false);
-  const handleClickModal = () => setOpen(true);
-  const handleModalSubmit = () => setOpen(false);
-  const handleModalCancel = () => setOpen(false);
+  
+  // 처음에 모달 바로 뜨고, 체크하고 닫으면 안 뜨게
+  const [isRemember, setRemember] = useState(true);
+  const [cookies, setCookie] = useCookies(["noneModal"]);
+
+  useEffect(() => {
+    if (cookies.noneModal !== undefined){
+      setRemember(false);
+    }
+  },[]);
+  
+  const handleClickModal = () => setRemember(true);
+  // const handleModalSubmit = () => setRemember(false);
+  const handleModalCancel = () => setRemember(false);
 
   // 클릭하면 페이지이동
   const handleClick = () => {
-    window.location.href = "/card"
+    window.location.href = "/select"
   }
 
   // 스크롤 생성, 버튼변화는 css적용해야
@@ -68,16 +79,16 @@ function Home() {
     <div>
     <div className='Modal'>
       <button onClick={handleClickModal}>튜토리얼</button>
-      <Modal
-        isOpen={isOpen}
-        onSubmit={handleModalSubmit} 
+      <Modal setCookie={setCookie}
+        isOpen={isRemember}
+        // onSubmit={handleModalSubmit} 
         onCancel={handleModalCancel}
       />
     </div>
 
     <div className='wrap'>
       <h1 {...fadeInH1}>Re:tter</h1>
-      <button onClick={handleClick}>시작하기</button>
+      <Button primary onClick={handleClick}>시작하기</Button>
       <div className="inner">
       ## TACOTRON2
 
