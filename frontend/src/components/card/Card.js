@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { setStickerPos } from "../../store/actions/cardActions";
@@ -20,6 +20,7 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(CardComponent);
 
 function CardComponent({ background, stickers, text, setStickerPos }) {
+  const [selector, setSelector] = useState({ width: 200, height: 200, y: 0, x: 0 });
   const card = useRef();
   let pageX, pageY;
   const handleDragStart = (event) => {
@@ -51,19 +52,35 @@ function CardComponent({ background, stickers, text, setStickerPos }) {
     setStickerPos(index, nextX, nextY);
   };
 
+  const handleClick = (event, index) => {
+    const padding = 10;
+    const width = event.currentTarget.offsetWidth + padding;
+    const height = event.currentTarget.offsetHeight + padding;
+    const y = stickers[index].y - 6.5;
+    const x = stickers[index].x - 6.5;
+    console.log(stickers[index].y);
+    // console.log(event.currentTarget.offsetWidth);
+    // console.log(event.target.style);
+    setSelector({ ...selector, width, height, y, x });
+  }
+
   return (
-    <Card background={background} ref={card}>
-      {stickers.map((sticker, index) => (
-        <Sticker
-          key={index}
-          sticker={sticker}
-          draggable
-          onDragStart={(event) => handleDragStart(event, index)}
-          onDragEnd={(event) => handleDragEnd(event, index)}
-        >
-          {sticker.id}
-        </Sticker>
-      ))}
+    <Card Card background={background} ref={card} >
+      {
+        stickers.map((sticker, index) => (
+          <Sticker
+            key={index}
+            sticker={sticker}
+            draggable
+            onDragStart={(event) => handleDragStart(event, index)}
+            onDragEnd={(event) => handleDragEnd(event, index)}
+            onClick={(event) => handleClick(event, index)}
+          >
+            {sticker.id}
+          </Sticker>
+        ))
+      }
+      < Selector selector={selector} />
       {text.isVisible ? text.message : null}
     </Card>
   );
@@ -88,4 +105,14 @@ const Sticker = styled.div`
   background-color: orange;
 
   cursor: grab;
+`;
+
+const Selector = styled.div`
+  border: 2px solid gray;
+  position: absolute;
+  top: ${(props) => props.selector.y}px;
+  left: ${(props) => props.selector.x}px;
+  width: ${(props) => props.selector.width}px;
+  height: ${(props) => props.selector.height}px;
+  z-index: -1;
 `;
