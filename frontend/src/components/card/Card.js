@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { setStickerPos } from "../../store/actions/cardActions";
+import { setStickerPos, removeSticker } from "../../store/actions/cardActions";
 
 function mapStateToProps({ cardReducer }) {
   return {
@@ -14,13 +14,19 @@ function mapStateToProps({ cardReducer }) {
 function mapDispatchToProps(dispatch) {
   return {
     setStickerPos: (index, x, y) => dispatch(setStickerPos(index, x, y)),
+    removeSticker: (index) => dispatch(removeSticker(index)),
   };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardComponent);
 
-function CardComponent({ background, stickers, text, setStickerPos }) {
-  const [selector, setSelector] = useState({ width: 200, height: 200, y: 0, x: 0 });
+function CardComponent(props) {
+  const [selector, setSelector] = useState({
+    width: 200,
+    height: 200,
+    y: 0,
+    x: 0,
+  });
   const card = useRef();
   let pageX, pageY;
   const handleDragStart = (event) => {
@@ -49,39 +55,40 @@ function CardComponent({ background, stickers, text, setStickerPos }) {
     if (nextY > cardRef.height - target.height)
       nextY = cardRef.height - target.height;
 
-    setStickerPos(index, nextX, nextY);
+    props.setStickerPos(index, nextX, nextY);
   };
 
   const handleClick = (event, index) => {
-    const padding = 10;
+    const padding = 50;
     const width = event.currentTarget.offsetWidth + padding;
     const height = event.currentTarget.offsetHeight + padding;
-    const y = stickers[index].y - 6.5;
-    const x = stickers[index].x - 6.5;
-    console.log(stickers[index].y);
-    // console.log(event.currentTarget.offsetWidth);
-    // console.log(event.target.style);
-    setSelector({ ...selector, width, height, y, x });
-  }
+    const y = props.stickers[index].y - padding / 2;
+    const x = props.stickers[index].x - padding / 2;
+    setSelector({ ...selector, width, height, y, x, index });
+  };
+
+  const removeSticker = () => {
+    props.removeSticker(selector.index);
+  };
 
   return (
-    <Card Card background={background} ref={card} >
-      {
-        stickers.map((sticker, index) => (
-          <Sticker
-            key={index}
-            sticker={sticker}
-            draggable
-            onDragStart={(event) => handleDragStart(event, index)}
-            onDragEnd={(event) => handleDragEnd(event, index)}
-            onClick={(event) => handleClick(event, index)}
-          >
-            {sticker.id}
-          </Sticker>
-        ))
-      }
-      < Selector selector={selector} />
-      {text.isVisible ? text.message : null}
+    <Card Card background={props.background} ref={card}>
+      {props.stickers.map((sticker, index) => (
+        <Sticker
+          key={index}
+          sticker={sticker}
+          draggable
+          onDragStart={(event) => handleDragStart(event, index)}
+          onDragEnd={(event) => handleDragEnd(event, index)}
+          onClick={(event) => handleClick(event, index)}
+        >
+          {sticker.id}
+        </Sticker>
+      ))}
+      <Selector selector={selector}>
+        <div onClick={removeSticker}>X</div>
+      </Selector>
+      {props.text.isVisible ? props.text.message : null}
     </Card>
   );
 }
@@ -103,16 +110,30 @@ const Sticker = styled.div`
   width: ${(props) => props.sticker.width}px;
   height: ${(props) => props.sticker.height}px;
   background-color: orange;
+  z-index: 1;
 
   cursor: grab;
 `;
 
 const Selector = styled.div`
-  border: 2px solid gray;
+  box-shadow: 0 0 0 1.5px gray inset;
   position: absolute;
   top: ${(props) => props.selector.y}px;
   left: ${(props) => props.selector.x}px;
   width: ${(props) => props.selector.width}px;
   height: ${(props) => props.selector.height}px;
-  z-index: -1;
+
+  div {
+    background-color: skyblue;
+    border-radius: 50%;
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+
+    text-align: center;
+    padding-top: 3px;
+  }
 `;
