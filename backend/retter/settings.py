@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'card',
     'corsheaders',
-
+    'background_task'
 ]
 
 MIDDLEWARE = [
@@ -99,7 +99,7 @@ DATABASES = {
                 'ENGINE': 'django.db.backends.mysql', 
                 'NAME': 'retter', 
                 'USER': 'ssafy', 
-                'PASSWORD': 'ssafy123', 
+                'PASSWORD': 'ssafy', 
                 'HOST': '127.0.0.1', 
                 'PORT': 3306, 
                 } 
@@ -115,6 +115,7 @@ DATABASES = {
             #     } 
 
             }
+            
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
