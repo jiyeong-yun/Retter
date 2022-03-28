@@ -152,18 +152,7 @@ def record(request, *args, **kwargs):
             return Response(audio_serializer.errors, status = status.HTTP_400_BAD_REQUEST)  
 
 
-<<<<<<< HEAD
-        #documents = models.Card.objects.all()
-
-# def card_delete(request):
-#     cards = get_list_or_404(Card)
-#     for card in cards:
-#         if card.created_at.replace(tzinfo=None) + timedelta(minutes=1) <= datetime.now():
-#             card.delete()
-#             print(datetime.now())
-=======
 @api_view(['GET'])
 def delete_check(request):
     card_delete(repeat=Task.DAILY)
     return Response(status=status.HTTP_204_NO_CONTENT)
->>>>>>> 49a0bf7f0449f66f474a8ea9c4b5a7fb0995348b
