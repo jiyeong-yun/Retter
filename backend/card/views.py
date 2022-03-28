@@ -15,14 +15,14 @@ from rest_framework.decorators import api_view
 
 from card.serializers import CardSerializer, AudioSerializer, CardCreateSerializer
 
-from retter.settings import MEDIA_ROOT, MEDIA_URL
+from retter.settings import MEDIA_ROOT, MEDIA_URL, BASE_DIR
 
 
 from moviepy.editor import *
 from datetime import timedelta, datetime
 from card.serializers import CardSerializer, AudioSerializer
 from card.task import card_delete
-from retter.settings import MEDIA_ROOT
+
 
 from . import models
 from rest_framework.decorators import parser_classes
@@ -50,16 +50,15 @@ def card_detail(request, card_id):
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
     if request.method == 'POST':
-        if os.path.isdir(MEDIA_ROOT + "\\" + str(card.card_id).replace('-', '')) == False:
-            os.mkdir(MEDIA_ROOT + "\\" + str(card.card_id).replace('-', ''))
+        # if os.path.isdir(MEDIA_ROOT + "\\" + str(card.card_id).replace('-', '')) == False:
+        #     os.mkdir(MEDIA_ROOT + "\\" + str(card.card_id).replace('-', ''))
         serializer = CardSerializer(card, data=request.data)
         serializer.image = request.FILES['image']
         # serializer.myvoice = request.FILES['myvoice']
         if serializer.is_valid(raise_exception=True):
             serializer.save(video = 'media/' + str(card.card_id).replace('-', '') + '/' + card_id + '.mp4')
-
         if card.audio != None:
-            audio_clip = AudioFileClip(MEDIA_ROOT + '\\' + str(card.card_id).replace('-', '') + '\\' + card.audio)
+            audio_clip = AudioFileClip(str(BASE_DIR) + '\\' + card.audio)
         elif card.myvoice != None:
             audio_clip = AudioFileClip(MEDIA_ROOT + '\\' + card.myvoice.name)
 
@@ -108,9 +107,7 @@ def voice(request, card_id):
         card
 
 
-@api_view(['POST'])
-def record(request):
-    pass
+
 
 @api_view(["POST"])
 def create_card(request):
@@ -131,6 +128,7 @@ def create_card(request):
     serializer = CardCreateSerializer(card)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+@api_view(['POST'])
 @parser_classes([MultiPartParser, FormParser])
 def record(request, *args, **kwargs):
 
