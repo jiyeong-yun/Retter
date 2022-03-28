@@ -38,7 +38,7 @@ function Message({ setMessage }) {
 
     // todo: 서버로 메세지 보내는 로직
     const params = {
-      audio_num: voice,
+      voice_num: voice,
       text: preprocessedText,
     };
 
