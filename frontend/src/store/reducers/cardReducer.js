@@ -24,6 +24,9 @@ const cardReducer = (state = initialState, action) => {
     case types.SET_MESSAGE: {
       return {
         ...state,
+        menuVisible: { ...state.menuVisible },
+        background: { ...state.background },
+        stickers: state.stickers.map((sticker) => sticker),
         text: {
           ...state.text,
           message: action.message,
@@ -34,6 +37,9 @@ const cardReducer = (state = initialState, action) => {
     case types.SET_TEXT_ISVISIBLE: {
       return {
         ...state,
+        menuVisible: { ...state.menuVisible },
+        background: { ...state.background },
+        stickers: state.stickers.map((sticker) => sticker),
         text: {
           ...state.text,
           isVisible: !state.text.isVisible,
@@ -49,6 +55,9 @@ const cardReducer = (state = initialState, action) => {
           background: false,
           text: false,
         },
+        background: { ...state.background },
+        stickers: state.stickers.map((sticker) => sticker),
+        text: { ...state.text },
       };
     }
 
@@ -60,6 +69,9 @@ const cardReducer = (state = initialState, action) => {
           background: !state.menuVisible.background,
           text: false,
         },
+        background: { ...state.background },
+        stickers: state.stickers.map((sticker) => sticker),
+        text: { ...state.text },
       };
     }
 
@@ -71,46 +83,87 @@ const cardReducer = (state = initialState, action) => {
           background: false,
           text: !state.menuVisible.text,
         },
+        background: { ...state.background },
+        stickers: state.stickers.map((sticker) => sticker),
+        text: { ...state.text },
       };
     }
 
     case types.SET_BACKGROUND_COLOR: {
       return {
         ...state,
+        menuVisible: { ...state.menuVisible },
         background: {
           color: action.color,
+          image: state.background.image,
+        },
+        stickers: state.stickers.map((sticker) => sticker),
+        text: { ...state.text },
+      };
+    }
+
+    case types.SET_BACKGROUND_IMAGE: {
+      return {
+        ...state,
+        menuVisible: { ...state.menuVisible },
+        background: {
+          color: state.background.color,
+          image: action.imageURL,
+        },
+        stickers: state.stickers.map((sticker) => sticker),
+        text: { ...state.text },
+      };
+    }
+
+    case types.REMOVE_BACKGROUND_IMAGE: {
+      return {
+        ...state,
+        menuVisible: { ...state.menuVisible },
+        background: {
+          color: state.background.color,
           image: "",
         },
+        stickers: state.stickers.map((sticker) => sticker),
+        text: { ...state.text },
       };
     }
 
     case types.ADD_STICKER: {
+      const newStickers = state.stickers.map((sticker) => sticker);
+      const sticker = {
+        id: action.id,
+        x: 100,
+        y: 100,
+        width: 50,
+        height: 50,
+        rotate: 0,
+      };
+      newStickers.splice(action.index, 0, sticker);
+
       return {
         ...state,
-        stickers: [
-          ...state.stickers,
-          {
-            id: action.id,
-            x: 100,
-            y: 100,
-            width: 50,
-            height: 50,
-            rotate: 0,
-          },
-        ],
+        menuVisible: { ...state.menuVisible },
+        background: { ...state.background },
+        stickers: newStickers,
+        text: { ...state.text },
       };
     }
 
     case types.REMOVE_STICKER: {
-      const newStickers = state.stickers.splice(action.index, 1);
+      const newStickers = state.stickers.filter(
+        (sticker, index) => index !== action.index
+      );
       return {
         ...state,
+        menuVisible: { ...state.menuVisible },
+        background: { ...state.background },
         stickers: newStickers,
+        text: { ...state.text },
       };
     }
 
     case types.SET_STICKER_POS: {
-      const newStickers = [...state.stickers];
+      const newStickers = state.stickers.map((sticker) => sticker);
       newStickers[action.index].x = action.x;
       newStickers[action.index].y = action.y;
       return {
