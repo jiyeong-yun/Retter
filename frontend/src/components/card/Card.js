@@ -124,12 +124,17 @@ function CardComponent(props) {
           sticker={sticker}
           onDragStart={() => false}
           onMouseDown={(event) => handleMouseDown(event, index)}
+          onClick={() => {
+            setSelIndex(index);
+            moveSelector();
+          }}
         >
           {/* {sticker.id} */}
         </Sticker>
       ))}
       <Selector selector={selector}>
-        <div onClick={removeSticker}>X</div>
+        <CloseButton onClick={removeSticker}>X</CloseButton>
+        <ModifyButton>O</ModifyButton>
       </Selector>
       {props.text.isVisible ? props.text.message : null}
     </Card>
@@ -173,18 +178,26 @@ const Selector = styled.div.attrs((props) => ({
 }))`
   box-shadow: 0 0 0 1.5px gray inset;
   position: absolute;
+`;
 
-  div {
-    background-color: skyblue;
-    border-radius: 50%;
-    position: absolute;
-    top: -15px;
-    right: -15px;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
+const StickerButton = styled.div`
+  background-color: skyblue;
+  border-radius: 50%;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
 
-    text-align: center;
-    padding-top: 3px;
-  }
+  text-align: center;
+  padding-top: 3px;
+`;
+
+const CloseButton = styled(StickerButton)`
+  top: -15px;
+  right: -15px;
+`;
+
+const ModifyButton = styled(StickerButton)`
+  bottom: -15px;
+  right: -15px;
 `;
