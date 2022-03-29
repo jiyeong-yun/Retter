@@ -34,26 +34,31 @@ function Message({ setMessage }) {
     setMessage(nextText);
 
     // 2. 서버로 전송할 메세지 전처리
-    let preprocessedText = nextText.replace(
-      /[^ㄱ-ㅎ|ㅏ-ㅣ|가-힣|0-9|.?! ]/g,
-      ""
-    );
-    // 온점, 느낌표, 물음표 1개만 남김
-    preprocessedText = preprocessedText.replace(/\.+/g, ".");
-    preprocessedText = preprocessedText.replace(/!+/g, "!");
-    preprocessedText = preprocessedText.replace(/\?+/g, "?");
+    let preprocessedText = preprocess(nextText);
 
+    // todo: 서버로 메세지 보내는 로직
     const params = {
-      id: voice,
-      message: preprocessedText,
+      voice_num: voice,
+      text: preprocessedText,
     };
+
     sendMessage(
       params,
       (response) => console.log(response),
       (error) => console.log(error)
     );
-    // todo: 서버로 메세지 보내는 로직
+
     navigate("/card/edit");
+  };
+
+  const preprocess = (text) => {
+    let nextText = text.replace(/[^ㄱ-ㅎ|ㅏ-ㅣ|가-힣|0-9|.?! ]/g, "");
+    // 온점, 느낌표, 물음표 1개만 남김
+    nextText = nextText.replace(/\.+/g, ".");
+    nextText = nextText.replace(/!+/g, "!");
+    nextText = nextText.replace(/\?+/g, "?");
+
+    return nextText;
   };
 
   return (
