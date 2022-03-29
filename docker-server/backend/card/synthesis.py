@@ -3,8 +3,6 @@ import sys
 import numpy as np
 import torch
 import os
-import argparse
-import librosa
 from retter.settings import MODEL_ROOT, MEDIA_URL, MEDIA_ROOT
 from pydub import AudioSegment
 ## WaveGlow 프로젝트 위치 설정
@@ -14,18 +12,12 @@ sys.path.append(MODEL_ROOT+'/tacotron2/')
 
 ## 프로젝트 라이브러리 Import
 from hparams import defaults
-from model import Tacotron2
-from layers import TacotronSTFT, STFT
-from audio_processing import griffin_lim
 from tacotron2.train import load_model
 from text import text_to_sequence
-from scipy.io.wavfile import write
-import IPython.display as ipd
 import json
 import sys
 from waveglow.glow import WaveGlow
 from denoiser import Denoiser
-from tqdm.notebook import tqdm
 import soundfile as sf
 
 ## dict->object 변환용
@@ -35,7 +27,7 @@ class Struct:
         
 def load_checkpoint(checkpoint_path, model):
     assert os.path.isfile(checkpoint_path)
-    checkpoint_dict = torch.load(checkpoint_path, map_location='cpu')
+    checkpoint_dict = torch.load(checkpoint_path, map_location=torch.device('cpu'))
     model_for_loading = checkpoint_dict['model']
     model.load_state_dict(model_for_loading.state_dict())
     return model
@@ -45,12 +37,15 @@ class Synthesizer:
         hparams = Struct(**defaults)
         hparams.n_mel_channels=80
         hparams.sampling_rate = 22050
-        
+
         self.hparams = hparams
-        
+
+        device = torch.device('cpu')
+
         model = load_model(hparams)
-        model.load_state_dict(torch.load(tacotron_check)['state_dict'])
-        model.cuda().eval()#.half()
+        model.load_state_dict(torch.load(tacotron_check, map_location=device)['state_dict'])
+        model.to(device).eval()#.half()
+
         
         self.tacotron = model
         
@@ -61,7 +56,7 @@ class Synthesizer:
         
         waveglow = WaveGlow(**waveglow_config)
         waveglow = load_checkpoint(waveglow_check, waveglow)
-        waveglow.cuda().eval()
+        waveglow.to(device).eval()
         
         self.denoiser = Denoiser(waveglow)
         self.waveglow = waveglow
@@ -70,7 +65,7 @@ class Synthesizer:
     def inference(self, text):
         assert type(text)==str, "텍스트 하나만 지원합니다."
         sequence = np.array(text_to_sequence(text, ['korean_cleaners']))[None, :]
-        sequence = torch.autograd.Variable(torch.from_numpy(sequence)).cuda().long()
+        sequence = torch.autograd.Variable(torch.from_numpy(sequence)).cpu().long()
 
         mel_outputs, mel_outputs_postnet, _, alignments = self.tacotron.inference(sequence)
         
@@ -97,7 +92,7 @@ class Synthesizer:
     def denoise_inference(self, text, sigma=0.666):
         assert type(text)==str, "텍스트 하나만 지원합니다."
         sequence = np.array(text_to_sequence(text, ['korean_cleaners']))[None, :]
-        sequence = torch.autograd.Variable(torch.from_numpy(sequence)).cuda().long()
+        sequence = torch.autograd.Variable(torch.from_numpy(sequence)).cpu().long()
 
         mel_outputs, mel_outputs_postnet, _, alignments = self.tacotron.inference(sequence)
                
