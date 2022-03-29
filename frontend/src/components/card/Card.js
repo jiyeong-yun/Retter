@@ -29,26 +29,59 @@ function CardComponent(props) {
     display: "none",
   });
   const [selIndex, setSelIndex] = useState();
+  const [page, setPage] = useState({
+    x: 0,
+    y: 0,
+  });
   const card = useRef();
   let target = useRef();
   let pageX, pageY;
   const padding = 50;
 
+  const handleClick = useCallback(
+    (event, index) => {
+      console.log(selIndex);
+      console.log(index);
+      console.log(props.stickers);
+      const padding = 50;
+      // const width = event.currentTarget.offsetWidth + padding;
+      // const height = event.currentTarget.offsetHeight + padding;
+      const width = props.stickers[index].width + padding;
+      const height = props.stickers[index].height + padding;
+      const y = props.stickers[index].y - padding / 2;
+      const x = props.stickers[index].x - padding / 2;
+      setSelector({ width, height, y, x, display: "block" });
+    },
+    [selIndex, props.stickers]
+  );
+
   const handleMouseMove = useCallback((event) => {
     console.log("마우스 이동");
-  });
+    // console.log(target.current);
+  }, []);
 
-  const handleMouseUp = useCallback((event) => {
-    console.log("마우스 이벤트 끝");
-  });
+  const handleMouseUp = useCallback(
+    (event) => {
+      console.log("마우스 이벤트 끝");
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    },
+    [handleMouseMove]
+  );
 
   const handleMouseDown = useCallback(
-    (event) => {
+    (event, index) => {
       console.log("마우스이벤트");
       document.addEventListener("mousemove", handleMouseMove);
       document.addEventListener("mouseup", handleMouseUp);
+
+      target.current = event.target.getBoundingClientRect();
+      setSelIndex(index);
+      setPage({ x: event.pageX, y: event.pageY });
+
+      handleClick(event, index);
     },
-    [handleMouseMove, handleMouseUp]
+    [handleMouseMove, handleMouseUp, handleClick]
   );
 
   useEffect(() => {
@@ -120,18 +153,6 @@ function CardComponent(props) {
     };
   };
 
-  const handleClick = (event, index) => {
-    console.log(selIndex + " " + index);
-    const padding = 50;
-    // const width = event.currentTarget.offsetWidth + padding;
-    // const height = event.currentTarget.offsetHeight + padding;
-    const width = props.stickers[index].width + padding;
-    const height = props.stickers[index].height + padding;
-    const y = props.stickers[index].y - padding / 2;
-    const x = props.stickers[index].x - padding / 2;
-    setSelector({ width, height, y, x, display: "block" });
-  };
-
   const removeSticker = () => {
     props.removeSticker(selIndex);
     setSelector({ ...selector, display: "none" });
@@ -160,7 +181,7 @@ function CardComponent(props) {
           onMouseDown={(event) => handleMouseDown(event, index)}
           // onMouseMove={(event) => handleDragEnd(event, index)}
           // onMouseUp={(event) => handleDragEnd(event, index)}
-          onClick={(event) => handleClick(event, index)}
+          // onClick={(event) => handleClick(event, index)}
         >
           {/* {sticker.id} */}
         </Sticker>
