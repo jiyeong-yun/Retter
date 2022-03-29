@@ -26,54 +26,114 @@ function CardComponent(props) {
     height: 200,
     y: 0,
     x: 0,
+    display: "none",
   });
+  const [selIndex, setSelIndex] = useState();
   const card = useRef();
   let pageX, pageY;
-  const handleDragStart = (event) => {
+  const padding = 50;
+
+  const handleDragStart = (event, index) => {
     // 커서 위치를 구하기 위해 이동 전 좌표를 저장해둠
     pageX = event.pageX;
     pageY = event.pageY;
+    setSelIndex(index);
+    handleClick(event, selIndex);
+    // setSelector({ ...selector, display: "block" });
+
+    const handleDrag = (event) => {
+      const cardRef = card.current.getBoundingClientRect();
+      const target = event.target.getBoundingClientRect();
+
+      // 마우스 커서 위치를 기억
+      const shiftX = pageX - target.left;
+      const shiftY = pageY - target.top;
+
+      // 다음 좌표 갱신
+      let nextX = event.pageX - cardRef.left - shiftX;
+      let nextY = event.pageY - cardRef.top - shiftY;
+
+      // 카드 영역 밖으로는 나가지 못하도록 함
+      if (nextX < 0) nextX = 0;
+      if (nextY < 0) nextY = 0;
+      if (nextX > cardRef.width - target.width)
+        nextX = cardRef.width - target.width;
+      if (nextY > cardRef.height - target.height)
+        nextY = cardRef.height - target.height;
+
+      // console.log(cardRef);
+      // console.log(target);
+      // console.log(`pageX: ${pageX} pageY: ${pageY}`);
+      // console.log(`event.pageX: ${event.pageX} pageY: ${event.pageY}`);
+      // console.log(`shiftX: ${shiftX} shiftY: ${shiftY}`);
+      // console.log(`nextX: ${nextX} nextY: ${nextY}`);
+      props.setStickerPos(selIndex, nextX, nextY);
+
+      setSelector({
+        ...selector,
+        index: selIndex,
+        x: nextX - padding / 2,
+        y: nextY - padding / 2,
+        display: "block",
+      });
+      pageX = event.pageX;
+      pageY = event.pageY;
+    };
+
+    handleDrag(event, index);
+    console.log(event);
+    document.addEventListener("mousemove", handleDrag);
+
+    document.onmouseup = () => {
+      document.removeEventListener("mousemove", handleDrag);
+      // document.onmouseup = null;
+    };
   };
 
-  const handleDragEnd = (event, index) => {
-    const cardRef = card.current.getBoundingClientRect();
-    const target = event.target.getBoundingClientRect();
+  // const handleDragEnd = (event, index) => {
+  //   const cardRef = card.current.getBoundingClientRect();
+  //   const target = event.target.getBoundingClientRect();
 
-    // 마우스 커서 위치를 기억
-    const shiftX = pageX - target.left;
-    const shiftY = pageY - target.top;
+  //   // 마우스 커서 위치를 기억
+  //   const shiftX = pageX - target.left;
+  //   const shiftY = pageY - target.top;
 
-    // 다음 좌표 갱신
-    let nextX = event.pageX - cardRef.left - shiftX;
-    let nextY = event.pageY - cardRef.top - shiftY;
+  //   // 다음 좌표 갱신
+  //   let nextX = event.pageX - cardRef.left - shiftX;
+  //   let nextY = event.pageY - cardRef.top - shiftY;
 
-    // 카드 영역 밖으로는 나가지 못하도록 함
-    if (nextX < 0) nextX = 0;
-    if (nextY < 0) nextY = 0;
-    if (nextX > cardRef.width - target.width)
-      nextX = cardRef.width - target.width;
-    if (nextY > cardRef.height - target.height)
-      nextY = cardRef.height - target.height;
+  //   // 카드 영역 밖으로는 나가지 못하도록 함
+  //   if (nextX < 0) nextX = 0;
+  //   if (nextY < 0) nextY = 0;
+  //   if (nextX > cardRef.width - target.width)
+  //     nextX = cardRef.width - target.width;
+  //   if (nextY > cardRef.height - target.height)
+  //     nextY = cardRef.height - target.height;
 
-    props.setStickerPos(index, nextX, nextY);
-  };
+  //   props.setStickerPos(index, nextX, nextY);
+  //   pageX = event.pageX;
+  //   pageY = event.pageY;
+  // };
 
   const handleClick = (event, index) => {
     const padding = 50;
-    const width = event.currentTarget.offsetWidth + padding;
-    const height = event.currentTarget.offsetHeight + padding;
+    // const width = event.currentTarget.offsetWidth + padding;
+    // const height = event.currentTarget.offsetHeight + padding;
+    const width = props.stickers[index].width + padding;
+    const height = props.stickers[index].height + padding;
     const y = props.stickers[index].y - padding / 2;
     const x = props.stickers[index].x - padding / 2;
-    setSelector({ ...selector, width, height, y, x, index });
+    setSelector({ width, height, y, x, display: "block" });
   };
 
   const removeSticker = () => {
-    props.removeSticker(selector.index);
+    props.removeSticker(selIndex);
+    setSelector({ ...selector, display: "none" });
   };
 
   return (
     <Card Card background={props.background} ref={card}>
-      {props.stickers.map((sticker, index) => (
+      {/* {props.stickers.map((sticker, index) => (
         <Sticker
           key={index}
           sticker={sticker}
@@ -83,6 +143,19 @@ function CardComponent(props) {
           onClick={(event) => handleClick(event, index)}
         >
           {sticker.id}
+        </Sticker>
+      ))} */}
+      {props.stickers.map((sticker, index) => (
+        <Sticker
+          key={index}
+          sticker={sticker}
+          onDragStart={() => false}
+          onMouseDown={(event) => handleDragStart(event, index)}
+          // onMouseMove={(event) => handleDragEnd(event, index)}
+          // onMouseUp={(event) => handleDragEnd(event, index)}
+          onClick={(event) => handleClick(event, index)}
+        >
+          {/* {sticker.id} */}
         </Sticker>
       ))}
       <Selector selector={selector}>
@@ -103,25 +176,32 @@ const Card = styled.section`
   overflow: hidden;
 `;
 
-const Sticker = styled.div`
-  position: absolute;
-  top: ${(props) => props.sticker.y}px;
-  left: ${(props) => props.sticker.x}px;
-  width: ${(props) => props.sticker.width}px;
-  height: ${(props) => props.sticker.height}px;
+const Sticker = styled.div.attrs((props) => ({
+  style: {
+    position: "absolute",
+    top: `${props.sticker.y}px`,
+    left: `${props.sticker.x}px`,
+    width: `${props.sticker.width}px`,
+    height: `${props.sticker.height}px`,
+  },
+}))`
   background-color: orange;
   z-index: 1;
-
   cursor: grab;
 `;
 
-const Selector = styled.div`
+const Selector = styled.div.attrs((props) => ({
+  style: {
+    position: "absolute",
+    top: `${props.selector.y}px`,
+    left: `${props.selector.x}px`,
+    width: `${props.selector.width}px`,
+    height: `${props.selector.height}px`,
+    display: props.selector.display,
+  },
+}))`
   box-shadow: 0 0 0 1.5px gray inset;
   position: absolute;
-  top: ${(props) => props.selector.y}px;
-  left: ${(props) => props.selector.x}px;
-  width: ${(props) => props.selector.width}px;
-  height: ${(props) => props.selector.height}px;
 
   div {
     background-color: skyblue;
