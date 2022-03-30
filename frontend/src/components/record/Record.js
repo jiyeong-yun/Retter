@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import RecordTimer from "./RecordTimer";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const AudioRecord = () => {
   const [stream, setStream] = useState();
@@ -60,6 +61,7 @@ const AudioRecord = () => {
     // dataavailable 이벤트로 Blob 데이터에 대한 응답을 받을 수 있음
     media.ondataavailable = function (e) {
       setAudioUrl(e.data);
+      console.log(e.data);
       setOnRec(true);
     };
 
@@ -75,8 +77,8 @@ const AudioRecord = () => {
     source.disconnect();
   };
 
-  /*
-  const onSubmitAudioFile = useCallback(() => {
+  
+  const onSubmitAudioFile = useCallback((e) => {
     if (audioUrl) {
       console.log(URL.createObjectURL(audioUrl)); // 출력된 링크에서 녹음된 오디오 확인 가능
     }
@@ -84,10 +86,47 @@ const AudioRecord = () => {
     const sound = new File([audioUrl], "soundBlob", { lastModified: new Date().getTime(), type: "audio" });
     console.log(sound); // File 정보 출력
   }, [audioUrl]);
-  */
 
+  
+  // file 정보 서버로
+  const navigate = useNavigate();
   const handleClick = () => {
-  };
+    const form = new FormData();
+    form.append("file_name", audioUrl);
+    axios
+    .post(`http://127.0.0.1:8000/api/record/`, form, {
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+    .then((response) => {
+      console.log(response)
+      navigate("/card/edit");
+    })
+      .catch((error) => console.log(error));
+    };
+    
+    // //
+    // const handleChange = ({ target: { value } }) =>{
+    //   setAnalyser(value);
+    // }
+
+
+  // //
+  // function UploadForm(props) {
+  //   return(
+  //     <div>
+  //       <input type="file" name="docx" onChange={setFile.bind(this)} />
+  //       <input type="button" onClick={postFile} value="Upload" />
+  //     </div>
+  //   )
+  //   function postFile(event) {   
+  //     // HTTP POST  
+  //   }
+  //   function setFile(event) {
+  //     // Get the details of the files
+  //     console.log(event.target.files)
+  //   }
+  // }
+
 
   return (
     <div className="voice">
@@ -96,9 +135,11 @@ const AudioRecord = () => {
       <br />
       <button onClick={onRec ? onRecAudio : offRecAudio}>녹음</button>
       {/* <button onClick={onSubmitAudioFile}>결과 확인</button> */}
-      <Link to="/card/edit">
-        <button onClick={handleClick}>다음</button>
-      </Link>
+      {/* <nav value={analyser} onChange={handleChange} placeholder="목소리를 녹음해주세요!">
+      </nav> */}
+      
+      <button onClick={handleClick}>다음</button>
+      
     </div>
   );
 };
