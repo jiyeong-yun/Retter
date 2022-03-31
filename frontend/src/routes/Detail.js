@@ -22,14 +22,14 @@ function Detail() {
     window.location.href = "/"
   }
   // id마다 결과페이지(아직 json이 없음)
-  const { id } = useParams();
+  const { card_id } = useParams();
   const getResult = async () => {
     const json = await (
-      await fetch(`https://localhost3000/result/*`)
-    ).json();
+      await fetch(`https://localhost3000/card/${card_id}`)
+    ).then((response) => response.json());
     console.log(json);
   };
-  console.log(id);
+  console.log(card_id);
   useEffect(() => {
     getResult();
   }, []);
@@ -38,23 +38,23 @@ function Detail() {
       <button onClick={handleClick}>처음으로</button>
       <h2>메세지결과</h2>
       <Link to="/logo512.png" target="_blank" download>Download</Link>
-      <CopyToClipboard text={`https://localhost3000/result/${id}`}>
+      <CopyToClipboard text={`https://localhost3000/card/${card_id}`}>
         <button>url복사</button>
       </CopyToClipboard>
       <br />
-      <FacebookShareButton style={{ marginRight: "20px" }} url={`https://localhost3000/result/${id}`}>
+      <FacebookShareButton style={{ marginRight: "20px" }} url={`https://localhost3000/card/${card_id}`}>
         <FacebookIcon size={48} round={true} borderRadius={24}></FacebookIcon>
       </FacebookShareButton>
-      <FacebookMessengerShareButton style={{ marginRight: "20px" }} url={`https://localhost3000/result/${id}`}>
+      <FacebookMessengerShareButton style={{ marginRight: "20px" }} url={`https://localhost3000/card/${card_id}`}>
         <FacebookMessengerIcon size={48} round={true} borderRadius={24}></FacebookMessengerIcon>
       </FacebookMessengerShareButton>
-      <TwitterShareButton style={{ marginRight: "20px" }} url={`https://localhost3000/result/${id}`}>
+      <TwitterShareButton style={{ marginRight: "20px" }} url={`https://localhost3000/card/${card_id}`}>
         <TwitterIcon size={48} round={true} borderRadius={24}></TwitterIcon>
       </TwitterShareButton>
-      <LineShareButton style={{ marginRight: "20px" }} url={`https://localhost3000/result/${id}`}>
+      <LineShareButton style={{ marginRight: "20px" }} url={`https://localhost3000/card/${card_id}`}>
         <LineIcon size={48} round={true} borderRadius={24}></LineIcon>
       </LineShareButton>
-      <EmailShareButton style={{ marginRight: "20px" }} url={`https://localhost3000/result/${id}`}>
+      <EmailShareButton style={{ marginRight: "20px" }} url={`https://localhost3000/card/${card_id}`}>
         <EmailIcon size={48} round={true} borderRadius={24}></EmailIcon>
       </EmailShareButton>
     </div>
