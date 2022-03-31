@@ -145,7 +145,7 @@ def record(request, *args, **kwargs):
         if audio_serializer.is_valid(raise_exception=True):
             audio_serializer.save()
 
-            return Response(status = status.HTTP_201_CREATED)
+            return Response(audio_serializer.data, status = status.HTTP_201_CREATED)
         else:
             return Response(audio_serializer.errors, status = status.HTTP_400_BAD_REQUEST)  
 

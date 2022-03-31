@@ -1,11 +1,20 @@
+import styled from "styled-components";
+import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 export default function Menu() {
   return (
     <nav>
       <ul>
-        <li>저장</li>
-        <li>재생</li>
-        <li>뒤로 가기</li>
+        <List>저장</List>
+        <List>재생</List>
+        <List>
+          <ArrowBackIosRoundedIcon />
+        </List>
       </ul>
     </nav>
   );
 }
+
+const List = styled.li`
+  list-style: none;
+  cursor: pointer;
+`;
