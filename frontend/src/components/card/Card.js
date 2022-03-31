@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { setStickerPos, removeSticker } from "../../store/actions/cardActions";
+import {
+  setStickerPos,
+  removeSticker,
+  setStickerScale,
+} from "../../store/actions/cardActions";
 
 function mapStateToProps({ cardReducer }) {
   return {
@@ -15,6 +19,7 @@ function mapDispatchToProps(dispatch) {
   return {
     setStickerPos: (index, x, y) => dispatch(setStickerPos(index, x, y)),
     removeSticker: (index) => dispatch(removeSticker(index)),
+    setStickerScale: (index, scale) => dispatch(setStickerScale(index, scale)),
   };
 }
 
@@ -27,6 +32,7 @@ function CardComponent(props) {
     y: 0,
     x: 0,
     display: "none",
+    scale: 1,
   });
   const [selIndex, setSelIndex] = useState();
   const [page, setPage] = useState({
@@ -34,6 +40,7 @@ function CardComponent(props) {
     y: 0,
   });
   const [isDragging, setIsDragging] = useState(false);
+  const [isModify, setIsModify] = useState(false);
   const card = useRef();
   let target = useRef();
 
@@ -43,7 +50,7 @@ function CardComponent(props) {
     const height = props.stickers[selIndex].height + padding;
     const y = props.stickers[selIndex].y - padding / 2;
     const x = props.stickers[selIndex].x - padding / 2;
-    setSelector({ width, height, y, x, display: "block" });
+    setSelector({ width, height, y, x, display: "block", scale: 1 });
   }, [props.stickers, selIndex]);
 
   const moveXY = useCallback(
@@ -76,39 +83,79 @@ function CardComponent(props) {
     [page, selIndex, props, moveSelector]
   );
 
-  const handleMouseMove = useCallback(
+  const onDrag = useCallback(
     (event) => {
       moveXY(event);
     },
     [moveXY]
   );
 
-  const handleMouseUp = useCallback(() => {
+  const onDragEnd = useCallback(() => {
     setIsDragging(false);
   }, []);
 
   const handleMouseDown = useCallback(
-    (event, index) => {
-      setIsDragging(true);
+    (event) => {
       target.current = event.target.getBoundingClientRect();
-      setSelIndex(index);
       setPage({ x: event.pageX, y: event.pageY });
       moveSelector(event);
     },
     [moveSelector]
   );
 
+  const onDragStart = useCallback(
+    (event, index) => {
+      setIsDragging(true);
+      setSelIndex(index);
+      handleMouseDown(event);
+    },
+    [handleMouseDown]
+  );
+
+  /** 카드 확대, 축소, 회전 */
+  const onModifyStart = useCallback(
+    (event) => {
+      setIsModify(true);
+      handleMouseDown(event);
+    },
+    [handleMouseDown]
+  );
+
+  const onModify = useCallback(
+    (event) => {
+      // const width = props.stickers[selIndex].width;
+      const height = props.stickers[selIndex].height;
+      const diff = event.pageY - page.y;
+
+      // const nextWidth = width + diff;
+      const nextHeight = height + diff;
+      const scale = nextHeight / height;
+      console.log(scale);
+      props.setStickerScale(selIndex, scale);
+    },
+    [page, selIndex, props]
+  );
+
   useEffect(() => {
     if (isDragging) {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
+      document.addEventListener("mousemove", onDrag);
+      document.addEventListener("mouseup", onDragEnd);
     }
 
     return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
+      document.removeEventListener("mousemove", onDrag);
+      document.removeEventListener("mouseup", onDragEnd);
     };
-  }, [isDragging, handleMouseMove, handleMouseUp]);
+  }, [isDragging, onDrag, onDragEnd]);
+
+  useEffect(() => {
+    if (isModify) {
+      document.addEventListener("mousemove", onModify);
+    }
+    return () => {
+      document.removeEventListener("mousemove", onModify);
+    };
+  }, [isModify, onModify]);
 
   const removeSticker = () => {
     props.removeSticker(selIndex);
@@ -120,10 +167,9 @@ function CardComponent(props) {
       {props.stickers.map((sticker, index) => (
         <Sticker
           key={index}
-          ref={target}
           sticker={sticker}
           onDragStart={() => false}
-          onMouseDown={(event) => handleMouseDown(event, index)}
+          onMouseDown={(event) => onDragStart(event, index)}
           onClick={() => {
             setSelIndex(index);
             moveSelector();
@@ -134,7 +180,9 @@ function CardComponent(props) {
       ))}
       <Selector selector={selector}>
         <CloseButton onClick={removeSticker}>X</CloseButton>
-        <ModifyButton>O</ModifyButton>
+        <ModifyButton onMouseDown={(event) => onModifyStart(event)}>
+          O
+        </ModifyButton>
       </Selector>
       {props.text.isVisible ? props.text.message : null}
     </Card>
@@ -158,8 +206,8 @@ const Sticker = styled.div.attrs((props) => ({
     left: `${props.sticker.x}px`,
     width: `${props.sticker.width}px`,
     height: `${props.sticker.height}px`,
+    transform: `scale(${props.sticker.scale})`,
   },
-  className: "sticker",
 }))`
   background-color: orange;
   z-index: 1;
@@ -173,6 +221,7 @@ const Selector = styled.div.attrs((props) => ({
     left: `${props.selector.x}px`,
     width: `${props.selector.width}px`,
     height: `${props.selector.height}px`,
+    transform: `scale(${props.selector.scale})`,
     display: props.selector.display,
   },
 }))`

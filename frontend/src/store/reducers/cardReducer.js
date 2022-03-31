@@ -137,6 +137,7 @@ const cardReducer = (state = initialState, action) => {
         width: 50,
         height: 50,
         rotate: 0,
+        scale: 1,
       };
       newStickers.splice(action.index, 0, sticker);
 
@@ -166,6 +167,15 @@ const cardReducer = (state = initialState, action) => {
       const newStickers = state.stickers.map((sticker) => sticker);
       newStickers[action.index].x = action.x;
       newStickers[action.index].y = action.y;
+      return {
+        ...state,
+        stickers: newStickers,
+      };
+    }
+
+    case types.SET_STICKER_SCALE: {
+      const newStickers = state.stickers.map((sticker) => sticker);
+      newStickers[action.index].scale = action.scale;
       return {
         ...state,
         stickers: newStickers,

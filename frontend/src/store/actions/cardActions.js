@@ -73,3 +73,11 @@ export const setStickerPos = (index, x, y) => {
     y,
   };
 };
+
+export const setStickerScale = (index, scale) => {
+  return {
+    type: types.SET_STICKER_SCALE,
+    index,
+    scale,
+  };
+};
