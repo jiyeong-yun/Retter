@@ -3,16 +3,16 @@ import { Link } from "react-router-dom";
 
 
 // card model보고 임의로 넣음(카드 완성본 보관용?)
-function Result({id, audio, image, video}) {
+function Result({card_id, text, audio, myvoice, image, video, created_at, voice_num}) {
   return (
     <div>
-      <img src={image} alt={id}/>
+      <img src={image} alt={card_id}/>
       <h2>
-        <Link to={`/result/${id}`}>{video}</Link>
+        <Link to={`/card/${card_id}`}>{image}</Link>
       </h2>
       <p>{image}</p>
       <ul>
-        {audio.map((g) => (
+        {image.map((g) => (
           <li key={g}>{g}</li>
         ))}
       </ul>
@@ -21,9 +21,12 @@ function Result({id, audio, image, video}) {
 }
 
 Result.propTypes = {
-  id: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
+  card_id: PropTypes.number.isRequired,
+  text: PropTypes.string.isRequired,
   audio: PropTypes.string.isRequired,
+  myvoice: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  voice_num: PropTypes.number.isRequired,
   video: PropTypes.arrayOf(PropTypes.string).isRequired,
 }
 
