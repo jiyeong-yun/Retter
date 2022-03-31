@@ -189,7 +189,9 @@ function CardComponent(props) {
   );
 }
 
-const Card = styled.section`
+const Card = styled.section.attrs((props) => ({
+  id: "card",
+}))`
   background-color: ${(props) => props.background.color};
   background-image: url(${(props) => props.background.image});
   background-size: cover;
