@@ -101,12 +101,15 @@ const AudioRecord = () => {
       console.log(response)
       navigate("/card/edit");
     })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error)
+        alert("목소리를 녹음해주세요!")
+      });
     };
     
     // //
     // const handleChange = ({ target: { value } }) =>{
-    //   setAnalyser(value);
+    //   onSubmitAudioFile(value);
     // }
 
 
