@@ -190,7 +190,7 @@ const cardReducer = (state = initialState, action) => {
         background: { ...state.background },
         stickers: state.stickers.map((sticker) => sticker),
         text: { ...state.text },
-        id: action.id,
+        id: action.id.replace(/-/g, ""),
       };
     }
     default:

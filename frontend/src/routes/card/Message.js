@@ -46,8 +46,7 @@ function Message({ setMessage, setCardID }) {
     sendMessage(
       params,
       ({ data }) => {
-        const card_id = data.card_id.replace(/-/g, "");
-        setCardID(card_id);
+        setCardID(data.card_id);
       },
       (error) => console.log(error)
     );
