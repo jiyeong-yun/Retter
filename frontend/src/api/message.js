@@ -14,3 +14,7 @@ export const sendImageURL = async (params, success, fail) => {
     .then(success)
     .catch(fail);
 };
+
+export const deleteCard = async (card_id, success, fail) => {
+  await api.delete(`/card/${card_id}`).then(success).catch(fail);
+};

@@ -3,7 +3,8 @@ import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import html2canvas from "html2canvas";
 import { useCallback } from "react";
 import { connect } from "react-redux";
-import { sendImageURL } from "../../api/message";
+import { sendImageURL, deleteCard } from "../../api/message";
+import { setCardID } from "../../store/actions/cardActions";
 import { useNavigate } from "react-router-dom";
 
 function mapStateToProps({ cardReducer }) {
@@ -11,9 +12,15 @@ function mapStateToProps({ cardReducer }) {
     card_id: cardReducer.id,
   };
 }
-export default connect(mapStateToProps)(Menu);
 
-function Menu({ card_id }) {
+function mapDispatchToProps(dispatch) {
+  return {
+    setCardID: (id) => dispatch(setCardID(id)),
+  };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);
+
+function Menu({ card_id, setCardID }) {
   const navigate = useNavigate();
   const saveCard = useCallback(() => {
     const card = document.getElementById("card");
@@ -44,14 +51,35 @@ function Menu({ card_id }) {
     });
   }, [card_id, navigate]);
 
-  const deleteCard = useCallback(() => {}, []);
+  const goMain = useCallback(() => {
+    if (
+      window.confirm(
+        "메인으로 돌아가면 현재까지 편집한 카드가 삭제돼요. 괜찮으시겠어요?"
+      )
+    ) {
+      if (card_id) {
+        deleteCard(
+          card_id,
+          (response) => {
+            console.log(response);
+            setCardID("");
+            navigate(`/`);
+          },
+          (error) => {
+            console.log(error);
+            alert("카드 삭제에 실패했습니다. 다시 시도해 주세요.");
+          }
+        );
+      }
+    }
+  }, [card_id, setCardID, navigate]);
 
   return (
     <nav>
       <ul>
         <List onClick={saveCard}>저장</List>
         <List>재생</List>
-        <List onClick={deleteCard}>
+        <List onClick={goMain}>
           <ArrowBackIosRoundedIcon />
         </List>
       </ul>
