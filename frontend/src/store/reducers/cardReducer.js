@@ -1,6 +1,7 @@
 import types from "../types";
 
 const initialState = {
+  id: "",
   menuVisible: {
     sticker: false,
     background: false,
@@ -179,6 +180,17 @@ const cardReducer = (state = initialState, action) => {
       return {
         ...state,
         stickers: newStickers,
+      };
+    }
+
+    case types.SET_CARD_ID: {
+      return {
+        ...state,
+        menuVisible: { ...state.menuVisible },
+        background: { ...state.background },
+        stickers: state.stickers.map((sticker) => sticker),
+        text: { ...state.text },
+        id: action.id,
       };
     }
     default:

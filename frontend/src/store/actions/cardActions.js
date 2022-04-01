@@ -81,3 +81,10 @@ export const setStickerScale = (index, scale) => {
     scale,
   };
 };
+
+export const setCardID = (id) => {
+  return {
+    type: types.SET_CARD_ID,
+    id,
+  };
+};
