@@ -53,7 +53,7 @@ def card_detail(request, card_id):
         # if os.path.isdir(MEDIA_ROOT + "\\" + str(card.card_id).replace('-', '')) == False:
         #     os.mkdir(MEDIA_ROOT + "\\" + str(card.card_id).replace('-', ''))
         serializer = CardSerializer(card, data=request.data)
-        serializer.image = request.FILES['image']
+        serializer.image = request.FILES.get('image')
         # serializer.myvoice = request.FILES['myvoice']
         if serializer.is_valid(raise_exception=True):
             serializer.save(video = 'media/' + str(card.card_id).replace('-', '') + '/' + card_id + '.mp4')
