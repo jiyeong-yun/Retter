@@ -4,6 +4,7 @@ import html2canvas from "html2canvas";
 import { useCallback } from "react";
 import { connect } from "react-redux";
 import { sendImageURL } from "../../api/message";
+import { useNavigate } from "react-router-dom";
 
 function mapStateToProps({ cardReducer }) {
   return {
@@ -13,6 +14,7 @@ function mapStateToProps({ cardReducer }) {
 export default connect(mapStateToProps)(Menu);
 
 function Menu({ card_id }) {
+  const navigate = useNavigate();
   const saveCard = useCallback(() => {
     const card = document.getElementById("card");
     html2canvas(card).then(function (canvas) {
@@ -30,12 +32,17 @@ function Menu({ card_id }) {
         };
         sendImageURL(
           params,
-          (response) => console.log(response),
-          (error) => console.log(error)
+          (response) => {
+            navigate(`/card/${card_id}`);
+          },
+          (error) => {
+            console.log(error);
+            alert("카드 변환 중 에러가 발생했습니다. 다시 시도해주세요.");
+          }
         );
       }, "image/png");
     });
-  }, [card_id]);
+  }, [card_id, navigate]);
 
   const deleteCard = useCallback(() => {}, []);
 
