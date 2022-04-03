@@ -92,7 +92,7 @@ const AudioRecord = () => {
   const navigate = useNavigate();
   const handleClick = () => {
     const form = new FormData();
-    form.append("file_name", audioUrl);
+    form.append("file_name", audioUrl, '.wav');
     axios
     .post(`http://127.0.0.1:8000/api/record/`, form, {
       headers: { "Content-Type": "multipart/form-data" },
