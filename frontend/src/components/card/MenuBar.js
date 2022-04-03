@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
-import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
-import PauseRoundedIcon from '@mui/icons-material/PauseRounded';
+import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
+import PauseRoundedIcon from "@mui/icons-material/PauseRounded";
 import html2canvas from "html2canvas";
 import { useCallback, useRef, useState } from "react";
 import { connect } from "react-redux";
@@ -93,37 +93,62 @@ function Menu({ card_id, setCardID }) {
     if (audio.paused || audio.ended) {
       setIsPlaying(true);
       audio.play();
-    }
-    else {
+    } else {
       audio.pause();
     }
-  }, []);
+  }, [card_id]);
 
   const stopAudio = useCallback(() => {
     setIsPlaying(false);
   }, []);
 
-
   return (
     <nav>
-      <ul>
-        <List onClick={saveCard} disabled={card_id ? false : true}>저장</List>
-        <List onClick={controlAudio} >{card_id ? (isPlaying ? <PauseRoundedIcon /> : <PlayArrowRoundedIcon />) : "로딩중.."}</List>
+      <ListWrapper>
+        <List onClick={saveCard} disabled={card_id ? false : true}>
+          저장
+        </List>
+        <List onClick={controlAudio}>
+          {card_id ? (
+            isPlaying ? (
+              <PauseRoundedIcon />
+            ) : (
+              <PlayArrowRoundedIcon />
+            )
+          ) : (
+            <Spinner src={`/spinner.gif`} alt="loading..." />
+          )}
+        </List>
         <List onClick={goMain}>
           <ArrowBackIosRoundedIcon />
         </List>
-      </ul>
-      {card_id ? <audio src={`${BACKEND_URL}/media/${card_id}/${card_id}.wav`} ref={audioRef} onPlay={() => setIsPlaying(true)} onPause={stopAudio} onEnded={stopAudio} /> : null}
-
+      </ListWrapper>
+      {card_id ? (
+        <audio
+          src={`${BACKEND_URL}/media/${card_id}/${card_id}.wav`}
+          ref={audioRef}
+          onPlay={() => setIsPlaying(true)}
+          onPause={stopAudio}
+          onEnded={stopAudio}
+        />
+      ) : null}
     </nav>
   );
 }
 
+const ListWrapper = styled.ul`
+  display: inline-block;
+`;
+
 const List = styled.li.attrs((props) => ({
   style: {
     color: props.disabled ? "lightgray" : "black",
-  }
+  },
 }))`
   list-style: none;
   cursor: pointer;
+`;
+
+const Spinner = styled.img`
+  width: 50px;
 `;
