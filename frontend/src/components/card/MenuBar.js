@@ -23,6 +23,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(Menu);
 function Menu({ card_id, setCardID }) {
   const navigate = useNavigate();
   const saveCard = useCallback(() => {
+    if (!card_id) return;
+
     const card = document.getElementById("card");
     html2canvas(card).then(function (canvas) {
       canvas.toBlob(function (blob) {
@@ -77,7 +79,7 @@ function Menu({ card_id, setCardID }) {
   return (
     <nav>
       <ul>
-        <List onClick={saveCard}>저장</List>
+        <List onClick={saveCard} disabled={card_id ? false : true}>저장</List>
         <List>재생</List>
         <List onClick={goMain}>
           <ArrowBackIosRoundedIcon />
@@ -87,7 +89,11 @@ function Menu({ card_id, setCardID }) {
   );
 }
 
-const List = styled.li`
+const List = styled.li.attrs((props) => ({
+  style: {
+    color: props.disabled ? "lightgray" : "black",
+  }
+}))`
   list-style: none;
   cursor: pointer;
 `;
