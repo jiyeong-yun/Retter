@@ -337,7 +337,7 @@ const H2 = styled.h2 `
 
 const DIV = styled.div `
   background-image: url('/images/background2.jpg');
-  height: 180vh;
+   height: 180vh;
   background-size: cover;
   text-align: center;
   line-height: 130%;
