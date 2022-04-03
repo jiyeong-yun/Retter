@@ -116,7 +116,7 @@ function Menu({ card_id, setCardID }) {
               <PlayArrowRoundedIcon />
             )
           ) : (
-            <Spinner src={`/spinner.gif`} alt="loading..." />
+            <Spinner src={`/images/spinner.gif`} alt="loading..." />
           )}
         </List>
         <List onClick={goMain}>
