@@ -32,7 +32,8 @@ from background_task.models import Task
 from .task import card_delete
 
 import os
-import shutil
+from pydub import AudioSegment
+from pydub.utils import make_chunks
 
 
 # Create your views here.
