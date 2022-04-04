@@ -6,11 +6,19 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
 }
 
-#root {background-color: #EAE2B1;}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@font-face {
+  font-family: "notoSans";
+  src: url("./font/NotoSansKR-Medium.otf") format('opentype');
+}
+
+@font-face {
+  font-family: "gowun";
+  src: url("./font/GowunBatang-Bold.ttf") format('truetype');
 }

@@ -137,7 +137,6 @@ function Home() {
           <P>
             <p data-aos="fade-right">내 목소리 또는 다른 목소리와 함께 내 마음을 전해보세요</p>
             <p data-aos="fade-right">글로만 전하는 편지보다 훨씬 특별한 편지가 될 거에요</p>
-            <p data-aos="fade-right">설명</p>
           </P>
           
           </TEXTDIV2>
@@ -209,21 +208,25 @@ const P2 = styled.div `
 const FOOTDIV2 = styled.div `
   // padding-left: 40%;
   text-align: center;
+  line-height: 1.5em;
 `
 const FOOTDIV = styled.div `
   // padding-left: 40%;
   word-spacing: 20px;
   margin-top: 2%;
   text-align: center;
+  line-height: 1.5em;
 `
 const PT = styled.p `
   font-size: 21px;
   text-align: center;
+  line-height: 1.5em;
 `
 const H22 = styled.h2 `
   font-size: 50px;
   color: white;
-  margin-bottom: 7%;
+  margin-bottom: 1.5em;
+  font-weight: bold;
 `
 const IMG1 = styled.img `
   float: right;
@@ -233,7 +236,7 @@ const IMG1 = styled.img `
 const P = styled.div `
   // font-family: 'Noto Sans KR', sans-serif;
   font-size: 20px;
-  line-height: 100%;
+  line-height: 2em;
   margin-top: 4%;
   font-weight: bold;
 `
@@ -277,8 +280,9 @@ const INTRO2 = styled.div `
 
 `
 const BIGTEXT = styled.div `
-  font-size: 30px;
+  font-size: 60px;
   line-height: 120%;
+  font-weight: bold;
 `
 
 const BUTTLOCA = styled.div `
@@ -316,6 +320,7 @@ const WRAP = styled.div `
 `
 
 const SButton = styled.button `
+  margin-top: 1.5em;
   padding: 1rem 8rem;
   font-size: 40px;
   border-radius: 10px;
@@ -324,6 +329,7 @@ const SButton = styled.button `
   outline: 0;
   color: white;
   font-family: 'Gowun Batang', serif;
+  font-weight: bold;
 `;
 
 
@@ -333,14 +339,16 @@ const H2 = styled.h2 `
   padding-top: 75%;
   line-height: 120%;
   margin: 0;
+  font-weight: bold;
 `
 
 const DIV = styled.div `
   background-image: url('/images/background2.jpg');
-   height: 180vh;
+  height: 180vh;
   background-size: cover;
   text-align: center;
-  line-height: 130%;
+  line-height: 2em;
   color: white;
-  font-size: 20px;
+  font-size: 25px;
+  font-weight: bold;
  `

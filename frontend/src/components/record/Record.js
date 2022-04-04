@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
 import RecordTimer from "./RecordTimer";
+import RecordTimer0 from "./RecordTimer0";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -78,21 +79,22 @@ const AudioRecord = () => {
   };
 
   
-  const onSubmitAudioFile = useCallback((e) => {
-    if (audioUrl) {
-      console.log(URL.createObjectURL(audioUrl)); // 출력된 링크에서 녹음된 오디오 확인 가능
-    }
-    // File 생성자를 사용해 파일로 변환
-    const sound = new File([audioUrl], "soundBlob", { lastModified: new Date().getTime(), type: "audio" });
-    console.log(sound); // File 정보 출력
-  }, [audioUrl]);
-
+  // const onSubmitAudioFile = useCallback((e) => {
+  //   if (audioUrl) {
+  //     console.log(URL.createObjectURL(audioUrl)); // 출력된 링크에서 녹음된 오디오 확인 가능
+  //   }
+  //   // File 생성자를 사용해 파일로 변환
+  //   const sound = new File([audioUrl], "soundBlob", { lastModified: new Date().getTime(), type: "audio" });
+  //   console.log(sound); // File 정보 출력
+  // }, [audioUrl]);
+  
   
   // file 정보 서버로
   const navigate = useNavigate();
   const handleClick = () => {
     const form = new FormData();
-    form.append("file_name", audioUrl, '.wav');
+    const sound = new File([audioUrl], "audio.webm", { lastModified: new Date().getTime(), type: "audio/webm;codecs=opus" });
+    form.append("file_name", sound);
     axios
     .post(`http://127.0.0.1:8000/api/record/`, form, {
       headers: { "Content-Type": "multipart/form-data" },
@@ -133,7 +135,7 @@ const AudioRecord = () => {
 
   return (
     <div className="voice">
-      {onRec === false ? <RecordTimer /> : null}
+      {onRec === false ? <RecordTimer /> : <RecordTimer0 />}
       {audioUrl ? <audio src={URL.createObjectURL(audioUrl)} controls="controls" /> : null}
       <br />
       <button onClick={onRec ? onRecAudio : offRecAudio}>녹음</button>
