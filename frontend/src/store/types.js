@@ -12,6 +12,12 @@ const cardTypes = {
   ADD_STICKER: "ADD_STICKER",
   REMOVE_STICKER: "REMOVE_STICKER",
   SET_STICKER_POS: "SET_STICKER_POS",
+<<<<<<< HEAD
+=======
+  SET_STICKER_SCALE: "SET_STICKER_SCALE",
+
+  SET_CARD_ID: "SET_CARD_ID",
+>>>>>>> ce45131251102bfaa7aa41d6ee6ac3b486443c22
 };
 
 const types = {

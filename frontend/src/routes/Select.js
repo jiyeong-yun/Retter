@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import Modal from '../components/Modal';
-import Button from '../components/button';
+// import Button from '../components/button';
 import { useCookies } from "react-cookie";
+import styled from "styled-components";
+import '../index.css';
+import { AlignVerticalCenter } from '@mui/icons-material';
 
 function Select() {
 
@@ -24,9 +27,9 @@ function Select() {
   const handleClickCard = () => {
     window.location.href = "/card"
   }
-  
+
   return (
-    <div>
+    <div style={{height:'100vh',width:'100vw'}}>
       <div className='Modal'>
         <button onClick={handleClickModal}>튜토리얼</button>
         <Modal setCookie={setCookie}
@@ -36,13 +39,59 @@ function Select() {
         />
       </div>
       <br />
-      
+
+      <CONTENT>
+        <div>카드에 넣을 목소리를 <br/> 골라주세요!</div>
+      </CONTENT>
+
       <div>
-      <Button onClick={handleClickRecord}>내 목소리로 카드 만들기</Button>
-      <br />
-      <Button onClick={handleClickCard}>다른 목소리로 카드 만들기</Button>
+        <BUTTONS>
+          <Button1 color="#64B998" onClick={handleClickRecord}>내 목소리로 카드 만들기</Button1>
+          <br />
+          <Button1 color="#FB6B4C" onClick={handleClickCard}>다른 목소리로 카드 만들기</Button1>
+        </BUTTONS>
       </div>
+
     </div>
   )
 }
 export default Select;
+
+// background-color: ${props => props.color}
+
+const Button1 = styled.button `
+  border: none;
+  width: 240px;
+  height: 100px;
+  padding : 1rem 1.5rem;
+  margin : 1.5rem ;
+  border-radius: 10px;
+  background-color: ${props => props.color};
+  box-shadow: 5px 5px #EDB949;
+  font-family:"gowun";
+  font-size:13pt;
+`;
+
+const Button2 = styled.button `
+  border: none;
+  width: 240px;
+  height: 100px;
+  padding : 1rem 1.5rem;
+  margin : 1rem;
+  border-radius: 10px;
+  background-color: ${props => props.color};
+`;
+
+const CONTENT = styled.div `
+  padding: 3em;
+  font-size: 19pt;
+  font-family:"gowun";
+  text-align:center;
+  min-width: 230px;
+`
+
+const BUTTONS = styled.div `
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
