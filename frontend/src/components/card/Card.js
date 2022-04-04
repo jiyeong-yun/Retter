@@ -73,10 +73,6 @@ function CardComponent(props) {
       if (nextY > cardRef.height - target.current.height)
         nextY = cardRef.height - target.current.height;
 
-      // console.log(`pageX: ${page.x} pageY: ${page.y}`);
-      // console.log(`event.pageX: ${event.pageX} pageY: ${event.pageY}`);
-      // console.log(`shiftX: ${shiftX} shiftY: ${shiftY}`);
-      // console.log(`nextX: ${nextX} nextY: ${nextY}`);
       props.setStickerPos(selIndex, nextX, nextY);
       moveSelector(event);
     },

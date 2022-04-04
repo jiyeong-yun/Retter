@@ -88,3 +88,9 @@ export const setCardID = (id) => {
     id,
   };
 };
+
+export const resetCard = () => {
+  return {
+    type: types.RESET_CARD,
+  };
+};
