@@ -89,3 +89,9 @@ export const setCardID = (id, audio) => {
     audio,
   };
 };
+
+export const resetCard = () => {
+  return {
+    type: types.RESET_CARD,
+  };
+};

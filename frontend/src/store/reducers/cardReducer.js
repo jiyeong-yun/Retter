@@ -195,6 +195,28 @@ const cardReducer = (state = initialState, action) => {
         audio: action.audio,
       };
     }
+
+    case types.RESET_CARD: {
+      return {
+        id: "",
+        menuVisible: {
+          sticker: false,
+          background: false,
+          text: false,
+        },
+        background: {
+          color: "transparent",
+          image: "",
+        },
+        stickers: [],
+        text: {
+          message: "",
+          isVisible: true,
+          x: 50,
+          y: 50,
+        },
+      };
+    }
     default:
       return state;
   }

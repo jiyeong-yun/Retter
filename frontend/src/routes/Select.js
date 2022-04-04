@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import Modal from '../components/Modal';
-// import Button from '../components/button';
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import '../index.css';
-import { AlignVerticalCenter } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 function Select() {
 
@@ -18,15 +17,7 @@ function Select() {
       if (cookies.noneModal !== undefined){
         setRemember(false);
       }
-    },[]);
-  
-  // 녹음과 텍스트 선택해 클릭하면 페이지이동
-  const handleClickRecord = () => {
-    window.location.href = "/record"
-  }
-  const handleClickCard = () => {
-    window.location.href = "/card"
-  }
+    },[cookies.noneModal]);
 
   return (
     <div style={{height:'100vh',width:'100vw'}}>
@@ -46,9 +37,13 @@ function Select() {
 
       <div>
         <BUTTONS>
-          <Button1 color="#64B998" onClick={handleClickRecord}>내 목소리로 카드 만들기</Button1>
+          <Link to='/record'>
+            <Button1 color="#64B998">내 목소리로 카드 만들기</Button1>
+          </Link>
           <br />
-          <Button1 color="#FB6B4C" onClick={handleClickCard}>다른 목소리로 카드 만들기</Button1>
+          <Link to='/card'>
+          <Button1 color="#FB6B4C">다른 목소리로 카드 만들기</Button1>
+          </Link>
         </BUTTONS>
       </div>
 
@@ -70,16 +65,6 @@ const Button1 = styled.button `
   box-shadow: 5px 5px #EDB949;
   font-family:"gowun";
   font-size:13pt;
-`;
-
-const Button2 = styled.button `
-  border: none;
-  width: 240px;
-  height: 100px;
-  padding : 1rem 1.5rem;
-  margin : 1rem;
-  border-radius: 10px;
-  background-color: ${props => props.color};
 `;
 
 const CONTENT = styled.div `

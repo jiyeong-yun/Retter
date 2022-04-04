@@ -4,6 +4,7 @@ ENV PYTHONBUFFERED 1
 
 RUN apt-get -y update
 RUN apt-get -y install vim
+RUN apt-get -y install libsndfile1
 
 RUN mkdir /docker-server
 ADD . /docker-server
