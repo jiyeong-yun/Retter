@@ -1,19 +1,19 @@
 import React from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import styled from "styled-components";
-const minuteSeconds = 20;
+const minuteSeconds = 0;
 
-// const timerProps = {
-//   isPlaying: false,
-//   size: 120,
-//   strokeWidth: 6
-// };
+const timerProps = {
+  isPlaying: true,
+  size: 150,
+  strokeWidth: 6
+};
 
-const renderTime = (dimension, time) => {
+const renderTime = () => {
   return (
     <div className="time-wrapper">
-      <div className="time">{time}</div>
-      <div>{dimension}</div>
+      <div className="time">녹음버튼을</div>
+      <div>눌러보세요</div>
     </div>
   );
 };
@@ -25,11 +25,9 @@ function Record() {
     <div>
       <CIRCLE>
         <CountdownCircleTimer
-          // {...timerProps}      
+          {...timerProps}
           isPlaying
-          size={150}
-          strokeWidth={6}  
-          duration={20}
+          duration={0}
           colors={['#218380', '#F7B801', '#A30000', '#A30000']}
           colorsTime={[7, 5, 2, 0]}
         >
@@ -46,6 +44,7 @@ function Record() {
     </div>
   );
 }
+
 const CIRCLE = styled.div`
   display: flex;
   justify-content: center;
@@ -57,5 +56,4 @@ const MESSAGE = styled.p`
   justify-content: center;
 
 `;
-
 export default Record;
