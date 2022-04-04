@@ -5,17 +5,18 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { sendMyVoice } from "../../api/message";
 import { connect } from "react-redux";
-import { setCardID } from "../../store/actions/cardActions";
+import { setCardID, resetCard } from "../../store/actions/cardActions";
 
 function mapDispatchToProps(dispatch) {
   return {
     setCardID: (id, audio) => dispatch(setCardID(id, audio)),
+    resetCard: () => dispatch(resetCard()),
   };
 }
 
 export default connect(null, mapDispatchToProps)(AudioRecord);
 
-function AudioRecord({ setCardID }) {
+function AudioRecord({ setCardID, resetCard }) {
   const [stream, setStream] = useState();
   const [media, setMedia] = useState();
   const [onRec, setOnRec] = useState(true);
@@ -111,6 +112,8 @@ function AudioRecord({ setCardID }) {
     sendMyVoice(
       form,
       ({ data }) => {
+        // 카드 정보가 남아있을 경우 reset
+        resetCard();
         setCardID(data.card_id, data.myvoice);
         navigate("/card/edit");
       },
@@ -119,7 +122,7 @@ function AudioRecord({ setCardID }) {
         alert("목소리를 녹음해주세요!");
       }
     );
-  }, [audioUrl, navigate, setCardID]);
+  }, [audioUrl, navigate, setCardID, resetCard]);
 
   // const handleChange = ({ target: { value } }) =>{
   //   onSubmitAudioFile(value);

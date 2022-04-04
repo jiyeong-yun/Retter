@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import { setMessage, setCardID } from "../../store/actions/cardActions";
+import {
+  setMessage,
+  setCardID,
+  resetCard,
+} from "../../store/actions/cardActions";
 import { useNavigate } from "react-router-dom";
 import { sendMessage } from "../../api/message";
 import styled from "styled-components";
@@ -8,12 +12,13 @@ function mapDispatchToProps(dispatch) {
   return {
     setMessage: (message) => dispatch(setMessage(message)),
     setCardID: (id, audio) => dispatch(setCardID(id, audio)),
+    resetCard: () => dispatch(resetCard()),
   };
 }
 
 export default connect(null, mapDispatchToProps)(Message);
 
-function Message({ setMessage, setCardID }) {
+function Message({ setMessage, setCardID, resetCard }) {
   const [text, setText] = useState("");
   const voices = [1, 2];
   // const [isVoiceVisible, setIsVoiceVisible] = useState(false);
@@ -46,6 +51,7 @@ function Message({ setMessage, setCardID }) {
     sendMessage(
       params,
       ({ data }) => {
+        resetCard();
         setCardID(data.card_id, data.audio);
       },
       (error) => console.log(error)
