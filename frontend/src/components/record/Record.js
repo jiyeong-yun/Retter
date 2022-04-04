@@ -4,9 +4,18 @@ import RecordTimer0 from "./RecordTimer0";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { sendMyVoice } from "../../api/message";
+import { connect } from "react-redux";
+import { setCardID } from "../../store/actions/cardActions";
 
-// import { style } from "@mui/system";
-const AudioRecord = () => {
+function mapDispatchToProps(dispatch) {
+  return {
+    setCardID: (id) => dispatch(setCardID(id)),
+  };
+}
+
+export default connect(null, mapDispatchToProps)(AudioRecord);
+
+function AudioRecord({ setCardID }) {
   const [stream, setStream] = useState();
   const [media, setMedia] = useState();
   const [onRec, setOnRec] = useState(true);
@@ -101,8 +110,8 @@ const AudioRecord = () => {
 
     sendMyVoice(
       form,
-      (response) => {
-        console.log(response);
+      ({ data }) => {
+        setCardID(data.card_id);
         navigate("/card/edit");
       },
       (error) => {
@@ -110,7 +119,7 @@ const AudioRecord = () => {
         alert("목소리를 녹음해주세요!");
       }
     );
-  }, [audioUrl, navigate]);
+  }, [audioUrl, navigate, setCardID]);
 
   // //
   // const handleChange = ({ target: { value } }) =>{
@@ -164,7 +173,7 @@ const AudioRecord = () => {
       </div>
     </div>
   );
-};
+}
 
 const RECORD = styled.div`
   margin: 3em;
@@ -179,4 +188,3 @@ const BUTTONS2 = styled.div`
   display: flex;
   flex-direction: row-reverse;
 `;
-export default AudioRecord;
