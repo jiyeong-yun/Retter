@@ -34,7 +34,7 @@ from .task import card_delete
 import os
 from pydub import AudioSegment
 from pydub.utils import make_chunks
-
+from django.http import JsonResponse
 
 # Create your views here.
 @api_view(['GET', 'POST', 'DELETE'])
@@ -172,7 +172,13 @@ def record(request, *args, **kwargs):
         if audio_serializer.is_valid(raise_exception=True):
             audio_serializer.save()
 
-            return Response(audio_serializer.data, status = status.HTTP_201_CREATED)
+            new_path = audio_serializer.data['myvoice'][1:]
+            print("나와라" + new_path)
+
+            audio_serializer.data['myvoice'] = new_path
+
+            return JsonResponse({"card_id": audio_serializer.data['card_id'], "myvoice" : new_path}, status = status.HTTP_201_CREATED)
+            #return Response(audio_serializer.data, status = status.HTTP_201_CREATED)
         else:
             return Response(audio_serializer.errors, status = status.HTTP_400_BAD_REQUEST)  
 
