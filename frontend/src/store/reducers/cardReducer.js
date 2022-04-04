@@ -2,6 +2,7 @@ import types from "../types";
 
 const initialState = {
   id: "",
+  audio: "",
   menuVisible: {
     sticker: false,
     background: false,
@@ -191,6 +192,29 @@ const cardReducer = (state = initialState, action) => {
         stickers: state.stickers.map((sticker) => sticker),
         text: { ...state.text },
         id: action.id.replace(/-/g, ""),
+        audio: action.audio,
+      };
+    }
+
+    case types.RESET_CARD: {
+      return {
+        id: "",
+        menuVisible: {
+          sticker: false,
+          background: false,
+          text: false,
+        },
+        background: {
+          color: "transparent",
+          image: "",
+        },
+        stickers: [],
+        text: {
+          message: "",
+          isVisible: true,
+          x: 50,
+          y: 50,
+        },
       };
     }
     default:

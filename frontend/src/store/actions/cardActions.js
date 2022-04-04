@@ -82,9 +82,16 @@ export const setStickerScale = (index, scale) => {
   };
 };
 
-export const setCardID = (id) => {
+export const setCardID = (id, audio) => {
   return {
     type: types.SET_CARD_ID,
     id,
+    audio,
+  };
+};
+
+export const resetCard = () => {
+  return {
+    type: types.RESET_CARD,
   };
 };

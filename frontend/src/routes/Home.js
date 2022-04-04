@@ -88,7 +88,6 @@ function Home() {
         data-aos-easing="ease-in-sine"
       >
         <br />
-
         <DIV>
           <H2>소중한 사람들에게</H2>
           <H22>마음을 전해요!</H22>
@@ -96,7 +95,6 @@ function Home() {
           <h3>목소리를 담은 나만의 특별한 메시지를 보내보세요!</h3>
           <SButton primary onClick={handleClick}>카드 만들기</SButton>
         </DIV>
-
         <br />
       </div>
 

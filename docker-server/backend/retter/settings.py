@@ -29,6 +29,8 @@ DEBUG = True
 ALLOWED_HOSTS = [
     # LOCAL
     "127.0.0.1",
+    "localhost", 
+    "0.0.0.0",
 
     # SERVER
     "j6c202.p.ssafy.io"
@@ -104,7 +106,7 @@ DATABASES = {
                 'PORT': 3306, 
                 } 
             
-            # SERVER
+            # # SERVER
             # 'default': { 
             #     'ENGINE': 'django.db.backends.mysql', 
             #     'NAME': 'retter', 
