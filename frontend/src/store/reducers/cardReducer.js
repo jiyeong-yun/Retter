@@ -1,6 +1,7 @@
 import types from "../types";
 
 const initialState = {
+  id: "",
   menuVisible: {
     sticker: false,
     background: false,
@@ -137,6 +138,7 @@ const cardReducer = (state = initialState, action) => {
         width: 50,
         height: 50,
         rotate: 0,
+        scale: 1,
       };
       newStickers.splice(action.index, 0, sticker);
 
@@ -169,6 +171,26 @@ const cardReducer = (state = initialState, action) => {
       return {
         ...state,
         stickers: newStickers,
+      };
+    }
+
+    case types.SET_STICKER_SCALE: {
+      const newStickers = state.stickers.map((sticker) => sticker);
+      newStickers[action.index].scale = action.scale;
+      return {
+        ...state,
+        stickers: newStickers,
+      };
+    }
+
+    case types.SET_CARD_ID: {
+      return {
+        ...state,
+        menuVisible: { ...state.menuVisible },
+        background: { ...state.background },
+        stickers: state.stickers.map((sticker) => sticker),
+        text: { ...state.text },
+        id: action.id.replace(/-/g, ""),
       };
     }
     default:

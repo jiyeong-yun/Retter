@@ -1,9 +1,10 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import RecordTimer from "./RecordTimer";
 import RecordTimer0 from "./RecordTimer0";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import styled from "styled-components";
+// import { style } from "@mui/system";
 const AudioRecord = () => {
   const [stream, setStream] = useState();
   const [media, setMedia] = useState();
@@ -134,19 +135,35 @@ const AudioRecord = () => {
 
 
   return (
-    <div className="voice">
-      {onRec === false ? <RecordTimer /> : <RecordTimer0 />}
-      {audioUrl ? <audio src={URL.createObjectURL(audioUrl)} controls="controls" /> : null}
-      <br />
-      <button onClick={onRec ? onRecAudio : offRecAudio}>녹음</button>
-      {/* <button onClick={onSubmitAudioFile}>결과 확인</button> */}
-      {/* <nav value={analyser} onChange={handleChange} placeholder="목소리를 녹음해주세요!">
-      </nav> */}
-      
-      <button onClick={handleClick}>다음</button>
-      
+    <div>
+      <RECORD>
+        {onRec === false ? <RecordTimer /> : <RecordTimer0 />}
+        {audioUrl ? <audio src={URL.createObjectURL(audioUrl)} controls="controls" /> : null}
+      </RECORD>
+      <div>
+        <BUTTONS1>
+          {onRec === false? <img src="/images/stop.png" alt="mic" onClick={onRec ? onRecAudio : offRecAudio}></img> :
+                            <img src="/images/mic.png" alt="recording" onClick={onRec ? onRecAudio : offRecAudio}></img>  }
+        </BUTTONS1>
+        <BUTTONS2>
+          <button onClick={handleClick}>다음</button>
+        </BUTTONS2>
+      </div>
     </div>
   );
 };
 
+const RECORD = styled.div`
+  margin: 3em;
+`;
+	
+const BUTTONS1 = styled.div`
+  justify-content:center;
+  display: flex;
+`
+	
+const BUTTONS2 = styled.div`
+  display: flex;
+  flex-direction : row-reverse;
+`
 export default AudioRecord;
