@@ -9,7 +9,7 @@ import { setCardID } from "../../store/actions/cardActions";
 
 function mapDispatchToProps(dispatch) {
   return {
-    setCardID: (id) => dispatch(setCardID(id)),
+    setCardID: (id, audio) => dispatch(setCardID(id, audio)),
   };
 }
 
@@ -111,7 +111,7 @@ function AudioRecord({ setCardID }) {
     sendMyVoice(
       form,
       ({ data }) => {
-        setCardID(data.card_id);
+        setCardID(data.card_id, data.myvoice);
         navigate("/card/edit");
       },
       (error) => {
@@ -121,12 +121,10 @@ function AudioRecord({ setCardID }) {
     );
   }, [audioUrl, navigate, setCardID]);
 
-  // //
   // const handleChange = ({ target: { value } }) =>{
   //   onSubmitAudioFile(value);
   // }
 
-  // //
   // function UploadForm(props) {
   //   return(
   //     <div>
