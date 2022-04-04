@@ -88,7 +88,7 @@ function Home() {
         data-aos-easing="ease-in-sine"
       >
         <br />
-        <BACK>
+
         <DIV>
           <H2>소중한 사람들에게</H2>
           <H22>마음을 전해요!</H22>
@@ -96,7 +96,7 @@ function Home() {
           <h3>목소리를 담은 나만의 특별한 메시지를 보내보세요!</h3>
           <SButton primary onClick={handleClick}>카드 만들기</SButton>
         </DIV>
-        </BACK>
+
         <br />
       </div>
 
@@ -223,7 +223,7 @@ const PT = styled.p `
   line-height: 1.5em;
 `
 const H22 = styled.h2 `
-  font-size: 50px;
+  font-size: 2em;
   color: white;
   margin-bottom: 1.5em;
   font-weight: bold;
@@ -280,7 +280,7 @@ const INTRO2 = styled.div `
 
 `
 const BIGTEXT = styled.div `
-  font-size: 60px;
+  font-size: 3em;
   line-height: 120%;
   font-weight: bold;
 `
@@ -334,7 +334,7 @@ const SButton = styled.button `
 
 
 const H2 = styled.h2 `
-  font-size: 50px;
+  font-size: 2em;
   color: white;
   padding-top: 75%;
   line-height: 120%;
@@ -349,6 +349,5 @@ const DIV = styled.div `
   text-align: center;
   line-height: 2em;
   color: white;
-  font-size: 25px;
   font-weight: bold;
  `
