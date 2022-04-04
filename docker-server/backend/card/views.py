@@ -32,7 +32,8 @@ from background_task.models import Task
 from .task import card_delete
 
 import os
-import shutil
+from pydub import AudioSegment
+from pydub.utils import make_chunks
 
 
 # Create your views here.
@@ -60,7 +61,33 @@ def card_detail(request, card_id):
         if card.audio != None:
             audio_clip = AudioFileClip(str(BASE_DIR) + '\\' + card.audio)
         elif card.myvoice != None:
-            audio_clip = AudioFileClip(MEDIA_ROOT + '\\' + card.myvoice.name)
+            if serializer.data['myvoice'].endswith('webm'):
+                print(serializer.data['myvoice'] + "여기가 맞나요!!!!") #/Users/mac/Downloads/speech_command/right/sample-1.wav
+                file_path = str(BASE_DIR) + serializer.data['myvoice']
+                #file_path = os.path.join('C:', os.sep,'Users', 'SSAFY', 'Desktop', 'webm파일 코드', 'S06P22C202', 'docker-server', 'backend', 'media', '0c251b7eb05c44b19ed4a348b5aef337', 'audio.webm')
+                #file_path = os.path.join('..', 'media', 'fc901a9fc1cf4b46847f44a6fdcc8f64', 'audio.webm')
+                if (os.path.isfile(file_path)) :
+                    print("정상입니다")
+                
+                print("파일경로 " + file_path)
+                '''
+                audioSegment = AudioSegment.from_file(file_path, 'webm')
+                new_file_path = file_path.replace('webm', 'wav')
+                audioSegment.export(new_file_path, format='wav')
+                print(new_file_path)
+                '''
+                #'''
+                audioSegment = AudioSegment.from_file(file_path, 'webm')
+                chunk_length_ms = 20000 #1밀리 초
+                chunks = make_chunks(audioSegment, chunk_length_ms)
+                for i, chunk in enumerate(chunks):
+                    if len(chunk) < 1000:
+                        continue
+                    new_file_path = file_path.replace('.webm', '-{0}.wav').format(i + 1)
+                    chunk.export(new_file_path, format='wav')
+                    print(new_file_path) #/Users/mac/Downloads/speech_command/right/sample-1-1.wav
+                #'''
+                audio_clip = AudioFileClip(new_file_path)
 
         image_clip = ImageClip(MEDIA_ROOT + '\\' + card.image.name)
         
