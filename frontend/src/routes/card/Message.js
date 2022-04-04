@@ -1,18 +1,19 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import { setMessage } from "../../store/actions/cardActions";
+import { setMessage, setCardID } from "../../store/actions/cardActions";
 import { useNavigate } from "react-router-dom";
 import { sendMessage } from "../../api/message";
 import styled from "styled-components";
 function mapDispatchToProps(dispatch) {
   return {
     setMessage: (message) => dispatch(setMessage(message)),
+    setCardID: (id) => dispatch(setCardID(id)),
   };
 }
 
 export default connect(null, mapDispatchToProps)(Message);
 
-function Message({ setMessage }) {
+function Message({ setMessage, setCardID }) {
   const [text, setText] = useState("");
   const voices = [1, 2];
   // const [isVoiceVisible, setIsVoiceVisible] = useState(false);
@@ -44,7 +45,9 @@ function Message({ setMessage }) {
 
     sendMessage(
       params,
-      (response) => console.log(response),
+      ({ data }) => {
+        setCardID(data.card_id);
+      },
       (error) => console.log(error)
     );
 
