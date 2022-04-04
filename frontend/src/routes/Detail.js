@@ -1,3 +1,4 @@
+import { getCard } from "../api/message";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -18,31 +19,33 @@ import {
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 function Detail() {
-  // 클릭하면 페이지이동
-  const handleClick = () => {
-    window.location.href = "/"
-  }
-  // id마다 결과페이지(아직 json이 없음)
   const { card_id } = useParams();
-  const getResult = async () => {
-    const json = await (
-      await fetch(`https://localhost3000/card/${card_id}`)
-    ).then((response) => response.json());
-    console.log(json);
-  };
-  console.log(card_id);
-  useEffect(() => {
-    getResult();
-  }, []);
+
+  useEffect(() => { 
+    getCard(card_id, (response) => {
+      console.log(response);
+    },
+    (error) => {
+      console.log(error);
+    }
+    )
+    console.log(card_id);
+  }, [card_id]);
+
   return (
     <div>
 
       <LOC>
-        <ToMain onClick={handleClick}>처음으로</ToMain>
+        <Link to='/'>
+        <ToMain>처음으로</ToMain>
+        </Link>
       </LOC>
        
       <Center>
-        <h2>메세지결과</h2>
+        <h2>
+          메세지결과
+          {/* <video src={} /> */}
+        </h2>
       </Center>
 
       <Center>
