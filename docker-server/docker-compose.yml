@@ -26,7 +26,3 @@ services:
       - ./backend:/srv/docker-server
       - ./log:/var/log/uwsgi
 
-  tacotron2:
-    container_name: tacotron2
-    image: eunseo130/tacotron2
-    restart: always

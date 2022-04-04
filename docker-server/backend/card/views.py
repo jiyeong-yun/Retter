@@ -100,11 +100,7 @@ def card_detail(request, card_id):
         return Response(status=status.HTTP_201_CREATED)
 
     if request.method == 'GET':
-        file_path = card.video
-        fs = FileSystemStorage(file_path)
-        response = FileResponse(fs.open('', 'rb'), content_type="video/mp4")
-        response['Content-Disposition'] = f'attachment; filename={card.video[6:]}'
-        return response
+        return Response(card.video, status=status.HTTP_200_OK)
 
 
 # card_id 생성되는 코드
