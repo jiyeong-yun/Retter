@@ -44,6 +44,19 @@ function CardComponent(props) {
   const card = useRef();
   let target = useRef();
 
+  const checkSelector = useCallback((event) => {
+    if (!event.target.className.includes("element")) {
+      setSelector((selector) => ({ ...selector, display: "none" }));
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("click", checkSelector);
+    return () => {
+      document.removeEventListener("click", checkSelector);
+    };
+  }, [checkSelector]);
+
   const moveSelector = useCallback(() => {
     const padding = 50;
     const width = props.stickers[selIndex].width + padding;
@@ -153,10 +166,10 @@ function CardComponent(props) {
     };
   }, [isModify, onModify]);
 
-  const removeSticker = () => {
+  const removeSticker = useCallback(() => {
     props.removeSticker(selIndex);
-    setSelector({ ...selector, display: "none" });
-  };
+    setSelector((selector) => ({ ...selector, display: "none" }));
+  }, [props, selIndex]);
 
   return (
     <Card Card background={props.background} ref={card}>
@@ -198,6 +211,7 @@ const Card = styled.section.attrs((props) => ({
 `;
 
 const Sticker = styled.div.attrs((props) => ({
+  className: "element",
   style: {
     position: "absolute",
     top: `${props.sticker.y}px`,
@@ -213,6 +227,7 @@ const Sticker = styled.div.attrs((props) => ({
 `;
 
 const Selector = styled.div.attrs((props) => ({
+  className: "element",
   style: {
     position: "absolute",
     top: `${props.selector.y}px`,
