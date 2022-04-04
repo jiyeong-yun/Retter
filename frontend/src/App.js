@@ -21,7 +21,7 @@ function App() {
           <Route path="" element={<Message />} />
           <Route path="edit" element={<Card />} />
         </Route>
-        <Route path="/result/:id" element={<Detail />} />
+        <Route path="/card/:card_id" element={<Detail />} />
       </Routes>
     </Router>
   );

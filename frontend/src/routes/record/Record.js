@@ -1,11 +1,23 @@
-import MenuBar from "../../components/card/MenuBar";
+import styled from "styled-components";
 import Record from "../../components/record/Record";
 
 export default function CardPage() {
   return (
-    <div>
-      <MenuBar />
+    <CONTAINER1>
+      <TITLE>카드녹음하기</TITLE>
       <Record />
-    </div>
+    </CONTAINER1>
   );
 }
+
+const CONTAINER1 = styled.div`
+  width : 100vw;
+  height : 100vh;
+
+`;
+
+const TITLE = styled.h1`
+  text-align : center;
+  margin : 0;
+  padding : 2em;
+`;

@@ -1,7 +1,10 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import RecordTimer from "./RecordTimer";
-import { Link } from "react-router-dom";
-
+import RecordTimer0 from "./RecordTimer0";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import styled from "styled-components";
+// import { style } from "@mui/system";
 const AudioRecord = () => {
   const [stream, setStream] = useState();
   const [media, setMedia] = useState();
@@ -60,6 +63,7 @@ const AudioRecord = () => {
     // dataavailable 이벤트로 Blob 데이터에 대한 응답을 받을 수 있음
     media.ondataavailable = function (e) {
       setAudioUrl(e.data);
+      console.log(e.data);
       setOnRec(true);
     };
 
@@ -75,32 +79,91 @@ const AudioRecord = () => {
     source.disconnect();
   };
 
-  /*
-  const onSubmitAudioFile = useCallback(() => {
-    if (audioUrl) {
-      console.log(URL.createObjectURL(audioUrl)); // 출력된 링크에서 녹음된 오디오 확인 가능
-    }
-    // File 생성자를 사용해 파일로 변환
-    const sound = new File([audioUrl], "soundBlob", { lastModified: new Date().getTime(), type: "audio" });
-    console.log(sound); // File 정보 출력
-  }, [audioUrl]);
-  */
-
+  
+  // const onSubmitAudioFile = useCallback((e) => {
+  //   if (audioUrl) {
+  //     console.log(URL.createObjectURL(audioUrl)); // 출력된 링크에서 녹음된 오디오 확인 가능
+  //   }
+  //   // File 생성자를 사용해 파일로 변환
+  //   const sound = new File([audioUrl], "soundBlob", { lastModified: new Date().getTime(), type: "audio" });
+  //   console.log(sound); // File 정보 출력
+  // }, [audioUrl]);
+  
+  
+  // file 정보 서버로
+  const navigate = useNavigate();
   const handleClick = () => {
-  };
+    const form = new FormData();
+    const sound = new File([audioUrl], "audio.webm", { lastModified: new Date().getTime(), type: "audio/webm;codecs=opus" });
+    form.append("file_name", sound);
+    axios
+    .post(`http://127.0.0.1:8000/api/record/`, form, {
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+    .then((response) => {
+      console.log(response)
+      navigate("/card/edit");
+    })
+      .catch((error) => {
+        console.log(error)
+        alert("목소리를 녹음해주세요!")
+      });
+    };
+    
+    // //
+    // const handleChange = ({ target: { value } }) =>{
+    //   onSubmitAudioFile(value);
+    // }
+
+
+  // //
+  // function UploadForm(props) {
+  //   return(
+  //     <div>
+  //       <input type="file" name="docx" onChange={setFile.bind(this)} />
+  //       <input type="button" onClick={postFile} value="Upload" />
+  //     </div>
+  //   )
+  //   function postFile(event) {   
+  //     // HTTP POST  
+  //   }
+  //   function setFile(event) {
+  //     // Get the details of the files
+  //     console.log(event.target.files)
+  //   }
+  // }
+
 
   return (
-    <div className="voice">
-      {onRec === false ? <RecordTimer /> : null}
-      {audioUrl ? <audio src={URL.createObjectURL(audioUrl)} controls="controls" /> : null}
-      <br />
-      <button onClick={onRec ? onRecAudio : offRecAudio}>녹음</button>
-      {/* <button onClick={onSubmitAudioFile}>결과 확인</button> */}
-      <Link to="/card/edit">
-        <button onClick={handleClick}>다음</button>
-      </Link>
+    <div>
+      <RECORD>
+        {onRec === false ? <RecordTimer /> : <RecordTimer0 />}
+        {audioUrl ? <audio src={URL.createObjectURL(audioUrl)} controls="controls" /> : null}
+      </RECORD>
+      <div>
+        <BUTTONS1>
+          {onRec === false? <img src="/images/stop.png" alt="mic" onClick={onRec ? onRecAudio : offRecAudio}></img> :
+                            <img src="/images/mic.png" alt="recording" onClick={onRec ? onRecAudio : offRecAudio}></img>  }
+        </BUTTONS1>
+        <BUTTONS2>
+          <button onClick={handleClick}>다음</button>
+        </BUTTONS2>
+      </div>
     </div>
   );
 };
 
+const RECORD = styled.div`
+  margin: 3em;
+`;
+	
+const BUTTONS1 = styled.div`
+  justify-content:center;
+  display: flex;
+`
+	
+const BUTTONS2 = styled.div`
+  display: flex;
+  flex-direction : row-reverse;
+`
 export default AudioRecord;
