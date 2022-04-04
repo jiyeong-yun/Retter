@@ -7,7 +7,7 @@ import styled from "styled-components";
 function mapDispatchToProps(dispatch) {
   return {
     setMessage: (message) => dispatch(setMessage(message)),
-    setCardID: (id) => dispatch(setCardID(id)),
+    setCardID: (id, audio) => dispatch(setCardID(id, audio)),
   };
 }
 
@@ -46,7 +46,7 @@ function Message({ setMessage, setCardID }) {
     sendMessage(
       params,
       ({ data }) => {
-        setCardID(data.card_id);
+        setCardID(data.card_id, data.audio);
       },
       (error) => console.log(error)
     );
@@ -65,10 +65,8 @@ function Message({ setMessage, setCardID }) {
   };
 
   return (
-    <main style={{width:'100vw',height:'100vh'}}>
-      <TITLE>
-        메세지를 입력하세요.
-      </TITLE>
+    <main style={{ width: "100vw", height: "100vh" }}>
+      <TITLE>메세지를 입력하세요.</TITLE>
       <TEXTAREA_OUT>
         <TEXTAREA1
           value={text}
@@ -77,7 +75,7 @@ function Message({ setMessage, setCardID }) {
           placeholder="메세지를 입력해주세요!"
         ></TEXTAREA1>
       </TEXTAREA_OUT>
-      <ul style={{listStyle:"none"}}>
+      <ul style={{ listStyle: "none" }}>
         <li>
           Re:tter는 한글, 숫자만 지원해요. (메세지에 영어가 들어가면 자동으로
           삭제됩니다.)
@@ -119,16 +117,14 @@ function Message({ setMessage, setCardID }) {
   );
 }
 
-
-
 const TITLE = styled.h2`
-  text-align : center;
-  margin : 0;
-  padding : 2em;
+  text-align: center;
+  margin: 0;
+  padding: 2em;
 `;
 const TEXTAREA1 = styled.textarea`
-  width : 90%;
-  height : 9em;
+  width: 90%;
+  height: 9em;
   border: none;
   display: flex;
   justify-content: center;
@@ -137,19 +133,18 @@ const TEXTAREA1 = styled.textarea`
 const TEXTAREA_OUT = styled.div`
   display: flex;
   justify-content: center;
-  margin : 2em;
-  
-`
+  margin: 2em;
+`;
 
 const NONDOTUL = styled.ul`
   list-style: none;
   display: flex;
   justify-content: space-evenly;
   padding: 0;
-`
+`;
 
 const NAV = styled.div`
   display: flex;
-  flex-direction : row-reverse;
+  flex-direction: row-reverse;
   margin-right: 1em;
-`
+`;

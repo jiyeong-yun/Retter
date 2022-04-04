@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import RecordTimer from "./RecordTimer";
 import RecordTimer0 from "./RecordTimer0";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import styled from "styled-components";
-// import { style } from "@mui/system";
-const AudioRecord = () => {
+import { sendMyVoice } from "../../api/message";
+import { connect } from "react-redux";
+import { setCardID } from "../../store/actions/cardActions";
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setCardID: (id, audio) => dispatch(setCardID(id, audio)),
+  };
+}
+
+export default connect(null, mapDispatchToProps)(AudioRecord);
+
+function AudioRecord({ setCardID }) {
   const [stream, setStream] = useState();
   const [media, setMedia] = useState();
   const [onRec, setOnRec] = useState(true);
@@ -79,7 +89,6 @@ const AudioRecord = () => {
     source.disconnect();
   };
 
-  
   // const onSubmitAudioFile = useCallback((e) => {
   //   if (audioUrl) {
   //     console.log(URL.createObjectURL(audioUrl)); // 출력된 링크에서 녹음된 오디오 확인 가능
@@ -88,35 +97,34 @@ const AudioRecord = () => {
   //   const sound = new File([audioUrl], "soundBlob", { lastModified: new Date().getTime(), type: "audio" });
   //   console.log(sound); // File 정보 출력
   // }, [audioUrl]);
-  
-  
+
   // file 정보 서버로
   const navigate = useNavigate();
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     const form = new FormData();
-    const sound = new File([audioUrl], "audio.webm", { lastModified: new Date().getTime(), type: "audio/webm;codecs=opus" });
+    const sound = new File([audioUrl], "audio.webm", {
+      lastModified: new Date().getTime(),
+      type: "audio/webm;codecs=opus",
+    });
     form.append("file_name", sound);
-    axios
-    .post(`http://127.0.0.1:8000/api/record/`, form, {
-      headers: { "Content-Type": "multipart/form-data" },
-    })
-    .then((response) => {
-      console.log(response)
-      navigate("/card/edit");
-    })
-      .catch((error) => {
-        console.log(error)
-        alert("목소리를 녹음해주세요!")
-      });
-    };
-    
-    // //
-    // const handleChange = ({ target: { value } }) =>{
-    //   onSubmitAudioFile(value);
-    // }
 
+    sendMyVoice(
+      form,
+      ({ data }) => {
+        setCardID(data.card_id, data.myvoice);
+        navigate("/card/edit");
+      },
+      (error) => {
+        console.log(error);
+        alert("목소리를 녹음해주세요!");
+      }
+    );
+  }, [audioUrl, navigate, setCardID]);
 
-  // //
+  // const handleChange = ({ target: { value } }) =>{
+  //   onSubmitAudioFile(value);
+  // }
+
   // function UploadForm(props) {
   //   return(
   //     <div>
@@ -124,8 +132,8 @@ const AudioRecord = () => {
   //       <input type="button" onClick={postFile} value="Upload" />
   //     </div>
   //   )
-  //   function postFile(event) {   
-  //     // HTTP POST  
+  //   function postFile(event) {
+  //     // HTTP POST
   //   }
   //   function setFile(event) {
   //     // Get the details of the files
@@ -133,17 +141,29 @@ const AudioRecord = () => {
   //   }
   // }
 
-
   return (
     <div>
       <RECORD>
         {onRec === false ? <RecordTimer /> : <RecordTimer0 />}
-        {audioUrl ? <audio src={URL.createObjectURL(audioUrl)} controls="controls" /> : null}
+        {audioUrl ? (
+          <audio src={URL.createObjectURL(audioUrl)} controls="controls" />
+        ) : null}
       </RECORD>
       <div>
         <BUTTONS1>
-          {onRec === false? <img src="/images/stop.png" alt="mic" onClick={onRec ? onRecAudio : offRecAudio}></img> :
-                            <img src="/images/mic.png" alt="recording" onClick={onRec ? onRecAudio : offRecAudio}></img>  }
+          {onRec === false ? (
+            <img
+              src="/images/stop.png"
+              alt="mic"
+              onClick={onRec ? onRecAudio : offRecAudio}
+            ></img>
+          ) : (
+            <img
+              src="/images/mic.png"
+              alt="recording"
+              onClick={onRec ? onRecAudio : offRecAudio}
+            ></img>
+          )}
         </BUTTONS1>
         <BUTTONS2>
           <button onClick={handleClick}>다음</button>
@@ -151,19 +171,18 @@ const AudioRecord = () => {
       </div>
     </div>
   );
-};
+}
 
 const RECORD = styled.div`
   margin: 3em;
 `;
-	
+
 const BUTTONS1 = styled.div`
-  justify-content:center;
+  justify-content: center;
   display: flex;
-`
-	
+`;
+
 const BUTTONS2 = styled.div`
   display: flex;
-  flex-direction : row-reverse;
-`
-export default AudioRecord;
+  flex-direction: row-reverse;
+`;

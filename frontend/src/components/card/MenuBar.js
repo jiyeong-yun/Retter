@@ -13,17 +13,18 @@ import { BACKEND_URL } from "../../api/index";
 function mapStateToProps({ cardReducer }) {
   return {
     card_id: cardReducer.id,
+    audio: cardReducer.audio,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    setCardID: (id) => dispatch(setCardID(id)),
+    setCardID: (id, audio) => dispatch(setCardID(id, audio)),
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Menu);
 
-function Menu({ card_id, setCardID }) {
+function Menu({ card_id, audio, setCardID }) {
   const navigate = useNavigate();
   const audioRef = useRef();
   const [isPlaying, setIsPlaying] = useState(false);
@@ -125,7 +126,7 @@ function Menu({ card_id, setCardID }) {
       </ListWrapper>
       {card_id ? (
         <audio
-          src={`${BACKEND_URL}/media/${card_id}/${card_id}.wav`}
+          src={`${BACKEND_URL}/${audio}`}
           ref={audioRef}
           onPlay={() => setIsPlaying(true)}
           onPause={stopAudio}
@@ -142,7 +143,7 @@ const ListWrapper = styled.ul`
 
 const List = styled.li.attrs((props) => ({
   style: {
-    color: props.disabled ? "lightgray" : "black",
+    color: props.disabled ? "gray" : "black",
   },
 }))`
   list-style: none;
