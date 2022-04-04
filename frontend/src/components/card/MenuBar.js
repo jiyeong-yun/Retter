@@ -6,7 +6,7 @@ import html2canvas from "html2canvas";
 import { useCallback, useRef, useState } from "react";
 import { connect } from "react-redux";
 import { sendImageURL, deleteCard } from "../../api/message";
-import { setCardID } from "../../store/actions/cardActions";
+import { resetCard } from "../../store/actions/cardActions";
 import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../../api/index";
 
@@ -19,12 +19,12 @@ function mapStateToProps({ cardReducer }) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    setCardID: (id, audio) => dispatch(setCardID(id, audio)),
+    resetCard: () => dispatch(resetCard()),
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Menu);
 
-function Menu({ card_id, audio, setCardID }) {
+function Menu({ card_id, audio, resetCard }) {
   const navigate = useNavigate();
   const audioRef = useRef();
   const [isPlaying, setIsPlaying] = useState(false);
@@ -73,8 +73,8 @@ function Menu({ card_id, audio, setCardID }) {
         deleteCard(
           card_id,
           (response) => {
-            console.log(response);
-            setCardID("");
+            // console.log(response);
+            resetCard();
             navigate(`/`);
           },
           (error) => {
@@ -84,7 +84,7 @@ function Menu({ card_id, audio, setCardID }) {
         );
       }
     }
-  }, [card_id, setCardID, navigate]);
+  }, [card_id, resetCard, navigate]);
 
   const controlAudio = useCallback(() => {
     // 음성을 생성하지 않았을 경우 return

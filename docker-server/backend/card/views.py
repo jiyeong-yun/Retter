@@ -31,7 +31,7 @@ from django.http.request import QueryDict
 from background_task.models import Task
 from .task import card_delete
 
-import os
+import os, shutil
 from pydub import AudioSegment
 from pydub.utils import make_chunks
 from django.http import JsonResponse
