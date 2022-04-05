@@ -21,5 +21,6 @@ const TITLE = styled.h1`
   margin : 0;
   padding-top : 2em;
   font-size: 2rem;
-  font-family: Noto Sans KR;
+  font-family: 'Gowun Batang';
+  font-weight: bold;
 `;

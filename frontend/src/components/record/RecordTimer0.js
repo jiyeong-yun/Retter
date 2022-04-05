@@ -19,10 +19,12 @@ const timerProps = {
 
 const renderTime = () => {
   return (
-    <div className="time-wrapper">
-      <div className="time">녹음버튼을</div>
-      <div>눌러보세요</div>
-    </div>
+    <REC>
+      <div className="time-wrapper">
+        <div className="time">녹음버튼을</div>
+        <div>눌러보세요</div>
+      </div>
+    </REC>
    
   );
 };
@@ -64,6 +66,12 @@ const CIRCLE = styled.div`
 const MESSAGE = styled.p`
   display: flex;
   justify-content: center;
+  font-family: 'Gowun Batang';
+  font-weight: bold;
+`;
 
+const REC = styled.p`
+  font-family: 'Gowun Batang';
+  font-weight: bold;
 `;
 export default Record;

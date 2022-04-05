@@ -145,13 +145,17 @@ const TITLE2 = styled.h1`
   text-align : center;
   margin : 2em;
   font-size: 2em;
+  font-family: "Gowun Batang";
+  font-weight: bold;
 `;
 const TITLE = styled.h2`
   text-align : center;
+  font-family: 'Gowun Batang';
+  font-weight: bold;
 
 `;
 const TEXTAREA1 = styled.textarea`
-  width : 90%;
+  width : 70%;
   height : 10em;
   border: none;
   display: flex;
@@ -172,12 +176,14 @@ const NONDOTUL1 = styled.ul`
   display: flex;
   justify-content: space-around;
   margin: auto;
-`
-const NONDOTUL2 = styled.ul`
+  font-family: 'Gowun Batang';
+  font-weight: bold;
+  `
+  const NONDOTUL2 = styled.ul`
   list-style: none;
   display: flex;
   justify-content: space-around;
-  margin: auto;
+  margin: 0.3rem;
 `
 const NONDOTUL3 = styled.ul`
   list-style: none;
@@ -194,6 +200,8 @@ const NAV = styled.div`
 const TEXTUL = styled.ul`
   list-style: none;
   text-align : center;
+  font-family: 'Gowun Batang';
+  font-weight: bold;
 `
 const NEXTBUTTON = styled.button`
   box-sizing: border-box;
@@ -213,8 +221,8 @@ const NEXTBUTTON = styled.button`
   text-decoration: none;
   text-align: center;
   text-transform: uppercase;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
+  font-family: 'Gowun Batang';
+  font-weight: bold;
   background: #f1c40f;
   border-color: #f1c40f;
   color: #fff;
