@@ -9,20 +9,20 @@ import { useCookies } from "react-cookie";
 function Modal({ isOpen, onSubmit, onCancel, visible }){
   const content = [
     {
-      tab: "녹음",
-      content: "녹음하기"
+      tab: "내 목소리로 카드 만들기",
+      content: <img src='/images/logo.png'/>
     },
     {
-      tab: "텍스트",
-      content: "텍스트입력"
+      tab: "다른 목소리로 카드 만들기",
+      content: <img src='/images/letter2.png'/>
     },
     {
-      tab: "스티커",
-      content: "스티커꾸미기"
+      tab: "카드 꾸미기",
+      content: <img src='/images/phonesticker.png'/>
     },
     {
-      tab: "배경",
-      content: "배경색고르기"
+      tab: "결과 공유",
+      content: <img src='/images/people.png'/>
     },
   ];
 
