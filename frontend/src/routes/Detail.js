@@ -1,5 +1,5 @@
 import { getCard } from "../api/message";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -24,18 +24,19 @@ import KakaoShare from "../components/kakao";
 function Detail() {
   useEffect(() => setTitle("카드 보기💗"), []);
   const { card_id } = useParams();
+  const [video, setVideo] = useState();
 
   useEffect(() => {
     getCard(
       card_id,
-      (response) => {
-        console.log(response);
+      ({ data }) => {
+        console.log(data);
+        setVideo(data);
       },
       (error) => {
         console.log(error);
       }
     );
-    console.log(card_id);
   }, [card_id]);
 
   return (
@@ -47,15 +48,16 @@ function Detail() {
       </LOC>
 
       <Center>
-        <h2>
-          메세지결과
-          <video src={`media/${card_id}/${card_id}.mp4`} />
-        </h2>
+        {video ? (
+          <video controls src={`${BACKEND_URL}/${video}`}></video>
+        ) : null}
       </Center>
 
       <Center>
-        <Link to={`/media/${card_id}/card.png`} target="_blank" download>Download</Link>
-        <CopyToClipboard text={`http://localhost:3000/card/${card_id}`}>
+        <Link to={new URL(`${BACKEND_URL}/${video}`)} target="_blank" download>
+          Download
+        </Link>
+        <CopyToClipboard text={`https://localhost3000/card/${card_id}`}>
           <CopyButton>url복사</CopyButton>
         </CopyToClipboard>
       </Center>
@@ -64,19 +66,38 @@ function Detail() {
 
       <Center>
         <KakaoShare />
-        <FacebookShareButton style={{ marginRight: "20px" }} url={`http://localhost:3000/card/${card_id}`}>
+        <FacebookShareButton
+          style={{ marginRight: "20px" }}
+          url={`http://localhost:3000/card/${card_id}`}
+        >
           <FacebookIcon size={48} round={true} borderRadius={24}></FacebookIcon>
         </FacebookShareButton>
-        <FacebookMessengerShareButton style={{ marginRight: "20px" }} url={`http://localhost:3000/card/${card_id}`}>
-          <FacebookMessengerIcon size={48} round={true} borderRadius={24}></FacebookMessengerIcon>
+        <FacebookMessengerShareButton
+          style={{ marginRight: "20px" }}
+          url={`http://localhost:3000/card/${card_id}`}
+        >
+          <FacebookMessengerIcon
+            size={48}
+            round={true}
+            borderRadius={24}
+          ></FacebookMessengerIcon>
         </FacebookMessengerShareButton>
-        <TwitterShareButton style={{ marginRight: "20px" }} url={`http://localhost:3000/card/${card_id}`}>
+        <TwitterShareButton
+          style={{ marginRight: "20px" }}
+          url={`http://localhost:3000/card/${card_id}`}
+        >
           <TwitterIcon size={48} round={true} borderRadius={24}></TwitterIcon>
         </TwitterShareButton>
-        <LineShareButton style={{ marginRight: "20px" }} url={`http://localhost:3000/card/${card_id}`}>
+        <LineShareButton
+          style={{ marginRight: "20px" }}
+          url={`http://localhost:3000/card/${card_id}`}
+        >
           <LineIcon size={48} round={true} borderRadius={24}></LineIcon>
         </LineShareButton>
-        <EmailShareButton style={{ marginRight: "20px" }} url={`http://localhost:3000/card/${card_id}`}>
+        <EmailShareButton
+          style={{ marginRight: "20px" }}
+          url={`http://localhost:3000/card/${card_id}`}
+        >
           <EmailIcon size={48} round={true} borderRadius={24}></EmailIcon>
         </EmailShareButton>
       </Center>
