@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Record from "../../components/record/Record";
 
+
 export default function CardPage() {
   return (
     <CONTAINER1>
@@ -19,5 +20,7 @@ const CONTAINER1 = styled.div`
 const TITLE = styled.h1`
   text-align : center;
   margin : 0;
-  padding : 2em;
+  padding-top : 2em;
+  font-size: 2rem;
+  font-family: Noto Sans KR;
 `;

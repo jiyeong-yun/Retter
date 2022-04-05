@@ -137,8 +137,8 @@ const AudioRecord = () => {
   return (
     <div>
       <RECORD>
-        {onRec === false ? <RecordTimer /> : <RecordTimer0 />}
-        {audioUrl ? <audio src={URL.createObjectURL(audioUrl)} controls="controls" /> : null}
+        {onRec === false ? <RecordTimer /> : <RecordTimer0 audioUrl={audioUrl} />}
+        {/* {audioUrl ? <audio  src={URL.createObjectURL(audioUrl)} controls="controls" /> : null} */}
       </RECORD>
       <div>
         <BUTTONS1>
@@ -146,7 +146,7 @@ const AudioRecord = () => {
                             <img src="/images/mic.png" alt="recording" onClick={onRec ? onRecAudio : offRecAudio}></img>  }
         </BUTTONS1>
         <BUTTONS2>
-          <button onClick={handleClick}>다음</button>
+          <NEXTBUTTON onClick={handleClick}>다음</NEXTBUTTON>
         </BUTTONS2>
       </div>
     </div>
@@ -164,6 +164,46 @@ const BUTTONS1 = styled.div`
 	
 const BUTTONS2 = styled.div`
   display: flex;
-  flex-direction : row-reverse;
+  justify-content: center;
+  margin-top : 1em;
+`
+const NEXTBUTTON = styled.button`
+
+  box-sizing: border-box;
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid $red;
+  border-radius: 0.6em;
+  color: $red;
+  cursor: pointer;
+  display: flex;
+  align-self: center;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1;
+  margin: 20px;
+  padding: 1.2em 2.8em;
+  text-decoration: none;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  background: #f1c40f;
+  border-color: #f1c40f;
+  color: #fff;
+  background: {
+    image: linear-gradient(45deg,#f1c40f 50%, transparent 50%);
+    position: 100%;
+    size: 400%;
+  }
+  transition: background 300ms ease-in-out;
+
+  &:hover {
+    background-position: 0;
+  &:hover,
+  &:focus {
+    color: #fff;
+    outline: 0
+  }
 `
 export default AudioRecord;
