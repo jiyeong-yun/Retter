@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Record from "../../components/record/Record";
 
-
 export default function CardPage() {
   return (
     <CONTAINER1>

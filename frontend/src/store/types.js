@@ -15,6 +15,7 @@ const cardTypes = {
   SET_STICKER_SCALE: "SET_STICKER_SCALE",
 
   SET_CARD_ID: "SET_CARD_ID",
+  RESET_CARD: "RESET_CARD",
 };
 
 const types = {
