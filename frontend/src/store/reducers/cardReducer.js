@@ -117,12 +117,12 @@ const cardReducer = (state = initialState, action) => {
       };
     }
 
-    case types.REMOVE_BACKGROUND_IMAGE: {
+    case types.REMOVE_BACKGROUND: {
       return {
         ...state,
         menuVisible: { ...state.menuVisible },
         background: {
-          color: state.background.color,
+          color: "white",
           image: "",
         },
         stickers: state.stickers.map((sticker) => sticker),
