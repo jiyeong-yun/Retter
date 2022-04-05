@@ -6,6 +6,7 @@ import {
 } from "../../store/actions/cardActions";
 import Background from "./options/Background";
 import Sticker from "./options/Sticker";
+import styled from "styled-components";
 
 function mapStateToProps({ cardReducer }) {
   return {
@@ -46,12 +47,12 @@ function Options({
   };
   return (
     <section>
-      <nav>
-        <ul>
-          <li onClick={() => handleClick("sticker")}>스티커</li>
-          <li onClick={() => handleClick("background")}>배경</li>
-          <li onClick={() => handleClick("text")}>텍스트</li>
-        </ul>
+      <nav style={{width:'100vw'}}>
+        <Menu>
+          <Button onClick={() => handleClick("sticker")}>스티커</Button>
+          <Button onClick={() => handleClick("background")}>배경</Button>
+          <Button onClick={() => handleClick("text")}>텍스트</Button>
+        </Menu>
       </nav>
       {menuVisible.sticker ? <Sticker /> : null}
       {menuVisible.background ? <Background /> : null}
@@ -59,3 +60,22 @@ function Options({
     </section>
   );
 }
+
+const Menu = styled.div`
+  display:flex;
+  justify-content: space-evenly;
+`
+const Button = styled.button`
+  border: none;
+  width: 80px;
+  margin: 1rem;
+  height: 30px;
+  border-radius: 10px;
+  background-color: #e7e7e7;
+  box-shadow: 3px 3px #EDB949;
+  font-family:"Gowun Batang";
+  font-weight: bold;
+  font-size:10pt;
+  justify-content:right;
+  cursor: pointer;
+`

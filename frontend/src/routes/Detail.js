@@ -110,8 +110,7 @@ export default Detail;
 const ToMain = styled.button`
   border: none;
   width: 80px;
-  margin-top: 0.5rem;
-  margin-right: 0.5rem;
+  margin: 1rem;
   height: 30px;
   border-radius: 10px;
   background-color: #e7e7e7;
