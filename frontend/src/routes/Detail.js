@@ -57,6 +57,7 @@ function Detail() {
         {/* <Link to={new URL(`${BACKEND_URL}/${video}`)} target="_blank" download>
           Download
         </Link> */}
+        <KakaoShare />
         <CopyToClipboard text={`http://localhost:3000/card/${card_id}`}>
           <CopyButton>url복사</CopyButton>
         </CopyToClipboard>
@@ -65,7 +66,6 @@ function Detail() {
       <br />
 
       <Center>
-        <KakaoShare />
         <FacebookShareButton
           style={{ marginRight: "20px" }}
           url={`http://localhost:3000/card/${card_id}`}
