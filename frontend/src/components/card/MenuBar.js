@@ -104,26 +104,31 @@ function Menu({ card_id, audio, resetCard }) {
   }, []);
 
   return (
-    <nav>
+    <nav style={{width:'100vw'}}>
       <ListWrapper>
-        <List onClick={saveCard} disabled={card_id ? false : true}>
+        <Back onClick={goMain}>
+          <img
+            src="/images/back-arrow.png"
+            alt="back"
+            style={{width:'30px', height:'30px'}}
+          ></img>
+        </Back>
+        <Save onClick={saveCard} disabled={card_id ? false : true}>
           저장
-        </List>
-        <List onClick={controlAudio}>
-          {card_id ? (
-            isPlaying ? (
-              <PauseRoundedIcon />
-            ) : (
-              <PlayArrowRoundedIcon />
-            )
-          ) : (
-            <Spinner src={`/images/spinner.gif`} alt="loading..." />
-          )}
-        </List>
-        <List onClick={goMain}>
-          <ArrowBackIosRoundedIcon />
-        </List>
+        </Save>
       </ListWrapper>
+
+      <Spin onClick={controlAudio}>
+        {card_id ? (
+          isPlaying ? (
+            <PauseRoundedIcon />
+          ) : (
+            <PlayArrowRoundedIcon />
+          )
+        ) : (
+          <Spinner src={`/images/spinner.gif`} alt="loading..." />
+        )}
+      </Spin>
       {card_id ? (
         <audio
           src={`${BACKEND_URL}/${audio}`}
@@ -137,19 +142,43 @@ function Menu({ card_id, audio, resetCard }) {
   );
 }
 
-const ListWrapper = styled.ul`
-  display: inline-block;
+const ListWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
-const List = styled.li.attrs((props) => ({
-  style: {
-    color: props.disabled ? "gray" : "black",
-  },
-}))`
+const Back = styled.div`
   list-style: none;
   cursor: pointer;
+  margin-left: 1rem;
+  margin-top : 1rem;
+`;
+
+const Spin = styled.div`
+  justify-content: center;
+  display:flex;
 `;
 
 const Spinner = styled.img`
   width: 50px;
 `;
+
+const Save = styled.button.attrs((props) => ({
+  style: {
+    color: props.disabled ? "gray" : "black",
+  },
+}))`
+  border: none;
+  width: 80px;
+  margin-top: 1rem;
+  margin-right : 1rem;
+  height: 30px;
+  border-radius: 10px;
+  background-color: #e7e7e7;
+  box-shadow: 3px 3px #EDB949;
+  font-family:"Gowun Batang";
+  font-weight: bold;
+  font-size:10pt;
+  justify-content:right;
+  cursor: pointer;
+`

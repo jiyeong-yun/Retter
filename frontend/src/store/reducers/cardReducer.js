@@ -97,7 +97,7 @@ const cardReducer = (state = initialState, action) => {
         menuVisible: { ...state.menuVisible },
         background: {
           color: action.color,
-          image: state.background.image,
+          image: '',
         },
         stickers: state.stickers.map((sticker) => sticker),
         text: { ...state.text },
@@ -109,7 +109,7 @@ const cardReducer = (state = initialState, action) => {
         ...state,
         menuVisible: { ...state.menuVisible },
         background: {
-          color: state.background.color,
+          color: '',
           image: action.imageURL,
         },
         stickers: state.stickers.map((sticker) => sticker),

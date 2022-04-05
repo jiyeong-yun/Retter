@@ -57,7 +57,7 @@ function Detail() {
         {/* <Link to={new URL(`${BACKEND_URL}/${video}`)} target="_blank" download>
           Download
         </Link> */}
-        <CopyToClipboard text={`https://localhost3000/card/${card_id}`}>
+        <CopyToClipboard text={`http://localhost:3000/card/${card_id}`}>
           <CopyButton>url복사</CopyButton>
         </CopyToClipboard>
       </Center>
@@ -110,8 +110,7 @@ export default Detail;
 const ToMain = styled.button`
   border: none;
   width: 80px;
-  margin-top: 0.5rem;
-  margin-right: 0.5rem;
+  margin: 1rem;
   height: 30px;
   border-radius: 10px;
   background-color: #e7e7e7;

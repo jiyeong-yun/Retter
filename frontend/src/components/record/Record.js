@@ -104,26 +104,32 @@ function AudioRecord({ setCardID, resetCard }) {
   // file 정보 서버로
   const navigate = useNavigate();
   const handleClick = useCallback(() => {
-    const form = new FormData();
-    const sound = new File([audioUrl], "audio.webm", {
-      lastModified: new Date().getTime(),
-      type: "audio/webm;codecs=opus",
-    });
-    form.append("file_name", sound);
+    if (audioUrl===undefined) {
+      alert("목소리를 녹음해주세요")
+    }
+    else{
+      const form = new FormData();
+      const sound = new File([audioUrl], "audio.webm", {
+        lastModified: new Date().getTime(),
+        type: "audio/webm;codecs=opus",
+      });
+      form.append("file_name", sound);
+    
+      sendMyVoice(
+        form,
+        ({ data }) => {
+          // 카드 정보가 남아있을 경우 reset
+          resetCard();
+          setCardID(data.card_id, data.myvoice);
+          navigate("/card/edit");
+        },
+        (error) => {
+          console.log(error);
+          alert("목소리를 녹음해주세요!");
+        }
+      );
+    }
 
-    sendMyVoice(
-      form,
-      ({ data }) => {
-        // 카드 정보가 남아있을 경우 reset
-        resetCard();
-        setCardID(data.card_id, data.myvoice);
-        navigate("/card/edit");
-      },
-      (error) => {
-        console.log(error);
-        alert("목소리를 녹음해주세요!");
-      }
-    );
   }, [audioUrl, navigate, setCardID, resetCard]);
 
   // //
