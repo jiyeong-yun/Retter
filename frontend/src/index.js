@@ -21,6 +21,8 @@ const enhancer =
 
 const store = createStore(rootReducer, enhancer);
 
+window.Kakao.init('e9b5d682646c615337e753a1db926ae9');
+
 ReactDOM.render(
   <React.StrictMode>
     <GlobalStyle />

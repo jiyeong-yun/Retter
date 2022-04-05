@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { BACKEND_URL } from "../api/index";
 
 import {
   FacebookShareButton,
@@ -17,8 +18,9 @@ import {
   EmailIcon,
 } from "react-share";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import KakaoShare from "../components/kakao";
 
-function Detail() {
+function Detail({ video }) {
   const { card_id } = useParams();
 
   useEffect(() => { 
@@ -44,13 +46,13 @@ function Detail() {
       <Center>
         <h2>
           메세지결과
-          {/* <video src={} /> */}
+          <video src={`media/${card_id}/${card_id}.mp4`} />
         </h2>
       </Center>
 
       <Center>
-        <Link to="/logo512.png" target="_blank" download>Download</Link>
-        <CopyToClipboard text={`https://localhost3000/card/${card_id}`}>
+        <Link to={`/media/${card_id}/card.png`} target="_blank" download>Download</Link>
+        <CopyToClipboard text={`http://localhost:3000/card/${card_id}`}>
           <CopyButton>url복사</CopyButton>
         </CopyToClipboard>
       </Center>
@@ -58,19 +60,20 @@ function Detail() {
       <br />
 
       <Center>
-        <FacebookShareButton style={{ marginRight: "20px" }} url={`https://localhost3000/card/${card_id}`}>
+        <KakaoShare />
+        <FacebookShareButton style={{ marginRight: "20px" }} url={`http://localhost:3000/card/${card_id}`}>
           <FacebookIcon size={48} round={true} borderRadius={24}></FacebookIcon>
         </FacebookShareButton>
-        <FacebookMessengerShareButton style={{ marginRight: "20px" }} url={`https://localhost3000/card/${card_id}`}>
+        <FacebookMessengerShareButton style={{ marginRight: "20px" }} url={`http://localhost:3000/card/${card_id}`}>
           <FacebookMessengerIcon size={48} round={true} borderRadius={24}></FacebookMessengerIcon>
         </FacebookMessengerShareButton>
-        <TwitterShareButton style={{ marginRight: "20px" }} url={`https://localhost3000/card/${card_id}`}>
+        <TwitterShareButton style={{ marginRight: "20px" }} url={`http://localhost:3000/card/${card_id}`}>
           <TwitterIcon size={48} round={true} borderRadius={24}></TwitterIcon>
         </TwitterShareButton>
-        <LineShareButton style={{ marginRight: "20px" }} url={`https://localhost3000/card/${card_id}`}>
+        <LineShareButton style={{ marginRight: "20px" }} url={`http://localhost:3000/card/${card_id}`}>
           <LineIcon size={48} round={true} borderRadius={24}></LineIcon>
         </LineShareButton>
-        <EmailShareButton style={{ marginRight: "20px" }} url={`https://localhost3000/card/${card_id}`}>
+        <EmailShareButton style={{ marginRight: "20px" }} url={`http://localhost:3000/card/${card_id}`}>
           <EmailIcon size={48} round={true} borderRadius={24}></EmailIcon>
         </EmailShareButton>
 
