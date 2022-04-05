@@ -221,8 +221,8 @@ const NEXTBUTTON = styled.button`
   text-decoration: none;
   text-align: center;
   text-transform: uppercase;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
+  font-family: 'Gowun Batang';
+  font-weight: bold;
   background: #f1c40f;
   border-color: #f1c40f;
   color: #fff;
