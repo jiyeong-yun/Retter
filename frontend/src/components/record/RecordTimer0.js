@@ -1,7 +1,15 @@
 import React from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import styled from "styled-components";
+
 const minuteSeconds = 0;
+
+const playaudio = () => {
+  document.getElementById("player").play(); 
+}
+  
+
+
 
 const timerProps = {
   isPlaying: true,
@@ -15,14 +23,16 @@ const renderTime = () => {
       <div className="time">녹음버튼을</div>
       <div>눌러보세요</div>
     </div>
+   
   );
 };
 
 const getTimeSeconds = (time) => (minuteSeconds - time) | 0;
 
-function Record() {
+function Record({audioUrl}) {
   return (
     <div>
+      {audioUrl ? <audio id="player" style={{width:'50px',height:'50px'}} src={URL.createObjectURL(audioUrl)}/> : null}
       <CIRCLE>
         <CountdownCircleTimer
           {...timerProps}
@@ -31,9 +41,9 @@ function Record() {
           colors={['#218380', '#F7B801', '#A30000', '#A30000']}
           colorsTime={[7, 5, 2, 0]}
         >
-          {({ elapsedTime, color }) => (
-            <span style={{ color }}>
-              {renderTime("seconds", getTimeSeconds(elapsedTime))}
+          {(color) => (
+            <span >
+              {audioUrl ? <img  src="/images/playbutton.png" onClick={playaudio} alt="playbutton"/> : renderTime()}
             </span>
           )}
         </CountdownCircleTimer>

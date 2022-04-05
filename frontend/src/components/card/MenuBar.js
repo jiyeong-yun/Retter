@@ -9,7 +9,6 @@ import { sendImageURL, deleteCard } from "../../api/message";
 import { resetCard } from "../../store/actions/cardActions";
 import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../../api/index";
-import { height } from "@mui/system";
 
 function mapStateToProps({ cardReducer }) {
   return {
