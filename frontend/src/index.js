@@ -11,6 +11,7 @@ import { applyMiddleware, compose, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "./store/reducers";
 import { CookiesProvider } from "react-cookie";
+import GlobalStyle from "./GlobalStyle";
 
 // 배포 레벨에서는 Redux Logger를 사용하지 않음
 const enhancer =
@@ -20,12 +21,15 @@ const enhancer =
 
 const store = createStore(rootReducer, enhancer);
 
+window.Kakao.init('e9b5d682646c615337e753a1db926ae9');
+
 ReactDOM.render(
   <React.StrictMode>
+    <GlobalStyle />
     <CookiesProvider>
-    <Provider store={store}>
-      <App />
-    </Provider>
+      <Provider store={store}>
+        <App />
+      </Provider>
     </CookiesProvider>
   </React.StrictMode>,
   document.getElementById("root")

@@ -1,22 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { setMessage } from "../../store/actions/cardActions";
+import {
+  setMessage,
+  setCardID,
+  resetCard,
+} from "../../store/actions/cardActions";
+
 import { useNavigate } from "react-router-dom";
 import { sendMessage } from "../../api/message";
-
+import styled from "styled-components";
+import { setTitle } from "../../components/Title";
 function mapDispatchToProps(dispatch) {
   return {
     setMessage: (message) => dispatch(setMessage(message)),
+    setCardID: (id, audio) => dispatch(setCardID(id, audio)),
+    resetCard: () => dispatch(resetCard()),
   };
 }
 
 export default connect(null, mapDispatchToProps)(Message);
 
-function Message({ setMessage }) {
+const playSample = (voice) => {
+  document.getElementById(`sampleaudio${voice}`).play();
+}
+function Message({ setMessage, setCardID, resetCard }) {
+  useEffect(() => setTitle("메세지 작성"), []);
   const [text, setText] = useState("");
-  const voices = [1, 2, 3, 4, 5, 6];
-  const [isVoiceVisible, setIsVoiceVisible] = useState(false);
+  const voices = [1, 2];
+  // const [isVoiceVisible, setIsVoiceVisible] = useState(false);
   const [voice, setVoice] = useState(1);
+  
   const navigate = useNavigate();
   const handleChange = ({ target: { value } }) => {
     setText(value);
@@ -44,7 +57,11 @@ function Message({ setMessage }) {
 
     sendMessage(
       params,
-      (response) => console.log(response),
+      ({ data }) => {
+        resetCard();
+        setCardID(data.card_id, data.audio);
+
+      },
       (error) => console.log(error)
     );
 
@@ -62,26 +79,28 @@ function Message({ setMessage }) {
   };
 
   return (
-    <main>
-      메세지 입력
-      <textarea
-        value={text}
-        maxLength="100"
-        onChange={handleChange}
-        placeholder="메세지를 입력해주세요!"
-      ></textarea>
-      <ul>
-        <li>
-          Re:tter는 한글, 숫자만 지원해요. (메세지에 영어가 들어가면 자동으로
-          삭제됩니다.)
-        </li>
+    <main style={{width:'100vw',height:'100vh'}}>
+      <audio id="sampleaudio1" src="/audios/sample1.wav"></audio>
+      <audio id="sampleaudio2" src="/audios/sample2.wav"></audio>
+      <TITLE2>
+        음성메세지 만들기
+      </TITLE2>
+      <TITLE>
+        ※Re:tter는 한글, 숫자만 지원해요
+      </TITLE>
+      <TEXTAREA_OUT>
+        <TEXTAREA1
+          value={text}
+          maxLength="100"
+          onChange={handleChange}
+          placeholder="목소리를 입힐 메세지를 입력해주세요!"
+        ></TEXTAREA1>
+      </TEXTAREA_OUT>
+      <TEXTUL>
         <li>{voice}번째 음성 선택 중</li>
-      </ul>
-      <nav>
-        <button onClick={() => setIsVoiceVisible(true)}>음성 선택</button>
-        <button onClick={checkMessage}>카드 만들기</button>
-      </nav>
-      {isVoiceVisible ? (
+      </TEXTUL>
+
+      {/* {isVoiceVisible ? (
         <section>
           <ul>
             {voices.map((voice) => (
@@ -92,7 +111,125 @@ function Message({ setMessage }) {
           </ul>
           <button onClick={() => setIsVoiceVisible(false)}>닫기</button>
         </section>
-      ) : null}
+      ) : null} */}
+      <NONDOTUL1>
+        {voices.map((voice) => (
+          <li key={voice} onClick={() => setVoice(voice)}>
+            음성 {voice}
+          </li>
+        ))}
+      </NONDOTUL1>
+      <NONDOTUL2>
+        {voices.map((voice) => (
+          <li key={voice} onClick={() => setVoice(voice)}>
+            <img src={`/images/model${voice}.png`} alt="model"></img>
+          </li>
+        ))}
+      </NONDOTUL2>
+      <NONDOTUL3>
+        {voices.map((voice) => (
+          <li key={voice} onClick={() => playSample(voice)}>
+            <img src="/images/sampleplay.png" alt="sampleplay"></img>
+          </li>
+        ))}
+      </NONDOTUL3>
+      <NAV>
+        <NEXTBUTTON onClick={checkMessage}>카드 만들기</NEXTBUTTON>
+      </NAV>
     </main>
   );
 }
+
+
+const TITLE2 = styled.h1`
+  text-align : center;
+  margin : 2em;
+  font-size: 2em;
+`;
+const TITLE = styled.h2`
+  text-align : center;
+
+`;
+const TEXTAREA1 = styled.textarea`
+  width : 90%;
+  height : 10em;
+  border: none;
+  display: flex;
+  justify-content: center;
+  outline:none ;
+  cursor: pointer;
+`;
+
+const TEXTAREA_OUT = styled.div`
+  display: flex;
+  justify-content: center;
+  margin : 1em 2em 2em;
+  
+`
+
+const NONDOTUL1 = styled.ul`
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  margin: auto;
+`
+const NONDOTUL2 = styled.ul`
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  margin: auto;
+`
+const NONDOTUL3 = styled.ul`
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  margin: auto;
+`
+
+const NAV = styled.div`
+  display: flex;
+  justify-content: center;
+
+`
+const TEXTUL = styled.ul`
+  list-style: none;
+  text-align : center;
+`
+const NEXTBUTTON = styled.button`
+  box-sizing: border-box;
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid $red;
+  border-radius: 0.6em;
+  color: $red;
+  cursor: pointer;
+  display: flex;
+  align-self: center;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1;
+  margin: 20px;
+  padding: 1.2em 2.8em;
+  text-decoration: none;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  background: #f1c40f;
+  border-color: #f1c40f;
+  color: #fff;
+  background: {
+    image: linear-gradient(45deg,#f1c40f 50%, transparent 50%);
+    position: 100%;
+    size: 400%;
+  }
+  transition: background 300ms ease-in-out;
+
+  &:hover {
+    background-position: 0;
+  &:hover,
+  &:focus {
+    color: #fff;
+    outline: 0
+  }
+`

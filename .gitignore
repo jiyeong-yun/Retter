@@ -291,3 +291,7 @@ $RECYCLE.BIN/
 
 # backend
 __pycache__/
+
+# AI Model
+docker-server/backend/model/tacotron2/output/1
+docker-server/backend/model/waveglow/checkpoints/1

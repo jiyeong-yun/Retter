@@ -31,9 +31,10 @@ from django.http.request import QueryDict
 from background_task.models import Task
 from .task import card_delete
 
-import os
-import shutil
-
+import os, shutil
+from pydub import AudioSegment
+from pydub.utils import make_chunks
+from django.http import JsonResponse
 
 # Create your views here.
 @api_view(['GET', 'POST', 'DELETE'])
@@ -60,24 +61,46 @@ def card_detail(request, card_id):
         if card.audio != None:
             audio_clip = AudioFileClip(str(BASE_DIR) + '\\' + card.audio)
         elif card.myvoice != None:
-            audio_clip = AudioFileClip(MEDIA_ROOT + '\\' + card.myvoice.name)
+            if serializer.data['myvoice'].endswith('webm'):
+                print(serializer.data['myvoice'] + "여기가 맞나요!!!!") #/Users/mac/Downloads/speech_command/right/sample-1.wav
+                file_path = str(BASE_DIR) + serializer.data['myvoice']
+                #file_path = os.path.join('C:', os.sep,'Users', 'SSAFY', 'Desktop', 'webm파일 코드', 'S06P22C202', 'docker-server', 'backend', 'media', '0c251b7eb05c44b19ed4a348b5aef337', 'audio.webm')
+                #file_path = os.path.join('..', 'media', 'fc901a9fc1cf4b46847f44a6fdcc8f64', 'audio.webm')
+                if (os.path.isfile(file_path)) :
+                    print("정상입니다")
+                
+                print("파일경로 " + file_path)
+                '''
+                audioSegment = AudioSegment.from_file(file_path, 'webm')
+                new_file_path = file_path.replace('webm', 'wav')
+                audioSegment.export(new_file_path, format='wav')
+                print(new_file_path)
+                '''
+                #'''
+                audioSegment = AudioSegment.from_file(file_path, 'webm')
+                chunk_length_ms = 20000 #1밀리 초
+                chunks = make_chunks(audioSegment, chunk_length_ms)
+                for i, chunk in enumerate(chunks):
+                    if len(chunk) < 1000:
+                        continue
+                    new_file_path = file_path.replace('.webm', '-{0}.wav').format(i + 1)
+                    chunk.export(new_file_path, format='wav')
+                    print(new_file_path) #/Users/mac/Downloads/speech_command/right/sample-1-1.wav
+                #'''
+                audio_clip = AudioFileClip(new_file_path)
 
         image_clip = ImageClip(MEDIA_ROOT + '\\' + card.image.name)
         
         video_clip = image_clip.set_audio(audio_clip)
         video_clip.duration = audio_clip.duration
-        video_clip.write_videofile(MEDIA_ROOT + '\\' + str(card.card_id).replace('-', '') + '\\' + card_id + ".mp4",  codec='mpeg4', audio_codec="aac", fps=24)
+        video_clip.write_videofile(MEDIA_ROOT + '\\' + str(card.card_id).replace('-', '') + '\\' + card_id + ".mp4", codec="libx264", audio_codec="aac", fps=24)
 
         # response = HttpResponse(video, content_type="video/mp4")
         # response['Content-Disposition'] = 'attachment; filename=' + card_id + '.mp4'
         return Response(status=status.HTTP_201_CREATED)
 
     if request.method == 'GET':
-        file_path = card.video
-        fs = FileSystemStorage(file_path)
-        response = FileResponse(fs.open('', 'rb'), content_type="video/mp4")
-        response['Content-Disposition'] = f'attachment; filename={card.video[6:]}'
-        return response
+        return Response(card.video, status=status.HTTP_200_OK)
 
 
 # card_id 생성되는 코드
@@ -145,7 +168,13 @@ def record(request, *args, **kwargs):
         if audio_serializer.is_valid(raise_exception=True):
             audio_serializer.save()
 
-            return Response(status = status.HTTP_201_CREATED)
+            new_path = audio_serializer.data['myvoice'][1:]
+            print("나와라" + new_path)
+
+            audio_serializer.data['myvoice'] = new_path
+
+            return JsonResponse({"card_id": audio_serializer.data['card_id'], "myvoice" : new_path}, status = status.HTTP_201_CREATED)
+            #return Response(audio_serializer.data, status = status.HTTP_201_CREATED)
         else:
             return Response(audio_serializer.errors, status = status.HTTP_400_BAD_REQUEST)  
 
