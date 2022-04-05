@@ -1,14 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { setMessage, setCardID } from "../../store/actions/cardActions";
+import {
+  setMessage,
+  setCardID,
+  resetCard,
+} from "../../store/actions/cardActions";
+
 import { useNavigate } from "react-router-dom";
 import { sendMessage } from "../../api/message";
 import styled from "styled-components";
-import { NoEncryption } from "@mui/icons-material";
+import { setTitle } from "../../components/Title";
 function mapDispatchToProps(dispatch) {
   return {
     setMessage: (message) => dispatch(setMessage(message)),
-    setCardID: (id) => dispatch(setCardID(id)),
+    setCardID: (id, audio) => dispatch(setCardID(id, audio)),
+    resetCard: () => dispatch(resetCard()),
   };
 }
 
@@ -17,7 +23,8 @@ export default connect(null, mapDispatchToProps)(Message);
 const playSample = (voice) => {
   document.getElementById(`sampleaudio${voice}`).play();
 }
-function Message({ setMessage, setCardID }) {
+function Message({ setMessage, setCardID, resetCard }) {
+  useEffect(() => setTitle("메세지 작성"), []);
   const [text, setText] = useState("");
   const voices = [1, 2];
   // const [isVoiceVisible, setIsVoiceVisible] = useState(false);
@@ -51,7 +58,9 @@ function Message({ setMessage, setCardID }) {
     sendMessage(
       params,
       ({ data }) => {
-        setCardID(data.card_id);
+        resetCard();
+        setCardID(data.card_id, data.audio);
+
       },
       (error) => console.log(error)
     );
