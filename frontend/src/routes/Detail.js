@@ -57,7 +57,7 @@ function Detail() {
         {/* <Link to={new URL(`${BACKEND_URL}/${video}`)} target="_blank" download>
           Download
         </Link> */}
-        <CopyToClipboard text={`https://localhost3000/card/${card_id}`}>
+        <CopyToClipboard text={`http://localhost:3000/card/${card_id}`}>
           <CopyButton>url복사</CopyButton>
         </CopyToClipboard>
       </Center>
