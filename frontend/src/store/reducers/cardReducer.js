@@ -2,6 +2,7 @@ import types from "../types";
 
 const initialState = {
   id: "",
+  audio: "",
   menuVisible: {
     sticker: false,
     background: false,
@@ -96,7 +97,7 @@ const cardReducer = (state = initialState, action) => {
         menuVisible: { ...state.menuVisible },
         background: {
           color: action.color,
-          image: state.background.image,
+          image: '',
         },
         stickers: state.stickers.map((sticker) => sticker),
         text: { ...state.text },
@@ -108,7 +109,7 @@ const cardReducer = (state = initialState, action) => {
         ...state,
         menuVisible: { ...state.menuVisible },
         background: {
-          color: state.background.color,
+          color: '',
           image: action.imageURL,
         },
         stickers: state.stickers.map((sticker) => sticker),
@@ -191,6 +192,29 @@ const cardReducer = (state = initialState, action) => {
         stickers: state.stickers.map((sticker) => sticker),
         text: { ...state.text },
         id: action.id.replace(/-/g, ""),
+        audio: action.audio,
+      };
+    }
+
+    case types.RESET_CARD: {
+      return {
+        id: "",
+        menuVisible: {
+          sticker: false,
+          background: false,
+          text: false,
+        },
+        background: {
+          color: "transparent",
+          image: "",
+        },
+        stickers: [],
+        text: {
+          message: "",
+          isVisible: true,
+          x: 50,
+          y: 50,
+        },
       };
     }
     default:

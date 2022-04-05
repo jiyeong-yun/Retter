@@ -31,10 +31,10 @@ from django.http.request import QueryDict
 from background_task.models import Task
 from .task import card_delete
 
-import os
+import os, shutil
 from pydub import AudioSegment
 from pydub.utils import make_chunks
-
+from django.http import JsonResponse
 
 # Create your views here.
 @api_view(['GET', 'POST', 'DELETE'])
@@ -54,7 +54,7 @@ def card_detail(request, card_id):
         # if os.path.isdir(MEDIA_ROOT + "\\" + str(card.card_id).replace('-', '')) == False:
         #     os.mkdir(MEDIA_ROOT + "\\" + str(card.card_id).replace('-', ''))
         serializer = CardSerializer(card, data=request.data)
-        serializer.image = request.FILES['image']
+        serializer.image = request.FILES.get('image')
         # serializer.myvoice = request.FILES['myvoice']
         if serializer.is_valid(raise_exception=True):
             serializer.save(video = 'media/' + str(card.card_id).replace('-', '') + '/' + card_id + '.mp4')
@@ -93,7 +93,7 @@ def card_detail(request, card_id):
         
         video_clip = image_clip.set_audio(audio_clip)
         video_clip.duration = audio_clip.duration
-        video_clip.write_videofile(MEDIA_ROOT + '\\' + str(card.card_id).replace('-', '') + '\\' + card_id + ".mp4",  codec='mpeg4', audio_codec="aac", fps=24)
+        video_clip.write_videofile(MEDIA_ROOT + '\\' + str(card.card_id).replace('-', '') + '\\' + card_id + ".mp4", codec="libx264", audio_codec="aac", fps=24)
 
         # response = HttpResponse(video, content_type="video/mp4")
         # response['Content-Disposition'] = 'attachment; filename=' + card_id + '.mp4'
@@ -168,7 +168,13 @@ def record(request, *args, **kwargs):
         if audio_serializer.is_valid(raise_exception=True):
             audio_serializer.save()
 
-            return Response(audio_serializer.data, status = status.HTTP_201_CREATED)
+            new_path = audio_serializer.data['myvoice'][1:]
+            print("나와라" + new_path)
+
+            audio_serializer.data['myvoice'] = new_path
+
+            return JsonResponse({"card_id": audio_serializer.data['card_id'], "myvoice" : new_path}, status = status.HTTP_201_CREATED)
+            #return Response(audio_serializer.data, status = status.HTTP_201_CREATED)
         else:
             return Response(audio_serializer.errors, status = status.HTTP_400_BAD_REQUEST)  
 

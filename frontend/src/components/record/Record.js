@@ -1,11 +1,24 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import RecordTimer from "./RecordTimer";
 import RecordTimer0 from "./RecordTimer0";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import styled from "styled-components";
-// import { style } from "@mui/system";
-const AudioRecord = () => {
+import { sendMyVoice } from "../../api/message";
+import { connect } from "react-redux";
+import { setCardID, resetCard } from "../../store/actions/cardActions";
+import { setTitle } from "../Title";
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setCardID: (id, audio) => dispatch(setCardID(id, audio)),
+    resetCard: () => dispatch(resetCard()),
+  };
+}
+
+export default connect(null, mapDispatchToProps)(AudioRecord);
+
+function AudioRecord({ setCardID, resetCard }) {
+  useEffect(() => setTitle("목소리 녹음"), []);
   const [stream, setStream] = useState();
   const [media, setMedia] = useState();
   const [onRec, setOnRec] = useState(true);
@@ -79,7 +92,6 @@ const AudioRecord = () => {
     source.disconnect();
   };
 
-  
   // const onSubmitAudioFile = useCallback((e) => {
   //   if (audioUrl) {
   //     console.log(URL.createObjectURL(audioUrl)); // 출력된 링크에서 녹음된 오디오 확인 가능
@@ -88,33 +100,42 @@ const AudioRecord = () => {
   //   const sound = new File([audioUrl], "soundBlob", { lastModified: new Date().getTime(), type: "audio" });
   //   console.log(sound); // File 정보 출력
   // }, [audioUrl]);
-  
-  
+
   // file 정보 서버로
   const navigate = useNavigate();
-  const handleClick = () => {
-    const form = new FormData();
-    const sound = new File([audioUrl], "audio.webm", { lastModified: new Date().getTime(), type: "audio/webm;codecs=opus" });
-    form.append("file_name", sound);
-    axios
-    .post(`http://127.0.0.1:8000/api/record/`, form, {
-      headers: { "Content-Type": "multipart/form-data" },
-    })
-    .then((response) => {
-      console.log(response)
-      navigate("/card/edit");
-    })
-      .catch((error) => {
-        console.log(error)
-        alert("목소리를 녹음해주세요!")
+  const handleClick = useCallback(() => {
+    if (audioUrl===undefined) {
+      alert("목소리를 녹음해주세요")
+    }
+    else{
+      const form = new FormData();
+      const sound = new File([audioUrl], "audio.webm", {
+        lastModified: new Date().getTime(),
+        type: "audio/webm;codecs=opus",
       });
-    };
+      form.append("file_name", sound);
     
-    // //
-    // const handleChange = ({ target: { value } }) =>{
-    //   onSubmitAudioFile(value);
-    // }
+      sendMyVoice(
+        form,
+        ({ data }) => {
+          // 카드 정보가 남아있을 경우 reset
+          resetCard();
+          setCardID(data.card_id, data.myvoice);
+          navigate("/card/edit");
+        },
+        (error) => {
+          console.log(error);
+          alert("목소리를 녹음해주세요!");
+        }
+      );
+    }
 
+  }, [audioUrl, navigate, setCardID, resetCard]);
+
+  // //
+  // const handleChange = ({ target: { value } }) =>{
+  //   onSubmitAudioFile(value);
+  // }
 
   // //
   // function UploadForm(props) {
@@ -124,8 +145,8 @@ const AudioRecord = () => {
   //       <input type="button" onClick={postFile} value="Upload" />
   //     </div>
   //   )
-  //   function postFile(event) {   
-  //     // HTTP POST  
+  //   function postFile(event) {
+  //     // HTTP POST
   //   }
   //   function setFile(event) {
   //     // Get the details of the files
@@ -133,37 +154,90 @@ const AudioRecord = () => {
   //   }
   // }
 
-
   return (
     <div>
       <RECORD>
-        {onRec === false ? <RecordTimer /> : <RecordTimer0 />}
-        {audioUrl ? <audio src={URL.createObjectURL(audioUrl)} controls="controls" /> : null}
+        {onRec === false ? (
+          <RecordTimer />
+        ) : (
+          <RecordTimer0 audioUrl={audioUrl} />
+        )}
+        {/* {audioUrl ? <audio  src={URL.createObjectURL(audioUrl)} controls="controls" /> : null} */}
       </RECORD>
       <div>
         <BUTTONS1>
-          {onRec === false? <img src="/images/stop.png" alt="mic" onClick={onRec ? onRecAudio : offRecAudio}></img> :
-                            <img src="/images/mic.png" alt="recording" onClick={onRec ? onRecAudio : offRecAudio}></img>  }
+          {onRec === false ? (
+            <img
+              src="/images/stop.png"
+              alt="mic"
+              onClick={onRec ? onRecAudio : offRecAudio}
+            ></img>
+          ) : (
+            <img
+              src="/images/mic.png"
+              alt="recording"
+              onClick={onRec ? onRecAudio : offRecAudio}
+            ></img>
+          )}
         </BUTTONS1>
         <BUTTONS2>
-          <button onClick={handleClick}>다음</button>
+          <NEXTBUTTON onClick={handleClick}>다음</NEXTBUTTON>
         </BUTTONS2>
       </div>
     </div>
   );
-};
+}
 
 const RECORD = styled.div`
   margin: 3em;
 `;
-	
+
 const BUTTONS1 = styled.div`
-  justify-content:center;
+  justify-content: center;
   display: flex;
-`
-	
+`;
+
 const BUTTONS2 = styled.div`
   display: flex;
-  flex-direction : row-reverse;
-`
-export default AudioRecord;
+  justify-content: center;
+  margin-top: 1em;
+`;
+const NEXTBUTTON = styled.button`
+
+  box-sizing: border-box;
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid $red;
+  border-radius: 0.6em;
+  color: $red;
+  cursor: pointer;
+  display: flex;
+  align-self: center;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1;
+  margin: 20px;
+  padding: 1.2em 2.8em;
+  text-decoration: none;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'Gowun Batang';
+  font-weight: bold;
+  background: #f1c40f;
+  border-color: #f1c40f;
+  color: #fff;
+  background: {
+    image: linear-gradient(45deg,#f1c40f 50%, transparent 50%);
+    position: 100%;
+    size: 400%;
+  }
+  transition: background 300ms ease-in-out;
+
+  &:hover {
+    background-position: 0;
+  &:hover,
+  &:focus {
+    color: #fff;
+    outline: 0
+  }
+`;

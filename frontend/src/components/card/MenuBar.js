@@ -6,24 +6,25 @@ import html2canvas from "html2canvas";
 import { useCallback, useRef, useState } from "react";
 import { connect } from "react-redux";
 import { sendImageURL, deleteCard } from "../../api/message";
-import { setCardID } from "../../store/actions/cardActions";
+import { resetCard } from "../../store/actions/cardActions";
 import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../../api/index";
 
 function mapStateToProps({ cardReducer }) {
   return {
     card_id: cardReducer.id,
+    audio: cardReducer.audio,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    setCardID: (id) => dispatch(setCardID(id)),
+    resetCard: () => dispatch(resetCard()),
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Menu);
 
-function Menu({ card_id, setCardID }) {
+function Menu({ card_id, audio, resetCard }) {
   const navigate = useNavigate();
   const audioRef = useRef();
   const [isPlaying, setIsPlaying] = useState(false);
@@ -72,8 +73,8 @@ function Menu({ card_id, setCardID }) {
         deleteCard(
           card_id,
           (response) => {
-            console.log(response);
-            setCardID("");
+            // console.log(response);
+            resetCard();
             navigate(`/`);
           },
           (error) => {
@@ -83,7 +84,7 @@ function Menu({ card_id, setCardID }) {
         );
       }
     }
-  }, [card_id, setCardID, navigate]);
+  }, [card_id, resetCard, navigate]);
 
   const controlAudio = useCallback(() => {
     // 음성을 생성하지 않았을 경우 return
@@ -103,29 +104,34 @@ function Menu({ card_id, setCardID }) {
   }, []);
 
   return (
-    <nav>
+    <nav style={{width:'100vw'}}>
       <ListWrapper>
-        <List onClick={saveCard} disabled={card_id ? false : true}>
+        <Back onClick={goMain}>
+          <img
+            src="/images/back-arrow.png"
+            alt="back"
+            style={{width:'30px', height:'30px'}}
+          ></img>
+        </Back>
+        <Save onClick={saveCard} disabled={card_id ? false : true}>
           저장
-        </List>
-        <List onClick={controlAudio}>
-          {card_id ? (
-            isPlaying ? (
-              <PauseRoundedIcon />
-            ) : (
-              <PlayArrowRoundedIcon />
-            )
-          ) : (
-            <Spinner src={`/images/spinner.gif`} alt="loading..." />
-          )}
-        </List>
-        <List onClick={goMain}>
-          <ArrowBackIosRoundedIcon />
-        </List>
+        </Save>
       </ListWrapper>
+
+      <Spin onClick={controlAudio}>
+        {card_id ? (
+          isPlaying ? (
+            <PauseRoundedIcon />
+          ) : (
+            <PlayArrowRoundedIcon />
+          )
+        ) : (
+          <Spinner src={`/images/spinner.gif`} alt="loading..." />
+        )}
+      </Spin>
       {card_id ? (
         <audio
-          src={`${BACKEND_URL}/media/${card_id}/${card_id}.wav`}
+          src={`${BACKEND_URL}/${audio}`}
           ref={audioRef}
           onPlay={() => setIsPlaying(true)}
           onPause={stopAudio}
@@ -136,19 +142,43 @@ function Menu({ card_id, setCardID }) {
   );
 }
 
-const ListWrapper = styled.ul`
-  display: inline-block;
+const ListWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
-const List = styled.li.attrs((props) => ({
-  style: {
-    color: props.disabled ? "lightgray" : "black",
-  },
-}))`
+const Back = styled.div`
   list-style: none;
   cursor: pointer;
+  margin-left: 1rem;
+  margin-top : 1rem;
+`;
+
+const Spin = styled.div`
+  justify-content: center;
+  display:flex;
 `;
 
 const Spinner = styled.img`
   width: 50px;
 `;
+
+const Save = styled.button.attrs((props) => ({
+  style: {
+    color: props.disabled ? "gray" : "black",
+  },
+}))`
+  border: none;
+  width: 80px;
+  margin-top: 1rem;
+  margin-right : 1rem;
+  height: 30px;
+  border-radius: 10px;
+  background-color: #e7e7e7;
+  box-shadow: 3px 3px #EDB949;
+  font-family:"Gowun Batang";
+  font-weight: bold;
+  font-size:10pt;
+  justify-content:right;
+  cursor: pointer;
+`

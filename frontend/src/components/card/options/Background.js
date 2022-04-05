@@ -48,40 +48,64 @@ function Background({
     reader.readAsDataURL(event.target.files[0]);
   };
 
-  const deleteImage = () => {
-    removeBackgroundImage();
-  };
+  // const deleteImage = () => {
+  //   removeBackgroundImage();
+  // };
 
   return (
     <Option>
-      <DeleteButton onClick={deleteImage}>배경 삭제</DeleteButton>
-      <ImageInput htmlFor="image">
-        배경 이미지 추가
-        <input
-          id="image"
-          type="file"
-          accept="image/*"
-          onChange={handleChange}
-        ></input>
-      </ImageInput>
+      <div style={{width:'100wv'}}>
+        <Menu>
+          {/* <DeleteButton onClick={deleteImage}>배경 삭제</DeleteButton> */}
+          <ImageInput htmlFor="image">
+            <img
+              src="/images/plus.png"
+              alt="plus"
+              style={{width:'35px', height:'35px'}}
+            ></img>
+            <input
+              id="image"
+              type="file"
+              accept="image/*"
+              onChange={handleChange}
+            ></input>
+          </ImageInput>
+        </Menu>
 
-      {colors.map((color) => (
-        <Color key={color} color={color} onClick={() => handleClick(color)}>
-          {color === "transparent" ? "투명" : null}
-        </Color>
-      ))}
+        <Palette>
+          {colors.map((color) => (
+            <Color key={color} color={color} onClick={() => handleClick(color)}>
+              {color === "transparent" ? "투명" : null}
+            </Color>
+          ))}
+        </Palette>
+      </div>
     </Option>
   );
 }
 
 const Option = styled.ul`
+  justify-content: center;
+  display: flex;
+`;
+
+const Menu = styled.div`
+  justify-content: center;
+  display: flex;
+`;
+
+const Palette = styled.ul`
   display: grid;
   grid-template-columns: repeat(4, 70px);
+
+  justify-content: center;
 `;
+
 const Color = styled.li`
   list-style: none;
   cursor: pointer;
 
+  margin: 0.2rem;
   width: 50px;
   height: 50px;
   border-radius: 1rem;
@@ -93,15 +117,17 @@ const Color = styled.li`
 `;
 const ImageInput = styled.label`
   cursor: pointer;
+  margin-bottom: 0.5rem;
   input {
     display: none;
   }
 `;
-const DeleteButton = styled.button`
-  cursor: pointer;
-  border: none;
-  padding: 0.5rem 1rem;
-  &:hover {
-    background-color: lightgray;
-  }
-`;
+
+// const DeleteButton = styled.button`
+//   cursor: pointer;
+//   border: none;
+//   padding: 0.5rem 1rem;
+//   &:hover {
+//     background-color: lightgray;
+//   }
+// `;
