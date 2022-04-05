@@ -44,13 +44,15 @@ function Detail() {
       <Center>
         <h2>
           메세지결과
-          {/* <video src={} /> */}
+          {<video src={`https://localhost3000/card/${card_id}`} />}
+          {/* {<video src={`https://j6c202.p.ssafy.io/api/card/${card_id}`} />} */}
         </h2>
       </Center>
 
       <Center>
         <Link to="/logo512.png" target="_blank" download>Download</Link>
         <CopyToClipboard text={`https://localhost3000/card/${card_id}`}>
+        {/* <CopyToClipboard text={`https://j6c202.p.ssafy.io/api/card/${card_id}`}> */}
           <CopyButton>url복사</CopyButton>
         </CopyToClipboard>
       </Center>
@@ -90,7 +92,8 @@ const ToMain = styled.button `
   border-radius: 10px;
   background-color: #e7e7e7;
   box-shadow: 3px 3px #EDB949;
-  font-family:"gowun";
+  font-family:"Gowun Batang";
+  font-weight: bold;
   font-size:10pt;
   justify-content:right;
 `
@@ -108,7 +111,8 @@ const CopyButton = styled.button `
   border-radius: 10px;
   background-color: #64B998;
   box-shadow: 3px 3px #EDB949;
-  font-family:"gowun";
+  font-family:"Gowun Batang";
+  font-weight: bold;
   font-size:10pt;
 `
 

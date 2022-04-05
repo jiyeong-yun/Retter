@@ -63,14 +63,16 @@ const Button1 = styled.button `
   border-radius: 10px;
   background-color: ${props => props.color};
   box-shadow: 5px 5px #EDB949;
-  font-family:"gowun";
+  font-family:"Gowun Batang";
+  font-weight: bold;
   font-size:13pt;
 `;
 
 const CONTENT = styled.div `
   padding: 3em;
   font-size: 19pt;
-  font-family:"gowun";
+  font-family:"Gowun Batang";
+  font-weight: bold;
   text-align:center;
   min-width: 230px;
 `
