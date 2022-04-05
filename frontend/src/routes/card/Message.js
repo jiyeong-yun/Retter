@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import {
   setMessage,
@@ -8,6 +8,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { sendMessage } from "../../api/message";
 import styled from "styled-components";
+import { setTitle } from "../../components/Title";
+
 function mapDispatchToProps(dispatch) {
   return {
     setMessage: (message) => dispatch(setMessage(message)),
@@ -19,6 +21,7 @@ function mapDispatchToProps(dispatch) {
 export default connect(null, mapDispatchToProps)(Message);
 
 function Message({ setMessage, setCardID, resetCard }) {
+  useEffect(() => setTitle("메세지 작성"), []);
   const [text, setText] = useState("");
   const voices = [1, 2];
   // const [isVoiceVisible, setIsVoiceVisible] = useState(false);

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import RecordTimer from "./RecordTimer";
 import RecordTimer0 from "./RecordTimer0";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { sendMyVoice } from "../../api/message";
 import { connect } from "react-redux";
 import { setCardID, resetCard } from "../../store/actions/cardActions";
+import { setTitle } from "../Title";
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -17,6 +18,7 @@ function mapDispatchToProps(dispatch) {
 export default connect(null, mapDispatchToProps)(AudioRecord);
 
 function AudioRecord({ setCardID, resetCard }) {
+  useEffect(() => setTitle("목소리 녹음"), []);
   const [stream, setStream] = useState();
   const [media, setMedia] = useState();
   const [onRec, setOnRec] = useState(true);
