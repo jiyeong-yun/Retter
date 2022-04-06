@@ -248,7 +248,9 @@ const Sticker = styled.div.attrs((props) => ({
     transform: `scale(${props.sticker.scale})`,
   },
 }))`
-  background-color: orange;
+  background: url("/images/stickers/${(props) => props.sticker.id}.png") center
+    no-repeat;
+  background-size: contain;
   z-index: 1;
   cursor: grab;
 `;
