@@ -84,20 +84,30 @@ function Home() {
           data-aos-easing="ease-in-sine"
         >
           <br />
-          <BACK>
+          
+            {/* <TAPE src="images/logo.png"> </TAPE> */}
+            
+            <TAPEDIV>
+              {/* <img src="images/logo.png"></img> */}
+              <TAPE src="images/logo.png"></TAPE>
+            </TAPEDIV>
+            
             <DIV>
               <H2>소중한 사람들에게</H2>
               <H22>마음을 전해요!</H22>
-              <h3>
-                Re:tter는 인공지능 TTS 서비스로 대신 읽어드리는 음성 메시지
-                카드입니다
-              </h3>
-              <h3>목소리를 담은 나만의 특별한 메시지를 보내보세요!</h3>
+              <TITLE>
+                <h3>
+                  Re:tter는 인공지능 TTS 서비스로 대신 읽어드리는 음성 메시지
+                  카드입니다
+                </h3>
+                <h3>목소리를 담은 나만의 특별한 메시지를 보내보세요!</h3>
+              </TITLE>
+              
               <Link to="/select">
                 <SButton primary>카드 만들기</SButton>
               </Link>
             </DIV>
-          </BACK>
+         
           <br />
         </div>
 
@@ -195,13 +205,14 @@ function Home() {
 }
 
 export default Home;
-const TAPEDIV = styled.div `
-   text-align: center;
-   margin-bottom: -15em;
-@media screen and (max-width: 1000px) {
-  text-align: center;
 
-}
+const TAPEDIV = styled.div `
+  text-align: center;
+  margin-bottom: -15em;
+  
+  @media screen and (max-width: 1000px) {
+    text-align: center;
+  }
   
 `
 const TAPE = styled.img `
