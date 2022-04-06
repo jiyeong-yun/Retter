@@ -45,7 +45,7 @@ function Record({audioUrl}) {
         >
           {(color) => (
             <span >
-              {audioUrl ? <img  src="/images/playbutton.png" onClick={playaudio} alt="playbutton"/> : renderTime()}
+              {audioUrl ? <img style={{cursor:"pointer"}} src="/images/playbutton.png" onClick={playaudio} alt="playbutton"/> : renderTime()}
             </span>
           )}
         </CountdownCircleTimer>

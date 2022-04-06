@@ -19,7 +19,7 @@ import {
 } from "react-share";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { setTitle } from "../components/Title";
-import KakaoShare from "../components/kakao";
+// import KakaoShare from "../components/kakao";
 
 function Detail() {
   useEffect(() => setTitle("카드 보기💗"), []);
@@ -30,7 +30,7 @@ function Detail() {
     getCard(
       card_id,
       ({ data }) => {
-        console.log(data);
+        // console.log(data);
         setVideo(data);
       },
       (error) => {
@@ -38,6 +38,36 @@ function Detail() {
       }
     );
   }, [card_id]);
+
+
+  useEffect(() => {
+    initKakao();
+  }, []);
+
+  //자바스크립트 키로 카카오 init
+  const initKakao = () => {
+    if (window.Kakao) {
+      const kakao = window.Kakao;
+      if (!kakao.isInitialized()) {
+        kakao.init(process.env.REACT_APP_KAKAO_KEY);
+        // console.log(kakao.isInitialized());
+      }
+    }
+    window.Kakao.Link.createCustomButton({
+      container: '#kakao-link-btn',
+      //메시지 템플릿 아이디, [내 애플리케이션 > 카카오링크 > 메시지 템플릿]에서 확인
+      templateId: 74531,
+      templateArgs: {
+        //메시지 템플릿에서 활용할 arguments
+        url: `http://j6c202.p.ssafy.io/card/`,
+        key: card_id
+      },
+    });
+  };
+
+  const onShareKakaoClick = () => {
+    Detail(card_id);
+  };
 
   return (
     <div>
@@ -57,8 +87,15 @@ function Detail() {
         {/* <Link to={new URL(`${BACKEND_URL}/${video}`)} target="_blank" download>
           Download
         </Link> */}
-        <KakaoShare />
-        <CopyToClipboard text={`http://localhost:3000/card/${card_id}`}>
+        <button
+          id="kakao-link-btn"
+          type="button"
+          onClick={onShareKakaoClick}
+        >
+          <img src="/images/kakao.png" alt="카톡공유" />
+        </button>
+        {/* <KakaoShare /> */}
+        <CopyToClipboard text={`http://j6c202.p.ssafy.io/card/${card_id}`}>
           <CopyButton>url복사</CopyButton>
         </CopyToClipboard>
       </Center>
@@ -68,13 +105,13 @@ function Detail() {
       <Center>
         <FacebookShareButton
           style={{ marginRight: "20px" }}
-          url={`http://localhost:3000/card/${card_id}`}
+          url={`http://j6c202.p.ssafy.io/card/${card_id}`}
         >
           <FacebookIcon size={48} round={true} borderRadius={24}></FacebookIcon>
         </FacebookShareButton>
         <FacebookMessengerShareButton
           style={{ marginRight: "20px" }}
-          url={`http://localhost:3000/card/${card_id}`}
+          url={`http://j6c202.p.ssafy.io/card/${card_id}`}
         >
           <FacebookMessengerIcon
             size={48}
@@ -84,19 +121,19 @@ function Detail() {
         </FacebookMessengerShareButton>
         <TwitterShareButton
           style={{ marginRight: "20px" }}
-          url={`http://localhost:3000/card/${card_id}`}
+          url={`http://j6c202.p.ssafy.io/card/${card_id}`}
         >
           <TwitterIcon size={48} round={true} borderRadius={24}></TwitterIcon>
         </TwitterShareButton>
         <LineShareButton
           style={{ marginRight: "20px" }}
-          url={`http://localhost:3000/card/${card_id}`}
+          url={`http://j6c202.p.ssafy.io/card/${card_id}`}
         >
           <LineIcon size={48} round={true} borderRadius={24}></LineIcon>
         </LineShareButton>
         <EmailShareButton
           style={{ marginRight: "20px" }}
-          url={`http://localhost:3000/card/${card_id}`}
+          url={`http://j6c202.p.ssafy.io/card/${card_id}`}
         >
           <EmailIcon size={48} round={true} borderRadius={24}></EmailIcon>
         </EmailShareButton>

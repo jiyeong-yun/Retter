@@ -17,9 +17,10 @@ const CONTAINER1 = styled.div`
 `;
 
 const TITLE = styled.h1`
+  // height : 20vh;
   text-align : center;
-  margin : 0;
-  padding-top : 2em;
+  padding-top : 3.5em;
+  padding-bottom : 2em;
   font-size: 2rem;
   font-family: 'Gowun Batang';
   font-weight: bold;
