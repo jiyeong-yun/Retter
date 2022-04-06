@@ -195,12 +195,15 @@ const RECORD = styled.div`
 const BUTTONS1 = styled.div`
   justify-content: center;
   display: flex;
+  cursor: pointer;
+  margin: 3em;
 `;
 
 const BUTTONS2 = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 1em;
+  cursor: pointer;
 `;
 const NEXTBUTTON = styled.button`
 
@@ -216,7 +219,7 @@ const NEXTBUTTON = styled.button`
   font-size: 1rem;
   font-weight: 400;
   line-height: 1;
-  margin: 20px;
+  margin: 2em;
   padding: 1.2em 2.8em;
   text-decoration: none;
   text-align: center;

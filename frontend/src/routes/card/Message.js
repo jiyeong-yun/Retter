@@ -108,23 +108,23 @@ function Message({ setMessage, setCardID, resetCard }) {
       ) : null} */}
       <NONDOTUL1>
         {voices.map((voice) => (
-          <li key={voice} onClick={() => setVoice(voice)}>
+          <LSTLI1 key={voice} onClick={() => setVoice(voice)}>
             음성 {voice}
-          </li>
+          </LSTLI1>
         ))}
       </NONDOTUL1>
       <NONDOTUL2>
         {voices.map((voice) => (
-          <li key={voice} onClick={() => setVoice(voice)}>
+          <LSTLI2 key={voice} onClick={() => setVoice(voice)}>
             <img src={`/images/model${voice}.png`} alt="model"></img>
-          </li>
+          </LSTLI2>
         ))}
       </NONDOTUL2>
       <NONDOTUL3>
         {voices.map((voice) => (
-          <li key={voice} onClick={() => playSample(voice)}>
+          <LSTLI3 key={voice} onClick={() => playSample(voice)}>
             <img src="/images/sampleplay.png" alt="sampleplay"></img>
-          </li>
+          </LSTLI3>
         ))}
       </NONDOTUL3>
       <NAV>
@@ -136,7 +136,7 @@ function Message({ setMessage, setCardID, resetCard }) {
 
 const TITLE2 = styled.h1`
   text-align: center;
-  margin: 2em;
+  padding: 2em;
   font-size: 2em;
   font-family: "Gowun Batang";
   font-weight: bold;
@@ -147,8 +147,8 @@ const TITLE = styled.h2`
   font-weight: bold;
 `;
 const TEXTAREA1 = styled.textarea`
-  width: 70%;
-  height: 10em;
+  width: 250px;
+  height: 150px;
   border: none;
   display: flex;
   justify-content: center;
@@ -165,22 +165,34 @@ const TEXTAREA_OUT = styled.div`
 const NONDOTUL1 = styled.ul`
   list-style: none;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   margin: auto;
   font-family: "Gowun Batang";
   font-weight: bold;
+  cursor: pointer;
 `;
 const NONDOTUL2 = styled.ul`
   list-style: none;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   margin: 0.3rem;
+  cursor: pointer;
 `;
 const NONDOTUL3 = styled.ul`
   list-style: none;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   margin: auto;
+  cursor: pointer;
+`;
+const LSTLI1 = styled.li`
+  margin: 0.5em 1.6em;
+`;
+const LSTLI2 = styled.li`
+  margin: 0.5em  1em;
+`;
+const LSTLI3 = styled.li`
+  margin: 0.5em 2.3em;
 `;
 
 const NAV = styled.div`
