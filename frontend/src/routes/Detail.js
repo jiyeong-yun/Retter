@@ -40,8 +40,7 @@ function Detail() {
   }, [card_id]);
 
 
-  const url = window.location.href; //현재 url가져오기
-  // const { card_id } = useParams();
+  // const url = window.location.href; //현재 url가져오기
   // const url = `http://localhost:3000/card/${card_id}`;
   useEffect(() => {
     initKakao(); //
@@ -60,7 +59,7 @@ function Detail() {
       container: '#kakao-link-btn',
       templateId: 74531,
       templateArgs: {
-        cardId: `${card_id}`,
+        url: `http://j6c202.p.ssafy.io/card/${card_id}`,
       },
     });
   };
@@ -95,7 +94,7 @@ function Detail() {
           <img src="/images/kakao.png" alt="카톡공유" />
         </button>
         <KakaoShare />
-        <CopyToClipboard text={`http://localhost:3000/card/${card_id}`}>
+        <CopyToClipboard text={`http://j6c202.p.ssafy.io/card/${card_id}`}>
           <CopyButton>url복사</CopyButton>
         </CopyToClipboard>
       </Center>
@@ -105,13 +104,13 @@ function Detail() {
       <Center>
         <FacebookShareButton
           style={{ marginRight: "20px" }}
-          url={`http://localhost:3000/card/${card_id}`}
+          url={`http://j6c202.p.ssafy.io/card/${card_id}`}
         >
           <FacebookIcon size={48} round={true} borderRadius={24}></FacebookIcon>
         </FacebookShareButton>
         <FacebookMessengerShareButton
           style={{ marginRight: "20px" }}
-          url={`http://localhost:3000/card/${card_id}`}
+          url={`http://j6c202.p.ssafy.io/card/${card_id}`}
         >
           <FacebookMessengerIcon
             size={48}
@@ -121,19 +120,19 @@ function Detail() {
         </FacebookMessengerShareButton>
         <TwitterShareButton
           style={{ marginRight: "20px" }}
-          url={`http://localhost:3000/card/${card_id}`}
+          url={`http://j6c202.p.ssafy.io/card/${card_id}`}
         >
           <TwitterIcon size={48} round={true} borderRadius={24}></TwitterIcon>
         </TwitterShareButton>
         <LineShareButton
           style={{ marginRight: "20px" }}
-          url={`http://localhost:3000/card/${card_id}`}
+          url={`http://j6c202.p.ssafy.io/card/${card_id}`}
         >
           <LineIcon size={48} round={true} borderRadius={24}></LineIcon>
         </LineShareButton>
         <EmailShareButton
           style={{ marginRight: "20px" }}
-          url={`http://localhost:3000/card/${card_id}`}
+          url={`http://j6c202.p.ssafy.io/card/${card_id}`}
         >
           <EmailIcon size={48} round={true} borderRadius={24}></EmailIcon>
         </EmailShareButton>
