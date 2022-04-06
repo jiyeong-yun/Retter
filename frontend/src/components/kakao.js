@@ -2,9 +2,10 @@ import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 
 const KakaoShare= () => {
-  const url = window.location.href; //현재 url가져오기
-  // const { card_id } = useParams();
-  // const url = `http://localhost:3000/card/${card_id}`;
+  // const url = window.location.href; //현재 url가져오기
+  const { card_id } = useParams();
+  const url = `http://localhost:3000/card?key=${card_id}`;
+  console.log(url);
   useEffect(() => {
     initKakao(); //
   }, []);

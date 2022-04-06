@@ -39,6 +39,36 @@ function Detail() {
     );
   }, [card_id]);
 
+
+  const url = window.location.href; //현재 url가져오기
+  // const { card_id } = useParams();
+  // const url = `http://localhost:3000/card/${card_id}`;
+  useEffect(() => {
+    initKakao(); //
+  }, []);
+
+  //자바스크립트 키로 카카오 init
+  const initKakao = () => {
+    if (window.Kakao) {
+      const kakao = window.Kakao;
+      if (!kakao.isInitialized()) {
+        kakao.init(process.env.REACT_APP_KAKAO_KEY);
+        console.log(kakao.isInitialized());
+      }
+    }
+    window.Kakao.Link.createCustomButton({
+      container: '#kakao-link-btn',
+      templateId: 74531,
+      templateArgs: {
+        cardId: `${card_id}`,
+      },
+    });
+  };
+
+  const onShareKakaoClick = () => {
+    Detail(card_id);
+  };
+
   return (
     <div>
       <LOC>
@@ -57,6 +87,13 @@ function Detail() {
         {/* <Link to={new URL(`${BACKEND_URL}/${video}`)} target="_blank" download>
           Download
         </Link> */}
+        <button
+          id="kakao-link-btn"
+          type="button"
+          onClick={onShareKakaoClick}
+        >
+          <img src="/images/kakao.png" alt="카톡공유" />
+        </button>
         <KakaoShare />
         <CopyToClipboard text={`http://localhost:3000/card/${card_id}`}>
           <CopyButton>url복사</CopyButton>
