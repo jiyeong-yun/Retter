@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import PauseRoundedIcon from "@mui/icons-material/PauseRounded";
 import html2canvas from "html2canvas";
@@ -75,7 +74,6 @@ function Menu({ card_id, audio, resetCard }) {
           (response) => {
             // console.log(response);
             resetCard();
-            navigate(`/`);
           },
           (error) => {
             console.log(error);
@@ -83,6 +81,7 @@ function Menu({ card_id, audio, resetCard }) {
           }
         );
       }
+      navigate(`/`);
     }
   }, [card_id, resetCard, navigate]);
 
@@ -104,13 +103,13 @@ function Menu({ card_id, audio, resetCard }) {
   }, []);
 
   return (
-    <nav style={{width:'100vw'}}>
+    <nav style={{ width: "100vw" }}>
       <ListWrapper>
         <Back onClick={goMain}>
           <img
             src="/images/back-arrow.png"
             alt="back"
-            style={{width:'40px', height:'40px'}}
+            style={{ width: "30px", height: "30px" }}
           ></img>
         </Back>
         <Save onClick={saveCard} disabled={card_id ? false : true}>
@@ -119,16 +118,16 @@ function Menu({ card_id, audio, resetCard }) {
       </ListWrapper>
 
       <Spin onClick={controlAudio}>
-          {card_id ? (
-            isPlaying ? (
-              <PauseRoundedIcon />
-            ) : (
-              <PlayArrowRoundedIcon />
-            )
+        {card_id ? (
+          isPlaying ? (
+            <PauseRoundedIcon />
           ) : (
-            <Spinner src={`/images/spinner.gif`} alt="loading..." />
-          )}
-        </Spin>
+            <PlayArrowRoundedIcon />
+          )
+        ) : (
+          <Spinner src={`/images/spinner.gif`} alt="loading..." />
+        )}
+      </Spin>
       {card_id ? (
         <audio
           src={`${BACKEND_URL}/${audio}`}
@@ -150,13 +149,13 @@ const ListWrapper = styled.div`
 const Back = styled.div`
   list-style: none;
   cursor: pointer;
-  margin-left: 0.5rem;
-  margin-top : 0.5rem;
+  margin-left: 1rem;
+  margin-top: 1rem;
 `;
 
 const Spin = styled.div`
   justify-content: center;
-  display:flex;
+  display: flex;
 `;
 
 const Spinner = styled.img`
@@ -170,16 +169,15 @@ const Save = styled.button.attrs((props) => ({
 }))`
   border: none;
   width: 80px;
-  margin-top: 0.5rem;
-  margin-right : 0.5rem;
+  margin-top: 1rem;
+  margin-right: 1rem;
   height: 30px;
   border-radius: 10px;
   background-color: #e7e7e7;
-  box-shadow: 3px 3px #EDB949;
-  font-family:"Gowun Batang";
+  box-shadow: 3px 3px #edb949;
+  font-family: "Gowun Batang";
   font-weight: bold;
-  font-size:10pt;
-  justify-content:right;
-  list-style: none;
+  font-size: 10pt;
+  justify-content: right;
   cursor: pointer;
-`
+`;

@@ -4,12 +4,13 @@ import { useParams } from 'react-router-dom';
 const KakaoShare= () => {
   // const url = window.location.href; //현재 url가져오기
   const { card_id } = useParams();
-  const url = `http://localhost:3000/card/${card_id}`; //현재 url가져오기
+  const url = `http://localhost:3000/card?key=${card_id}`;
+  console.log(url);
   useEffect(() => {
     initKakao(); //
   }, []);
 
-  //자바스크립트키로 카카오 init
+  //자바스크립트 키로 카카오 init
   const initKakao = () => {
     if (window.Kakao) {
       const kakao = window.Kakao;
@@ -34,20 +35,13 @@ const KakaoShare= () => {
         },
       },
       social: {
-        likeCount: 286,
-        commentCount: 45,
-        sharedCount: 845,
+        likeCount: 202,
+        commentCount: 48,
+        sharedCount: 7942,
       },
       buttons: [
         {
-          title: '웹으로 보기',
-          link: {
-            mobileWebUrl: url,
-            webUrl: url,
-          },
-        },
-        {
-          title: '앱으로 보기',
+          title: '받은 메시지 확인하기',
           link: {
             mobileWebUrl: url,
             webUrl: url,
@@ -58,11 +52,9 @@ const KakaoShare= () => {
   };
 
   return (
-   
-        <div className="share-node" onClick={shareKakao}>
-            <img src="이미지" alt="카카오공유" />
-            <p>카톡</p>
-        </div>
+    <div className="share-node" onClick={shareKakao}>
+      <img src="/images/kakao.png" alt="카톡공유" />
+    </div>
   );
 };
 
