@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import RecordTimer from "./RecordTimer";
 import RecordTimer0 from "./RecordTimer0";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { sendMyVoice } from "../../api/message";
 import { connect } from "react-redux";
 import { setCardID, resetCard } from "../../store/actions/cardActions";
+import { setTitle } from "../Title";
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -17,6 +18,7 @@ function mapDispatchToProps(dispatch) {
 export default connect(null, mapDispatchToProps)(AudioRecord);
 
 function AudioRecord({ setCardID, resetCard }) {
+  useEffect(() => setTitle("목소리 녹음"), []);
   const [stream, setStream] = useState();
   const [media, setMedia] = useState();
   const [onRec, setOnRec] = useState(true);
@@ -102,32 +104,40 @@ function AudioRecord({ setCardID, resetCard }) {
   // file 정보 서버로
   const navigate = useNavigate();
   const handleClick = useCallback(() => {
-    const form = new FormData();
-    const sound = new File([audioUrl], "audio.webm", {
-      lastModified: new Date().getTime(),
-      type: "audio/webm;codecs=opus",
-    });
-    form.append("file_name", sound);
+    if (audioUrl===undefined) {
+      alert("목소리를 녹음해주세요")
+    }
+    else{
+      const form = new FormData();
+      const sound = new File([audioUrl], "audio.webm", {
+        lastModified: new Date().getTime(),
+        type: "audio/webm;codecs=opus",
+      });
+      form.append("file_name", sound);
+    
+      sendMyVoice(
+        form,
+        ({ data }) => {
+          // 카드 정보가 남아있을 경우 reset
+          resetCard();
+          setCardID(data.card_id, data.myvoice);
+          navigate("/card/edit");
+        },
+        (error) => {
+          console.log(error);
+          alert("목소리를 녹음해주세요!");
+        }
+      );
+    }
 
-    sendMyVoice(
-      form,
-      ({ data }) => {
-        // 카드 정보가 남아있을 경우 reset
-        resetCard();
-        setCardID(data.card_id, data.myvoice);
-        navigate("/card/edit");
-      },
-      (error) => {
-        console.log(error);
-        alert("목소리를 녹음해주세요!");
-      }
-    );
   }, [audioUrl, navigate, setCardID, resetCard]);
 
+  // //
   // const handleChange = ({ target: { value } }) =>{
   //   onSubmitAudioFile(value);
   // }
 
+  // //
   // function UploadForm(props) {
   //   return(
   //     <div>
@@ -147,10 +157,12 @@ function AudioRecord({ setCardID, resetCard }) {
   return (
     <div>
       <RECORD>
-        {onRec === false ? <RecordTimer /> : <RecordTimer0 />}
-        {audioUrl ? (
-          <audio src={URL.createObjectURL(audioUrl)} controls="controls" />
-        ) : null}
+        {onRec === false ? (
+          <RecordTimer />
+        ) : (
+          <RecordTimer0 audioUrl={audioUrl} />
+        )}
+        {/* {audioUrl ? <audio  src={URL.createObjectURL(audioUrl)} controls="controls" /> : null} */}
       </RECORD>
       <div>
         <BUTTONS1>
@@ -169,7 +181,7 @@ function AudioRecord({ setCardID, resetCard }) {
           )}
         </BUTTONS1>
         <BUTTONS2>
-          <button onClick={handleClick}>다음</button>
+          <NEXTBUTTON onClick={handleClick}>다음</NEXTBUTTON>
         </BUTTONS2>
       </div>
     </div>
@@ -187,5 +199,45 @@ const BUTTONS1 = styled.div`
 
 const BUTTONS2 = styled.div`
   display: flex;
-  flex-direction: row-reverse;
+  justify-content: center;
+  margin-top: 1em;
+`;
+const NEXTBUTTON = styled.button`
+
+  box-sizing: border-box;
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid $red;
+  border-radius: 0.6em;
+  color: $red;
+  cursor: pointer;
+  display: flex;
+  align-self: center;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1;
+  margin: 20px;
+  padding: 1.2em 2.8em;
+  text-decoration: none;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'Gowun Batang';
+  font-weight: bold;
+  background: #f1c40f;
+  border-color: #f1c40f;
+  color: #fff;
+  background: {
+    image: linear-gradient(45deg,#f1c40f 50%, transparent 50%);
+    position: 100%;
+    size: 400%;
+  }
+  transition: background 300ms ease-in-out;
+
+  &:hover {
+    background-position: 0;
+  &:hover,
+  &:focus {
+    color: #fff;
+    outline: 0
+  }
 `;

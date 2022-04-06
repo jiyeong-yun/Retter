@@ -54,7 +54,7 @@ def card_detail(request, card_id):
         # if os.path.isdir(MEDIA_ROOT + "\\" + str(card.card_id).replace('-', '')) == False:
         #     os.mkdir(MEDIA_ROOT + "\\" + str(card.card_id).replace('-', ''))
         serializer = CardSerializer(card, data=request.data)
-        serializer.image = request.FILES['image']
+        serializer.image = request.FILES.get('image')
         # serializer.myvoice = request.FILES['myvoice']
         if serializer.is_valid(raise_exception=True):
             serializer.save(video = 'media/' + str(card.card_id).replace('-', '') + '/' + card_id + '.mp4')
@@ -93,7 +93,7 @@ def card_detail(request, card_id):
         
         video_clip = image_clip.set_audio(audio_clip)
         video_clip.duration = audio_clip.duration
-        video_clip.write_videofile(MEDIA_ROOT + '\\' + str(card.card_id).replace('-', '') + '\\' + card_id + ".mp4",  codec='mpeg4', audio_codec="aac", fps=24)
+        video_clip.write_videofile(MEDIA_ROOT + '\\' + str(card.card_id).replace('-', '') + '\\' + card_id + ".mp4", codec="libx264", audio_codec="aac", fps=24)
 
         # response = HttpResponse(video, content_type="video/mp4")
         # response['Content-Disposition'] = 'attachment; filename=' + card_id + '.mp4'

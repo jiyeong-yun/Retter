@@ -3,7 +3,7 @@ Description=uWSGI service
 After=syslog.target
  
 [Service]
-ExecStart=/home/ubuntu/retter/bin/uwsgi -i /srv/S06P22C202/backend/.config/uwsgi/retter.ini
+ExecStart=/home/ubuntu/retter/bin/uwsgi -i /srv/S06P22C202/docker-server/backend/.config/uwsgi/retter.ini
  
 Restart=always
 KillSignal=SIGQUIT

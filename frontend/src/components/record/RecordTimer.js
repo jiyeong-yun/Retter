@@ -55,7 +55,8 @@ const CIRCLE = styled.div`
 const MESSAGE = styled.p`
   display: flex;
   justify-content: center;
-
+  font-family: 'Gowun Batang';
+  font-weight: bold;
 `;
 
 export default Record;
