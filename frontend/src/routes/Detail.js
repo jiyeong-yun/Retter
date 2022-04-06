@@ -19,7 +19,7 @@ import {
 } from "react-share";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { setTitle } from "../components/Title";
-import KakaoShare from "../components/kakao";
+// import KakaoShare from "../components/kakao";
 
 function Detail() {
   useEffect(() => setTitle("카드 보기💗"), []);
@@ -30,7 +30,7 @@ function Detail() {
     getCard(
       card_id,
       ({ data }) => {
-        console.log(data);
+        // console.log(data);
         setVideo(data);
       },
       (error) => {
@@ -40,10 +40,8 @@ function Detail() {
   }, [card_id]);
 
 
-  // const url = window.location.href; //현재 url가져오기
-  // const url = `http://localhost:3000/card/${card_id}`;
   useEffect(() => {
-    initKakao(); //
+    initKakao();
   }, []);
 
   //자바스크립트 키로 카카오 init
@@ -52,14 +50,17 @@ function Detail() {
       const kakao = window.Kakao;
       if (!kakao.isInitialized()) {
         kakao.init(process.env.REACT_APP_KAKAO_KEY);
-        console.log(kakao.isInitialized());
+        // console.log(kakao.isInitialized());
       }
     }
     window.Kakao.Link.createCustomButton({
       container: '#kakao-link-btn',
+      //메시지 템플릿 아이디, [내 애플리케이션 > 카카오링크 > 메시지 템플릿]에서 확인
       templateId: 74531,
       templateArgs: {
-        url: `http://j6c202.p.ssafy.io/card/${card_id}`,
+        //메시지 템플릿에서 활용할 arguments
+        url: `http://j6c202.p.ssafy.io/card/`,
+        key: card_id
       },
     });
   };
@@ -93,7 +94,7 @@ function Detail() {
         >
           <img src="/images/kakao.png" alt="카톡공유" />
         </button>
-        <KakaoShare />
+        {/* <KakaoShare /> */}
         <CopyToClipboard text={`http://j6c202.p.ssafy.io/card/${card_id}`}>
           <CopyButton>url복사</CopyButton>
         </CopyToClipboard>
