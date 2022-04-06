@@ -5,11 +5,12 @@ ENV PYTHONBUFFERED 1
 RUN apt-get -y update
 RUN apt-get -y install vim
 RUN apt-get -y install libsndfile1
+RUN apt-get -y install ffmpeg
 
 #RUN mkdir /srv/S06P22C202/docker-server
-ADD . /srv/S06P22C202/docker-server
+ADD . /docker-server/backend
 
-WORKDIR /srv/S06P22C202/docker-server
+WORKDIR /docker-server/backend
 
 RUN pip install pip==20.3
 RUN pip install --use-deprecated=legacy-resolver -r requirements.txt
