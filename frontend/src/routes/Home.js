@@ -195,158 +195,269 @@ function Home() {
 }
 
 export default Home;
-const IMG3 = styled.img`
+const TAPEDIV = styled.div `
+   text-align: center;
+   margin-bottom: -15em;
+@media screen and (max-width: 1000px) {
+  text-align: center;
+
+}
+  
+`
+const TAPE = styled.img `
+  display: none;
+
+  @media screen and (max-width: 1000px) {
+    display: inline;
+    witdh: 1.5em;
+    //height: 15em;
+    padding-top: 10em;
+
+  }
+  
+`
+
+const TITLE = styled.div `
+  line-height: 2em;
+  font-weight: bold;
+  color: white;
+
+  @media screen and (max-width: 1000px) {
+    color: #8B4513;
+
+  }
+`
+
+const IMG3 = styled.img `
   float: right;
   margin-right: 20%;
   width: 30%;
-`;
-const TEXTDIV2 = styled.div`
+
+  @media screen and (max-width: 1000px) {
+    width: 25%;
+  }
+ 
+`
+const TEXTDIV2 = styled.div `
   float: right;
-`;
-const P2 = styled.div`
+
+  @media screen and (max-width: 1000px) {
+    float: left;
+  }
+`
+const P2 = styled.div `
   font-size: 20px;
   line-height: 100%;
   margin-top: 4%;
   font-weight: bold;
   text-align: right;
-`;
-const FOOTDIV2 = styled.div`
+`
+const FOOTDIV2 = styled.div `
   // padding-left: 40%;
   text-align: center;
   line-height: 1.5em;
-`;
-const FOOTDIV = styled.div`
+`
+const FOOTDIV = styled.div `
   // padding-left: 40%;
-  word-spacing: 20px;
+  word-spacing: 2em;
   margin-top: 2%;
   text-align: center;
   line-height: 1.5em;
-`;
-const PT = styled.p`
-  font-size: 21px;
+`
+const PT = styled.p `
+  font-size: 1.2rem;
   text-align: center;
   line-height: 1.5em;
-`;
-const H22 = styled.h2`
-  font-size: 50px;
+
+  @media screen and (max-width: 1000px) {
+    margin-left: 15%;
+    font-size: 1rem;
+  }
+  
+`
+const H22 = styled.h2 `
+  font-size: 3em;
   color: white;
   margin-bottom: 1.5em;
   font-weight: bold;
-`;
-const IMG1 = styled.img`
+
+  @media screen and (max-width: 1000px) {
+    color: #8B4513;
+  }
+`
+const IMG1 = styled.img `
   float: right;
   width: 25%;
   margin-right: 20%;
-`;
-const P = styled.div`
+
+  @media screen and (max-width: 1000px) {
+    width: 22%;
+  }
+`
+const P = styled.div `
   // font-family: 'Noto Sans KR', sans-serif;
-  font-size: 20px;
+  font-size: 1.4em;
   line-height: 2em;
   margin-top: 4%;
   font-weight: bold;
-`;
-const FOOT = styled.div`
-  font-size: 17px;
+
+  @media screen and (max-width: 1000px) {
+    font-size: 0.9em;
+  }
+`
+const FOOT = styled.div `
+  font-size: 1rem;
   background-color: gray;
   color: white;
-
+  
   padding: 1%;
   margin-top: 7%;
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
   font-weight: lighter;
   line-height: 100%;
-`;
-const TBUTTON = styled.button`
+
+  @media screen and (max-width: 1000px) {
+    font-size: 0.8rem;
+  }
+`
+const TBUTTON = styled.button `
   border-radius: 50%;
   background-color: white;
-  width: 70px;
-  height: 70px;
+  width:70px;
+  height:70px;
   border: 0;
   outline: 0;
   font-weight: bold;
   font-size: 15px;
   float: right;
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
   margin-right: 2%;
-`;
-const INTRO3 = styled.div`
+
+  @media screen and (max-width: 1000px) {
+    //  margin-top: 20%;
+  }
+`
+const INTRO3 = styled.div `
   padding-left: 10%;
   margin-bottom: 30%;
   margin-top: 15%;
-`;
-const IMG2 = styled.img`
+
+  @media screen and (max-width: 1000px) {
+    margin-bottom: 10%;
+  }
+
+`
+const IMG2 = styled.img `
   width: 55%;
   padding-top: 5%;
-`;
-const INTRO2 = styled.div`
-  margin: 10%;
-  margin-bottom: 5%;
-`;
-const BIGTEXT = styled.div`
-  font-size: 60px;
+
+  @media screen and (max-width: 1000px) {
+    margin-left: 40%;
+  }
+
+`
+const INTRO2 = styled.div `
+ margin: 10%;
+ margin-bottom: 5%;
+
+`
+const BIGTEXT = styled.div `
+  font-size: 3.8em;
   line-height: 120%;
   font-weight: bold;
-`;
 
-const BUTTLOCA = styled.div`
+  @media screen and (max-width: 1000px) {
+    font-size: 1.3em;
+  }
+`
+
+const BUTTLOCA = styled.div `
   text-align: center;
-`;
+`
 
-const TEXTDIV = styled.div`
+const TEXTDIV = styled.div `
   margin-top: 15%;
-`;
+`
 
-const INTRO1 = styled.div`
+const INTRO1 = styled.div `
   padding-left: 10%;
   margin-bottom: 5%;
-`;
 
-const BACK = styled.div``;
+  @media screen and (max-width: 1000px) {
+     margin-top: 25%;
+  }
 
-const IMG = styled.img`
+  @media screen and (max-width: 500px) {
+    margin-top: -10%;
+ }
+  
+`
+
+const IMG = styled.img `
   object-fit: cover;
   height: 200vh;
   witdh: 50vw;
   text-align: center;
   position: relative;
-`;
+`
 
-const WRAP = styled.div`
+const WRAP = styled.div `
   margin-left: 10%;
   margin-right: 10%;
-  font-family: "Gowun Batang", serif;
+  font-family: 'Gowun Batang', serif;
   max-width: 80%;
-`;
+ 
+`
 
-const SButton = styled.button`
+const SButton = styled.button `
   margin-top: 1.5em;
   padding: 1rem 8rem;
   font-size: 40px;
   border-radius: 10px;
-  background-color: #fb6b4c;
+  background-color: #FB6B4C;
   border: 0;
   outline: 0;
   color: white;
-  font-family: "Gowun Batang", serif;
+  font-family: 'Gowun Batang', serif;
   font-weight: bold;
+
+  @media screen and (max-width: 1000px) {
+    font-size:1em;
+    padding: 1rem 4rem;
+  }
 `;
 
-const H2 = styled.h2`
-  font-size: 50px;
+
+const H2 = styled.h2 `
+  font-size: 3em;
   color: white;
   padding-top: 75%;
   line-height: 120%;
   margin: 0;
   font-weight: bold;
-`;
 
-const DIV = styled.div`
-  background-image: url("/images/background2.jpg");
+  @media screen and (max-width: 1000px) {
+    color: #8B4513;
+
+  }
+`
+
+const DIV = styled.div `
+  background-image: url('/images/background2.jpg');
   height: 180vh;
   background-size: cover;
   text-align: center;
-  line-height: 2em;
-  color: white;
-  font-size: 25px;
+  //line-height: 2em;
   font-weight: bold;
-`;
+  max-height: 80%;
+  font-size: 1.3em;
+  
+  @media screen and (max-width: 1000px) {
+    background-image: url('');
+    //background-size: auto;
+    height: 70vh;
+    // widith: 400px;
+    color: #8B4513;
+    font-size: 0.8em;
+  }
+ `
