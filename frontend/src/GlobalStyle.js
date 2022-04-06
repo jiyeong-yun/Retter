@@ -54,6 +54,24 @@ const GlobalStyle = createGlobalStyle`
 
     }
 
+    html {
+        &::-webkit-scrollbar {
+            width: 1.25rem;
+          }
+          &::-webkit-scrollbar-track {
+            background-color: transparent;
+          }
+          &::-webkit-scrollbar-thumb {
+            border-radius: 1rem;
+            background-color: rgba(0, 0, 0, 0.3);
+            // background-clip: padding-box;
+            border: 6px solid #EAE2B1;
+          }
+          &::-webkit-scrollbar-button {
+            width: 0;
+            height: 0;
+          }
+    }
     body {
         background-color: #EAE2B1;
         font-family: 'Noto Sans KR', 'Gowun Batang', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

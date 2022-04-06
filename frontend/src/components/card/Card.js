@@ -52,13 +52,6 @@ function CardComponent(props) {
     }
   }, []);
 
-  useEffect(() => {
-    document.addEventListener("click", checkSelector);
-    return () => {
-      document.removeEventListener("click", checkSelector);
-    };
-  }, [checkSelector]);
-
   const moveSelector = useCallback(
     (nextScale) => {
       const scale = nextScale ? nextScale : 1;
@@ -107,7 +100,7 @@ function CardComponent(props) {
 
   const onDrag = useCallback(
     (event) => {
-      moveXY(event);
+      moveXY(event.type === "mousemove" ? event : event.changedTouches[0]);
     },
     [moveXY]
   );
@@ -129,7 +122,9 @@ function CardComponent(props) {
     (event, index) => {
       setIsDragging(true);
       setSelIndex(index);
-      handleMouseDown(event);
+      handleMouseDown(
+        event.type === "touchstart" ? event.changedTouches[0] : event
+      );
     },
     [handleMouseDown]
   );
@@ -171,13 +166,38 @@ function CardComponent(props) {
     if (isDragging) {
       document.addEventListener("mousemove", onDrag);
       document.addEventListener("mouseup", onDragEnd);
+
+      document.addEventListener("touchmove", onDrag);
+      document.addEventListener("touchup", onDragEnd);
     }
 
     return () => {
       document.removeEventListener("mousemove", onDrag);
       document.removeEventListener("mouseup", onDragEnd);
+
+      document.removeEventListener("touchmove", onDrag);
+      document.removeEventListener("touchup", onDragEnd);
     };
   }, [isDragging, onDrag, onDragEnd]);
+
+  // const dragRef = useCallback((card) => {
+  //   if(card == null) return;
+  //     if (isDragging) {
+  //       document.addEventListener("mousemove", onDrag);
+  //       document.addEventListener("mouseup", onDragEnd);
+
+  //       card.current.addEventListener("touchmove", onDrag);
+  //       card.current.addEventListener("touchup", onDragEnd);
+  //     }
+
+  //     return () => {
+  //       document.removeEventListener("mousemove", onDrag);
+  //       document.removeEventListener("mouseup", onDragEnd);
+
+  //       document.removeEventListener("touchmove", onDrag);
+  //       document.removeEventListener("touchup", onDragEnd);
+  //     };
+  // }, [isDragging, onDrag, onDragEnd]);
 
   useEffect(() => {
     if (isModify) {
@@ -195,6 +215,13 @@ function CardComponent(props) {
     setSelector((selector) => ({ ...selector, display: "none" }));
   }, [props, selIndex]);
 
+  useEffect(() => {
+    document.addEventListener("click", checkSelector);
+    return () => {
+      document.removeEventListener("click", checkSelector);
+    };
+  }, [checkSelector]);
+
   return (
     <Card Card background={props.background} ref={card}>
       {props.stickers.map((sticker, index) => (
@@ -203,6 +230,11 @@ function CardComponent(props) {
           sticker={sticker}
           onDragStart={() => false}
           onMouseDown={(event) => onDragStart(event, index)}
+          onTouchStart={(event) => {
+            setSelIndex(index);
+            moveSelector();
+            onDragStart(event, index);
+          }}
           onClick={() => {
             setSelIndex(index);
             moveSelector();
@@ -212,13 +244,15 @@ function CardComponent(props) {
         </Sticker>
       ))}
       <Selector selector={selector}>
-        <CloseButton onClick={removeSticker}>X</CloseButton>
-        <ModifyButton
+        <CloseButton onClick={removeSticker} onTouchStart={removeSticker}>
+          X
+        </CloseButton>
+        {/* <ModifyButton
           className="element"
           onMouseDown={(event) => onModifyStart(event)}
         >
           O
-        </ModifyButton>
+        </ModifyButton> */}
       </Selector>
       {props.text.isVisible ? props.text.message : null}
     </Card>
@@ -271,7 +305,8 @@ const Selector = styled.div.attrs((props) => ({
 `;
 
 const StickerButton = styled.div`
-  background-color: skyblue;
+  background-color: gray;
+  color: white;
   border-radius: 50%;
   position: absolute;
   width: 30px;
@@ -279,7 +314,7 @@ const StickerButton = styled.div`
   cursor: pointer;
 
   text-align: center;
-  padding-top: 3px;
+  padding-top: 6px;
 `;
 
 const CloseButton = styled(StickerButton)`

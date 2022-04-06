@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { addSticker } from "../../../store/actions/cardActions";
 
 function mapDispatchToProps(dispatch) {
@@ -23,7 +23,7 @@ function StickerWindow({ addSticker }) {
   );
 
   return (
-    <div style={{ width: "100vw" }}>
+    <Container>
       <Option>
         {stickers.map((sticker, index) => (
           <Sticker
@@ -33,15 +33,41 @@ function StickerWindow({ addSticker }) {
           ></Sticker>
         ))}
       </Option>
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  width: 100vw;
+  position: relative;
+  height: calc(100vh - 459.6px);
+  padding: 0.5rem 0 1.7rem 0;
+`;
 
 const Option = styled.ul`
   display: grid;
   grid-template-columns: repeat(4, 70px);
-
   justify-content: center;
+
+  height: 100%;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 1.25rem;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+    background-color: rgba(0, 0, 0, 0.3);
+    // background-clip: padding-box;
+    border: 6px solid #eae2b1;
+  }
+  &::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+  }
 `;
 
 const Sticker = styled.li`
