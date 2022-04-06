@@ -87,15 +87,22 @@ function Home() {
         data-aos-offset="600"
         data-aos-easing="ease-in-sine"
       >
-        <br />
+        <TAPEDIV>
+          <TAPE src = "images/logo.png"></TAPE>
+        </TAPEDIV>
+        
         <DIV>
+        
           <H2>소중한 사람들에게</H2>
           <H22>마음을 전해요!</H22>
-          <h3>Re:ttr는 인공지능 TTS 서비스로 대신 읽어드리는 음성 메세지 카드입니다</h3>
-          <h3>목소리를 담은 나만의 특별한 메시지를 보내보세요!</h3>
+
+          <TITLE>
+            <h3>Re:tter는 인공지능 TTS 서비스로 대신 읽어드리는 음성 메세지 카드입니다</h3>
+            <h3>목소리를 담은 나만의 특별한 메시지를 보내보세요!</h3>
+          </TITLE>
+          
           <SButton primary onClick={handleClick}>카드 만들기</SButton>
         </DIV>
-        <br />
       </div>
 
       
@@ -134,7 +141,7 @@ function Home() {
           </BIGTEXT>
           <P>
             <p data-aos="fade-right">내 목소리 또는 다른 목소리와 함께 내 마음을 전해보세요</p>
-            <p data-aos="fade-right">글로만 전하는 편지보다 훨씬 특별한 편지가 될 거에요</p>
+            <p data-aos="fade-right">글로만 전하는 편지보다 훨씬 더 특별한 편지가 될 거에요!</p>
           </P>
           
           </TEXTDIV2>
@@ -151,7 +158,7 @@ function Home() {
           </BIGTEXT>
           <P>
             <p data-aos="fade-right">다이어리처럼 편지도 꾸밀 수 있어요</p>
-            <p data-aos="fade-right">나만의 스타일로 편지를 꾸며보세요</p>
+            <p data-aos="fade-right">나만의 스타일로 편지를 꾸며보세요!</p>
           </P>
          
         </INTRO3>
@@ -175,7 +182,7 @@ function Home() {
           </FOOTDIV>
           <FOOTDIV2>
             <p>이미지 저작권 표시</p>
-            <p>Re:ttr는 영리적인 목적으로 서비스를 운영하지 않습니다.</p>
+            <p>Re:tter는 영리적인 목적으로 서비스를 운영하지 않습니다.</p>
           </FOOTDIV2>
         </FOOT>
 
@@ -187,14 +194,55 @@ function Home() {
 }
 
 export default Home;
+const TAPEDIV = styled.div `
+   text-align: center;
+   margin-bottom: -15em;
+@media screen and (max-width: 1000px) {
+  text-align: center;
+
+}
+  
+`
+const TAPE = styled.img `
+  display: none;
+
+  @media screen and (max-width: 1000px) {
+    display: inline;
+    witdh: 1.5em;
+    //height: 15em;
+    padding-top: 10em;
+
+  }
+  
+`
+
+const TITLE = styled.div `
+  line-height: 2em;
+  font-weight: bold;
+  color: white;
+
+  @media screen and (max-width: 1000px) {
+    color: #8B4513;
+
+  }
+`
+
 const IMG3 = styled.img `
   float: right;
   margin-right: 20%;
   width: 30%;
+
+  @media screen and (max-width: 1000px) {
+    width: 25%;
+  }
  
 `
 const TEXTDIV2 = styled.div `
   float: right;
+
+  @media screen and (max-width: 1000px) {
+    float: left;
+  }
 `
 const P2 = styled.div `
   font-size: 20px;
@@ -210,36 +258,54 @@ const FOOTDIV2 = styled.div `
 `
 const FOOTDIV = styled.div `
   // padding-left: 40%;
-  word-spacing: 20px;
+  word-spacing: 2em;
   margin-top: 2%;
   text-align: center;
   line-height: 1.5em;
 `
 const PT = styled.p `
-  font-size: 21px;
+  font-size: 1.2rem;
   text-align: center;
   line-height: 1.5em;
+
+  @media screen and (max-width: 1000px) {
+    margin-left: 15%;
+    font-size: 1rem;
+  }
+  
 `
 const H22 = styled.h2 `
-  font-size: 2em;
+  font-size: 3em;
   color: white;
   margin-bottom: 1.5em;
   font-weight: bold;
+
+  @media screen and (max-width: 1000px) {
+    color: #8B4513;
+  }
 `
 const IMG1 = styled.img `
   float: right;
   width: 25%;
   margin-right: 20%;
+
+  @media screen and (max-width: 1000px) {
+    width: 22%;
+  }
 `
 const P = styled.div `
   // font-family: 'Noto Sans KR', sans-serif;
-  font-size: 20px;
+  font-size: 1.4em;
   line-height: 2em;
   margin-top: 4%;
   font-weight: bold;
+
+  @media screen and (max-width: 1000px) {
+    font-size: 0.9em;
+  }
 `
 const FOOT = styled.div `
-  font-size: 17px;
+  font-size: 1rem;
   background-color: gray;
   color: white;
   
@@ -248,6 +314,10 @@ const FOOT = styled.div `
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: lighter;
   line-height: 100%;
+
+  @media screen and (max-width: 1000px) {
+    font-size: 0.8rem;
+  }
 `
 const TBUTTON = styled.button `
   border-radius: 50%;
@@ -261,16 +331,29 @@ const TBUTTON = styled.button `
   float: right;
   font-family: 'Noto Sans KR', sans-serif;
   margin-right: 2%;
+
+  @media screen and (max-width: 1000px) {
+    //  margin-top: 20%;
+  }
 `
 const INTRO3 = styled.div `
   padding-left: 10%;
   margin-bottom: 30%;
   margin-top: 15%;
 
+  @media screen and (max-width: 1000px) {
+    margin-bottom: 10%;
+  }
+
 `
 const IMG2 = styled.img `
   width: 55%;
   padding-top: 5%;
+
+  @media screen and (max-width: 1000px) {
+    margin-left: 40%;
+  }
+
 `
 const INTRO2 = styled.div `
  margin: 10%;
@@ -278,9 +361,13 @@ const INTRO2 = styled.div `
 
 `
 const BIGTEXT = styled.div `
-  font-size: 3em;
+  font-size: 3.8em;
   line-height: 120%;
   font-weight: bold;
+
+  @media screen and (max-width: 1000px) {
+    font-size: 1.3em;
+  }
 `
 
 const BUTTLOCA = styled.div `
@@ -295,10 +382,14 @@ const INTRO1 = styled.div `
   padding-left: 10%;
   margin-bottom: 5%;
 
-`
+  @media screen and (max-width: 1000px) {
+     margin-top: 25%;
+  }
 
-const BACK = styled.div `
- 
+  @media screen and (max-width: 500px) {
+    margin-top: -10%;
+ }
+  
 `
 
 const IMG = styled.img `
@@ -328,16 +419,26 @@ const SButton = styled.button `
   color: white;
   font-family: 'Gowun Batang', serif;
   font-weight: bold;
+
+  @media screen and (max-width: 1000px) {
+    font-size:1em;
+    padding: 1rem 4rem;
+  }
 `;
 
 
 const H2 = styled.h2 `
-  font-size: 2em;
+  font-size: 3em;
   color: white;
   padding-top: 75%;
   line-height: 120%;
   margin: 0;
   font-weight: bold;
+
+  @media screen and (max-width: 1000px) {
+    color: #8B4513;
+
+  }
 `
 
 const DIV = styled.div `
@@ -345,7 +446,17 @@ const DIV = styled.div `
   height: 180vh;
   background-size: cover;
   text-align: center;
-  line-height: 2em;
-  color: white;
+  //line-height: 2em;
   font-weight: bold;
+  max-height: 80%;
+  font-size: 1.3em;
+  
+  @media screen and (max-width: 1000px) {
+    background-image: url('');
+    //background-size: auto;
+    height: 70vh;
+    // widith: 400px;
+    color: #8B4513;
+    font-size: 0.8em;
+  }
  `
