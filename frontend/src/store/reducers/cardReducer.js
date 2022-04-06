@@ -9,7 +9,7 @@ const initialState = {
     text: false,
   },
   background: {
-    color: "transparent",
+    color: "white",
     image: "",
   },
   stickers: [],
@@ -97,7 +97,7 @@ const cardReducer = (state = initialState, action) => {
         menuVisible: { ...state.menuVisible },
         background: {
           color: action.color,
-          image: '',
+          image: "",
         },
         stickers: state.stickers.map((sticker) => sticker),
         text: { ...state.text },
@@ -109,7 +109,7 @@ const cardReducer = (state = initialState, action) => {
         ...state,
         menuVisible: { ...state.menuVisible },
         background: {
-          color: '',
+          color: "white",
           image: action.imageURL,
         },
         stickers: state.stickers.map((sticker) => sticker),
@@ -117,12 +117,12 @@ const cardReducer = (state = initialState, action) => {
       };
     }
 
-    case types.REMOVE_BACKGROUND_IMAGE: {
+    case types.REMOVE_BACKGROUND: {
       return {
         ...state,
         menuVisible: { ...state.menuVisible },
         background: {
-          color: state.background.color,
+          color: "white",
           image: "",
         },
         stickers: state.stickers.map((sticker) => sticker),
@@ -205,7 +205,7 @@ const cardReducer = (state = initialState, action) => {
           text: false,
         },
         background: {
-          color: "transparent",
+          color: "white",
           image: "",
         },
         stickers: [],

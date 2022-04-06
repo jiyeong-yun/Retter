@@ -45,9 +45,9 @@ export const setBackgroundImage = (imageURL) => {
   };
 };
 
-export const removeBackgroundImage = () => {
+export const removeBackground = () => {
   return {
-    type: types.REMOVE_BACKGROUND_IMAGE,
+    type: types.REMOVE_BACKGROUND,
   };
 };
 

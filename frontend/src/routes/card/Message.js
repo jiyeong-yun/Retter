@@ -22,14 +22,13 @@ export default connect(null, mapDispatchToProps)(Message);
 
 const playSample = (voice) => {
   document.getElementById(`sampleaudio${voice}`).play();
-}
+};
 function Message({ setMessage, setCardID, resetCard }) {
-  useEffect(() => setTitle("메세지 작성"), []);
+  useEffect(() => setTitle("메시지 작성"), []);
   const [text, setText] = useState("");
   const voices = [1, 2];
   // const [isVoiceVisible, setIsVoiceVisible] = useState(false);
   const [voice, setVoice] = useState(1);
-  
   const navigate = useNavigate();
   const handleChange = ({ target: { value } }) => {
     setText(value);
@@ -37,19 +36,20 @@ function Message({ setMessage, setCardID, resetCard }) {
 
   const checkMessage = () => {
     if (text === "") {
-      alert("메세지를 입력해주세요!");
+      alert("메시지를 입력해주세요!");
       return;
     }
 
+    resetCard();
     // 1. 영어 삭제
     // 아래 전처리된 문장이 서버로 보내지고, 사용자에게는 이 텍스트로만 보임
     const nextText = text.replace(/\w/g, "");
     setMessage(nextText);
 
-    // 2. 서버로 전송할 메세지 전처리
+    // 2. 서버로 전송할 메시지 전처리
     let preprocessedText = preprocess(nextText);
 
-    // todo: 서버로 메세지 보내는 로직
+    // todo: 서버로 메시지 보내는 로직
     const params = {
       voice_num: voice,
       text: preprocessedText,
@@ -58,9 +58,7 @@ function Message({ setMessage, setCardID, resetCard }) {
     sendMessage(
       params,
       ({ data }) => {
-        resetCard();
         setCardID(data.card_id, data.audio);
-
       },
       (error) => console.log(error)
     );
@@ -79,21 +77,17 @@ function Message({ setMessage, setCardID, resetCard }) {
   };
 
   return (
-    <main style={{width:'100vw',height:'100vh'}}>
+    <main style={{ width: "100vw", height: "100vh" }}>
       <audio id="sampleaudio1" src="/audios/sample1.wav"></audio>
       <audio id="sampleaudio2" src="/audios/sample2.wav"></audio>
-      <TITLE2>
-        음성메세지 만들기
-      </TITLE2>
-      <TITLE>
-        ※Re:tter는 한글, 숫자만 지원해요
-      </TITLE>
+      <TITLE2>음성메시지 만들기</TITLE2>
+      <TITLE>※Re:tter는 한글, 숫자만 지원해요</TITLE>
       <TEXTAREA_OUT>
         <TEXTAREA1
           value={text}
           maxLength="100"
           onChange={handleChange}
-          placeholder="목소리를 입힐 메세지를 입력해주세요!"
+          placeholder="목소리를 입힐 메시지를 입력해주세요!"
         ></TEXTAREA1>
       </TEXTAREA_OUT>
       <TEXTUL>
@@ -140,69 +134,65 @@ function Message({ setMessage, setCardID, resetCard }) {
   );
 }
 
-
 const TITLE2 = styled.h1`
-  text-align : center;
-  margin : 2em;
+  text-align: center;
+  margin: 2em;
   font-size: 2em;
   font-family: "Gowun Batang";
   font-weight: bold;
 `;
 const TITLE = styled.h2`
-  text-align : center;
-  font-family: 'Gowun Batang';
+  text-align: center;
+  font-family: "Gowun Batang";
   font-weight: bold;
-
 `;
 const TEXTAREA1 = styled.textarea`
-  width : 70%;
-  height : 10em;
+  width: 70%;
+  height: 10em;
   border: none;
   display: flex;
   justify-content: center;
-  outline:none ;
+  outline: none;
   cursor: pointer;
 `;
 
 const TEXTAREA_OUT = styled.div`
   display: flex;
   justify-content: center;
-  margin : 1em 2em 2em;
-  
-`
+  margin: 1em 2em 2em;
+`;
 
 const NONDOTUL1 = styled.ul`
   list-style: none;
   display: flex;
   justify-content: space-around;
   margin: auto;
-  font-family: 'Gowun Batang';
+  font-family: "Gowun Batang";
   font-weight: bold;
-  `
-  const NONDOTUL2 = styled.ul`
+`;
+const NONDOTUL2 = styled.ul`
   list-style: none;
   display: flex;
   justify-content: space-around;
   margin: 0.3rem;
-`
+`;
 const NONDOTUL3 = styled.ul`
   list-style: none;
   display: flex;
   justify-content: space-around;
   margin: auto;
-`
+`;
 
 const NAV = styled.div`
   display: flex;
   justify-content: center;
-
-`
+`;
 const TEXTUL = styled.ul`
   list-style: none;
-  text-align : center;
-  font-family: 'Gowun Batang';
+  text-align: center;
+  font-family: "Gowun Batang";
   font-weight: bold;
-`
+`;
 const NEXTBUTTON = styled.button`
   box-sizing: border-box;
   appearance: none;
@@ -240,4 +230,4 @@ const NEXTBUTTON = styled.button`
     color: #fff;
     outline: 0
   }
-`
+`;

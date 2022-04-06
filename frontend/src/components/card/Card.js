@@ -45,6 +45,8 @@ function CardComponent(props) {
   let target = useRef();
 
   const checkSelector = useCallback((event) => {
+    if (typeof event.target.className !== "string") return;
+
     if (!event.target.className.includes("element")) {
       setSelector((selector) => ({ ...selector, display: "none" }));
     }
@@ -57,14 +59,25 @@ function CardComponent(props) {
     };
   }, [checkSelector]);
 
-  const moveSelector = useCallback(() => {
-    const padding = 50;
-    const width = props.stickers[selIndex].width + padding;
-    const height = props.stickers[selIndex].height + padding;
-    const y = props.stickers[selIndex].y - padding / 2;
-    const x = props.stickers[selIndex].x - padding / 2;
-    setSelector({ width, height, y, x, display: "block", scale: 1 });
-  }, [props.stickers, selIndex]);
+  const moveSelector = useCallback(
+    (nextScale) => {
+      const scale = nextScale ? nextScale : 1;
+      const padding = 50;
+      const width = props.stickers[selIndex].width + padding;
+      const height = props.stickers[selIndex].height + padding;
+      const y = props.stickers[selIndex].y - padding / 2;
+      const x = props.stickers[selIndex].x - padding / 2;
+      setSelector({
+        width,
+        height,
+        y,
+        x,
+        display: "block",
+        scale,
+      });
+    },
+    [props.stickers, selIndex]
+  );
 
   const moveXY = useCallback(
     (event) => {
@@ -87,7 +100,7 @@ function CardComponent(props) {
         nextY = cardRef.height - target.current.height;
 
       props.setStickerPos(selIndex, nextX, nextY);
-      moveSelector(event);
+      moveSelector();
     },
     [page, selIndex, props, moveSelector]
   );
@@ -139,11 +152,20 @@ function CardComponent(props) {
       // const nextWidth = width + diff;
       const nextHeight = height + diff;
       const scale = nextHeight / height;
-      console.log(scale);
+      // console.log(
+      //   `height: ${height}, nextHeight: ${nextHeight}, diff: ${diff}`
+      // );
+      // console.log(`scale: ${scale}`);
+      // console.log(scale);
       props.setStickerScale(selIndex, scale);
+      moveSelector(scale);
     },
-    [page, selIndex, props]
+    [page, selIndex, props, moveSelector]
   );
+
+  const onModifyEnd = useCallback(() => {
+    setIsModify(false);
+  }, []);
 
   useEffect(() => {
     if (isDragging) {
@@ -160,11 +182,13 @@ function CardComponent(props) {
   useEffect(() => {
     if (isModify) {
       document.addEventListener("mousemove", onModify);
+      document.addEventListener("mouseup", onModifyEnd);
     }
     return () => {
       document.removeEventListener("mousemove", onModify);
+      document.addEventListener("mouseup", onModifyEnd);
     };
-  }, [isModify, onModify]);
+  }, [isModify, onModify, onModifyEnd]);
 
   const removeSticker = useCallback(() => {
     props.removeSticker(selIndex);
@@ -189,7 +213,10 @@ function CardComponent(props) {
       ))}
       <Selector selector={selector}>
         <CloseButton onClick={removeSticker}>X</CloseButton>
-        <ModifyButton onMouseDown={(event) => onModifyStart(event)}>
+        <ModifyButton
+          className="element"
+          onMouseDown={(event) => onModifyStart(event)}
+        >
           O
         </ModifyButton>
       </Selector>
@@ -239,7 +266,6 @@ const Selector = styled.div.attrs((props) => ({
   },
 }))`
   box-shadow: 0 0 0 1.5px gray inset;
-  position: absolute;
 `;
 
 const StickerButton = styled.div`
