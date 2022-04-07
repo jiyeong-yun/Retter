@@ -83,7 +83,6 @@ function Home() {
         data-aos-easing="ease-in-sine"
       >
         <LOGO />
-
         <MainContent>
           <TitlePhrase>
             소중한 사람들에게 <br />
@@ -100,63 +99,62 @@ function Home() {
         </MainContent>
       </MainContainer>
 
-      <div>
-        <INTRO1>
+      <DescriptionContainer>
+        <Intro>
           <IMG1 src="images/letter2.png"></IMG1>
 
           <TEXTDIV>
-            <BIGTEXT>
-              <h1 data-aos="fade-right">말로 하긴 부끄럽고</h1>
-              <h1 data-aos="fade-right">텍스트는 불안할 때</h1>
-            </BIGTEXT>
+            <TitleText data-aos="fade-right">말로 하긴 부끄럽고</TitleText>
+            <TitleText data-aos="fade-right">텍스트는 불안할 때</TitleText>
 
-            <P>
+            <Paragraph align={"left"}>
               <p data-aos="fade-right">
                 코로나 19로 사회적 거리두기가 강화되면서
+                <br /> 마음의 거리두기도 진행되고 있는 지금…
               </p>
               <p data-aos="fade-right">
-                마음의 거리두기도 진행되고 있는 지금...
+                글로만 전하기에는 딱딱하기만 한 마음을 <br /> 여러가지 목소리와
+                함께 전해보세요.
               </p>
-              <p data-aos="fade-right">
-                글로만 전하기에는 딱딱하기만 한 마음을
-              </p>
-              <p data-aos="fade-right">여러가지 목소리와 함께 전해보세요</p>
-              <p data-aos="fade-right">편지의 감성과 최신 기술을 이용해</p>
-              <p data-aos="fade-right">나만의 카드를 만들어 보세요!</p>
-            </P>
-          </TEXTDIV>
-        </INTRO1>
 
-        <INTRO2>
+              <p data-aos="fade-right">
+                편지의 감성과 최신 기술을 이용해 <br /> 나만의 카드를 만들어
+                보세요!
+              </p>
+            </Paragraph>
+          </TEXTDIV>
+        </Intro>
+
+        <Intro>
           <TEXTDIV2>
-            <BIGTEXT>
-              <h1 data-aos="fade-right">좋아하는 목소리를</h1>
-              <h1 data-aos="fade-right">고를 수 있어요</h1>
-            </BIGTEXT>
-            <P>
+            <TextWrapper>
+              <TitleText data-aos="fade-right">좋아하는 목소리를</TitleText>
+              <TitleText data-aos="fade-right">고를 수 있어요</TitleText>
+            </TextWrapper>
+
+            <Paragraph align={"right"}>
               <p data-aos="fade-right">
-                내 목소리 또는 다른 목소리와 함께 내 마음을 전해보세요
+                내 목소리 또는 다른 목소리와 함께 내 마음을 전해보세요.
               </p>
               <p data-aos="fade-right">
-                글로만 전하는 편지보다 훨씬 특별한 편지가 될 거예요
+                글로만 전하는 편지보다 훨씬 특별한 편지가 될 거예요!
               </p>
-            </P>
+            </Paragraph>
           </TEXTDIV2>
 
           <IMG2 src="images/people.png"></IMG2>
-        </INTRO2>
+        </Intro>
 
-        <INTRO3>
+        <Intro>
           <IMG3 src="images/phonesticker.png"></IMG3>
-          <BIGTEXT>
-            <h1 data-aos="fade-right">개성만점 스티커로</h1>
-            <h1 data-aos="fade-right">편.꾸하자!</h1>
-          </BIGTEXT>
-          <P>
-            <p data-aos="fade-right">다이어리처럼 편지도 꾸밀 수 있어요</p>
+          <TitleText data-aos="fade-right">개성만점 스티커로</TitleText>
+          <TitleText data-aos="fade-right">편.꾸하자!</TitleText>
+
+          <Paragraph align={"left"}>
+            <p data-aos="fade-right">다이어리처럼 편지도 꾸밀 수 있어요!</p>
             <p data-aos="fade-right">나만의 스타일로 편지를 꾸며보세요</p>
-          </P>
-        </INTRO3>
+          </Paragraph>
+        </Intro>
 
         <Link to="/select">
           <BUTTLOCA>
@@ -175,38 +173,24 @@ function Home() {
         </TBUTTON>
 
         <FOOT>
-          <PT>만든 사람들</PT>
-          <PT>사서함 202호</PT>
-          <FOOTDIV>
-            <p>FE 김혜인 성당현</p>
-            <p>BE 김은서 노건우 서예진 윤지영</p>
-            <p>목소리 김혜인 일반여성</p>
-          </FOOTDIV>
+          <TeamName>사서함 202호</TeamName>
+          <TeamMember>김은서 김혜인 노건우 서예진 성당현 윤지영</TeamMember>
           <FOOTDIV2>
-            <p>이미지 저작권 표시</p>
+            <p>Voices by 1.여성 아나운서 2.김혜인 + KSS Dataset</p>
+            <p>Images by Freepik</p>
             <p>Re:tter는 영리적인 목적으로 서비스를 운영하지 않습니다.</p>
           </FOOTDIV2>
         </FOOT>
-      </div>
+      </DescriptionContainer>
     </WRAP>
   );
 }
 
 export default Home;
 
-const TitleDescription = styled.h3`
-  font-weight: bold;
-  font-size: 0.9em;
-  text-align: center;
-  line-height: 2em;
-  white-space: pre-line;
-  word-break: keep-all;
-  padding: 0 3rem;
-`;
-
 const IMG3 = styled.img`
   float: right;
-  margin-right: 20%;
+  // margin-right: 10%;
   width: 30%;
 
   @media screen and (max-width: 1000px) {
@@ -220,62 +204,63 @@ const TEXTDIV2 = styled.div`
     float: left;
   }
 `;
-const P2 = styled.div`
-  font-size: 20px;
-  line-height: 100%;
-  margin-top: 4%;
-  font-weight: bold;
-  text-align: right;
-`;
+
 const FOOTDIV2 = styled.div`
   // padding-left: 40%;
+  border-top: 1px gray solid;
+  padding-top: 2.5%;
   text-align: center;
-  line-height: 1.5em;
+  line-height: 2.1em;
 `;
-const FOOTDIV = styled.div`
+const TeamMember = styled.p`
   // padding-left: 40%;
-  word-spacing: 2em;
-  margin-top: 2%;
+  word-spacing: 1em;
+  font-size: 0.9rem;
   text-align: center;
   line-height: 1.5em;
+  padding-bottom: 2.5%;
 `;
-const PT = styled.p`
+const TeamName = styled.p`
+  font-family: "Gowun Batang";
+  font-weight: bold;
   font-size: 1.2rem;
   text-align: center;
-  line-height: 1.5em;
+  padding: 3% 0;
 
   @media screen and (max-width: 1000px) {
-    margin-left: 15%;
-    font-size: 1rem;
+    // font-size: 1rem;
   }
 `;
 
 const IMG1 = styled.img`
   float: right;
   width: 25%;
-  margin-right: 20%;
+  margin-top: 13%;
+  margin-right: 10%;
 
   @media screen and (max-width: 1000px) {
     width: 22%;
   }
 `;
-const P = styled.div`
-  // font-family: 'Noto Sans KR', sans-serif;
-  font-size: 1.4em;
-  line-height: 2em;
+
+const Paragraph = styled.div`
+  line-height: 2.1em;
   margin-top: 4%;
   font-weight: bold;
+  white-space: pre-line;
+  text-align: ${(props) => props.align};
 
   @media screen and (max-width: 1000px) {
-    font-size: 0.9em;
+    text-align: left;
   }
 `;
-const FOOT = styled.div`
-  font-size: 1rem;
-  background-color: gray;
+
+const FOOT = styled.footer`
+  font-size: 0.8rem;
+  background-color: dimgray;
   color: white;
 
-  padding: 1%;
+  padding: 5% 5%;
   margin-top: 7%;
   font-family: "Noto Sans KR", sans-serif;
   font-weight: lighter;
@@ -285,6 +270,7 @@ const FOOT = styled.div`
     font-size: 0.8rem;
   }
 `;
+
 const TBUTTON = styled.button`
   border-radius: 50%;
   background-color: white;
@@ -302,34 +288,13 @@ const TBUTTON = styled.button`
     //  margin-top: 20%;
   }
 `;
-const INTRO3 = styled.div`
-  padding-left: 10%;
-  margin-bottom: 30%;
-  margin-top: 15%;
 
-  @media screen and (max-width: 1000px) {
-    margin-bottom: 10%;
-  }
-`;
 const IMG2 = styled.img`
   width: 55%;
-  padding-top: 5%;
+  padding-top: 10%;
 
   @media screen and (max-width: 1000px) {
     margin-left: 40%;
-  }
-`;
-const INTRO2 = styled.div`
-  margin: 10%;
-  margin-bottom: 5%;
-`;
-const BIGTEXT = styled.div`
-  font-size: 3em;
-  line-height: 120%;
-  font-weight: bold;
-
-  @media screen and (max-width: 1000px) {
-    font-size: 1.3em;
   }
 `;
 
@@ -341,28 +306,7 @@ const TEXTDIV = styled.div`
   margin-top: 15%;
 `;
 
-const INTRO1 = styled.div`
-  padding-left: 10%;
-  margin-bottom: 5%;
-
-  @media screen and (max-width: 1000px) {
-    margin-top: 25%;
-  }
-
-  @media screen and (max-width: 500px) {
-    margin-top: -10%;
-  }
-`;
-
-const IMG = styled.img`
-  object-fit: cover;
-  height: 200vh;
-  witdh: 50vw;
-  text-align: center;
-  position: relative;
-`;
-
-const WRAP = styled.div`
+const WRAP = styled.main`
   font-family: "Gowun Batang", serif;
   max-width: 50%;
 
@@ -389,18 +333,6 @@ const SButton = styled.button`
   }
 `;
 
-const TitlePhrase = styled.h2`
-  font-size: 1.5em;
-  line-height: 1.5em;
-  font-weight: bold;
-  white-space: pre-line;
-  text-align: center;
-
-  @media screen and (max-width: 1000px) {
-    color: #8b4513;
-  }
-`;
-
 const LOGO = styled.div`
   background: url("/images/background3.jpg") bottom no-repeat;
   background-size: cover;
@@ -419,4 +351,48 @@ const MainContent = styled.div`
   align-items: center;
   justify-content: space-evenly;
   height: 45vh;
+`;
+
+const TitlePhrase = styled.h2`
+  font-size: 1.5em;
+  line-height: 1.6em;
+  font-weight: bold;
+  white-space: pre-line;
+  text-align: center;
+
+  @media screen and (max-width: 1000px) {
+    color: #8b4513;
+  }
+`;
+
+const TitleDescription = styled.h3`
+  font-weight: bold;
+  // font-size: 0.9em;
+  text-align: center;
+  line-height: 2.1em;
+  white-space: pre-line;
+  word-break: keep-all;
+  padding: 0 10%;
+`;
+
+const DescriptionContainer = styled.section`
+  margin-top: 1rem;
+`;
+
+const Intro = styled.article`
+  padding: 10%;
+`;
+
+const TitleText = styled.h2`
+  font-size: 1.4em;
+  line-height: 1.8em;
+  font-weight: bold;
+`;
+
+const TextWrapper = styled.div`
+  text-align: right;
+
+  @media screen and (max-width: 1000px) {
+    text-align: left;
+  }
 `;
