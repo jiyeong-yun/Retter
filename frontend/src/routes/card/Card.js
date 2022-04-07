@@ -5,9 +5,9 @@ import styled from "styled-components";
 
 export default function CardPage() {
   return (
-    <div>
+    <Container>
       <Center>
-        <MenuBar /> 
+        <MenuBar />
       </Center>
       <Center>
         <Card />
@@ -16,12 +16,16 @@ export default function CardPage() {
       <Center>
         <Options />
       </Center>
-    </div>
+    </Container>
   );
 }
 
-const Center = styled.div `
+const Container = styled.div`
+  height: 100vh;
+`;
+
+const Center = styled.div`
   justify-content: center;
   display: flex;
   align-items: center;
-`
+`;

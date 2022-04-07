@@ -45,26 +45,32 @@ function CardComponent(props) {
   let target = useRef();
 
   const checkSelector = useCallback((event) => {
+    if (typeof event.target.className !== "string") return;
+
     if (!event.target.className.includes("element")) {
       setSelector((selector) => ({ ...selector, display: "none" }));
     }
   }, []);
 
-  useEffect(() => {
-    document.addEventListener("click", checkSelector);
-    return () => {
-      document.removeEventListener("click", checkSelector);
-    };
-  }, [checkSelector]);
-
-  const moveSelector = useCallback(() => {
-    const padding = 50;
-    const width = props.stickers[selIndex].width + padding;
-    const height = props.stickers[selIndex].height + padding;
-    const y = props.stickers[selIndex].y - padding / 2;
-    const x = props.stickers[selIndex].x - padding / 2;
-    setSelector({ width, height, y, x, display: "block", scale: 1 });
-  }, [props.stickers, selIndex]);
+  const moveSelector = useCallback(
+    (nextScale) => {
+      const scale = nextScale ? nextScale : 1;
+      const padding = 50;
+      const width = props.stickers[selIndex].width + padding;
+      const height = props.stickers[selIndex].height + padding;
+      const y = props.stickers[selIndex].y - padding / 2;
+      const x = props.stickers[selIndex].x - padding / 2;
+      setSelector({
+        width,
+        height,
+        y,
+        x,
+        display: "block",
+        scale,
+      });
+    },
+    [props.stickers, selIndex]
+  );
 
   const moveXY = useCallback(
     (event) => {
@@ -87,14 +93,14 @@ function CardComponent(props) {
         nextY = cardRef.height - target.current.height;
 
       props.setStickerPos(selIndex, nextX, nextY);
-      moveSelector(event);
+      moveSelector();
     },
     [page, selIndex, props, moveSelector]
   );
 
   const onDrag = useCallback(
     (event) => {
-      moveXY(event);
+      moveXY(event.type === "mousemove" ? event : event.changedTouches[0]);
     },
     [moveXY]
   );
@@ -116,7 +122,9 @@ function CardComponent(props) {
     (event, index) => {
       setIsDragging(true);
       setSelIndex(index);
-      handleMouseDown(event);
+      handleMouseDown(
+        event.type === "touchstart" ? event.changedTouches[0] : event
+      );
     },
     [handleMouseDown]
   );
@@ -139,37 +147,80 @@ function CardComponent(props) {
       // const nextWidth = width + diff;
       const nextHeight = height + diff;
       const scale = nextHeight / height;
-      console.log(scale);
+      // console.log(
+      //   `height: ${height}, nextHeight: ${nextHeight}, diff: ${diff}`
+      // );
+      // console.log(`scale: ${scale}`);
+      // console.log(scale);
       props.setStickerScale(selIndex, scale);
+      moveSelector(scale);
     },
-    [page, selIndex, props]
+    [page, selIndex, props, moveSelector]
   );
+
+  const onModifyEnd = useCallback(() => {
+    setIsModify(false);
+  }, []);
 
   useEffect(() => {
     if (isDragging) {
       document.addEventListener("mousemove", onDrag);
       document.addEventListener("mouseup", onDragEnd);
+
+      document.addEventListener("touchmove", onDrag);
+      document.addEventListener("touchup", onDragEnd);
     }
 
     return () => {
       document.removeEventListener("mousemove", onDrag);
       document.removeEventListener("mouseup", onDragEnd);
+
+      document.removeEventListener("touchmove", onDrag);
+      document.removeEventListener("touchup", onDragEnd);
     };
   }, [isDragging, onDrag, onDragEnd]);
+
+  // const dragRef = useCallback((card) => {
+  //   if(card == null) return;
+  //     if (isDragging) {
+  //       document.addEventListener("mousemove", onDrag);
+  //       document.addEventListener("mouseup", onDragEnd);
+
+  //       card.current.addEventListener("touchmove", onDrag);
+  //       card.current.addEventListener("touchup", onDragEnd);
+  //     }
+
+  //     return () => {
+  //       document.removeEventListener("mousemove", onDrag);
+  //       document.removeEventListener("mouseup", onDragEnd);
+
+  //       document.removeEventListener("touchmove", onDrag);
+  //       document.removeEventListener("touchup", onDragEnd);
+  //     };
+  // }, [isDragging, onDrag, onDragEnd]);
 
   useEffect(() => {
     if (isModify) {
       document.addEventListener("mousemove", onModify);
+      document.addEventListener("mouseup", onModifyEnd);
     }
     return () => {
       document.removeEventListener("mousemove", onModify);
+      document.addEventListener("mouseup", onModifyEnd);
     };
-  }, [isModify, onModify]);
+  }, [isModify, onModify, onModifyEnd]);
 
   const removeSticker = useCallback(() => {
     props.removeSticker(selIndex);
     setSelector((selector) => ({ ...selector, display: "none" }));
   }, [props, selIndex]);
+
+  useEffect(() => {
+    document.addEventListener("click", checkSelector);
+    return () => {
+      document.removeEventListener("click", checkSelector);
+    };
+  }, [checkSelector]);
 
   return (
     <Card Card background={props.background} ref={card}>
@@ -179,6 +230,11 @@ function CardComponent(props) {
           sticker={sticker}
           onDragStart={() => false}
           onMouseDown={(event) => onDragStart(event, index)}
+          onTouchStart={(event) => {
+            setSelIndex(index);
+            moveSelector();
+            onDragStart(event, index);
+          }}
           onClick={() => {
             setSelIndex(index);
             moveSelector();
@@ -188,10 +244,15 @@ function CardComponent(props) {
         </Sticker>
       ))}
       <Selector selector={selector}>
-        <CloseButton onClick={removeSticker}>X</CloseButton>
-        <ModifyButton onMouseDown={(event) => onModifyStart(event)}>
+        <CloseButton onClick={removeSticker} onTouchStart={removeSticker}>
+          X
+        </CloseButton>
+        {/* <ModifyButton
+          className="element"
+          onMouseDown={(event) => onModifyStart(event)}
+        >
           O
-        </ModifyButton>
+        </ModifyButton> */}
       </Selector>
       {props.text.isVisible ? props.text.message : null}
     </Card>
@@ -221,7 +282,9 @@ const Sticker = styled.div.attrs((props) => ({
     transform: `scale(${props.sticker.scale})`,
   },
 }))`
-  background-color: orange;
+  background: url("/images/stickers/${(props) => props.sticker.id}.png") center
+    no-repeat;
+  background-size: contain;
   z-index: 1;
   cursor: grab;
 `;
@@ -239,11 +302,11 @@ const Selector = styled.div.attrs((props) => ({
   },
 }))`
   box-shadow: 0 0 0 1.5px gray inset;
-  position: absolute;
 `;
 
 const StickerButton = styled.div`
-  background-color: skyblue;
+  background-color: gray;
+  color: white;
   border-radius: 50%;
   position: absolute;
   width: 30px;
@@ -251,7 +314,7 @@ const StickerButton = styled.div`
   cursor: pointer;
 
   text-align: center;
-  padding-top: 3px;
+  padding-top: 6px;
 `;
 
 const CloseButton = styled(StickerButton)`

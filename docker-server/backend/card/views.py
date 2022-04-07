@@ -42,7 +42,7 @@ def card_detail(request, card_id):
     card = get_object_or_404(Card, pk=card_id)
     if request.method == 'DELETE':
         if card_id == str(card.card_id).replace('-', ''):
-            shutil.rmtree(MEDIA_ROOT + '\\' + card_id)
+            shutil.rmtree(MEDIA_ROOT + '/' + card_id)
             card.delete()
             data = {
                 'delete': f'카드 {card_id}가 삭제되었습니다.'
@@ -59,7 +59,7 @@ def card_detail(request, card_id):
         if serializer.is_valid(raise_exception=True):
             serializer.save(video = 'media/' + str(card.card_id).replace('-', '') + '/' + card_id + '.mp4')
         if card.audio != None:
-            audio_clip = AudioFileClip(str(BASE_DIR) + '\\' + card.audio)
+            audio_clip = AudioFileClip(str(BASE_DIR) + '/' + card.audio)
         elif card.myvoice != None:
             if serializer.data['myvoice'].endswith('webm'):
                 print(serializer.data['myvoice'] + "여기가 맞나요!!!!") #/Users/mac/Downloads/speech_command/right/sample-1.wav
@@ -89,11 +89,11 @@ def card_detail(request, card_id):
                 #'''
                 audio_clip = AudioFileClip(new_file_path)
 
-        image_clip = ImageClip(MEDIA_ROOT + '\\' + card.image.name)
+        image_clip = ImageClip(MEDIA_ROOT + '/' + card.image.name)
         
         video_clip = image_clip.set_audio(audio_clip)
         video_clip.duration = audio_clip.duration
-        video_clip.write_videofile(MEDIA_ROOT + '\\' + str(card.card_id).replace('-', '') + '\\' + card_id + ".mp4", codec="libx264", audio_codec="aac", fps=24)
+        video_clip.write_videofile(MEDIA_ROOT + '/' + str(card.card_id).replace('-', '') + '/' + card_id + ".mp4", codec="libx264", audio_codec="aac", fps=24)
 
         # response = HttpResponse(video, content_type="video/mp4")
         # response['Content-Disposition'] = 'attachment; filename=' + card_id + '.mp4'

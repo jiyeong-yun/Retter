@@ -22,14 +22,13 @@ export default connect(null, mapDispatchToProps)(Message);
 
 const playSample = (voice) => {
   document.getElementById(`sampleaudio${voice}`).play();
-}
+};
 function Message({ setMessage, setCardID, resetCard }) {
-  useEffect(() => setTitle("메세지 작성"), []);
+  useEffect(() => setTitle("메시지 작성"), []);
   const [text, setText] = useState("");
   const voices = [1, 2];
   // const [isVoiceVisible, setIsVoiceVisible] = useState(false);
   const [voice, setVoice] = useState(1);
-  
   const navigate = useNavigate();
   const handleChange = ({ target: { value } }) => {
     setText(value);
@@ -37,19 +36,20 @@ function Message({ setMessage, setCardID, resetCard }) {
 
   const checkMessage = () => {
     if (text === "") {
-      alert("메세지를 입력해주세요!");
+      alert("메시지를 입력해주세요!");
       return;
     }
 
+    resetCard();
     // 1. 영어 삭제
     // 아래 전처리된 문장이 서버로 보내지고, 사용자에게는 이 텍스트로만 보임
     const nextText = text.replace(/\w/g, "");
     setMessage(nextText);
 
-    // 2. 서버로 전송할 메세지 전처리
+    // 2. 서버로 전송할 메시지 전처리
     let preprocessedText = preprocess(nextText);
 
-    // todo: 서버로 메세지 보내는 로직
+    // todo: 서버로 메시지 보내는 로직
     const params = {
       voice_num: voice,
       text: preprocessedText,
@@ -58,9 +58,7 @@ function Message({ setMessage, setCardID, resetCard }) {
     sendMessage(
       params,
       ({ data }) => {
-        resetCard();
         setCardID(data.card_id, data.audio);
-
       },
       (error) => console.log(error)
     );
@@ -79,21 +77,17 @@ function Message({ setMessage, setCardID, resetCard }) {
   };
 
   return (
-    <main style={{width:'100vw',height:'100vh'}}>
+    <main style={{ width: "100vw", height: "100vh" }}>
       <audio id="sampleaudio1" src="/audios/sample1.wav"></audio>
       <audio id="sampleaudio2" src="/audios/sample2.wav"></audio>
-      <TITLE2>
-        음성메세지 만들기
-      </TITLE2>
-      <TITLE>
-        ※Re:tter는 한글, 숫자만 지원해요
-      </TITLE>
+      <TITLE2>음성메시지 만들기</TITLE2>
+      <TITLE>※Re:tter는 한글, 숫자만 지원해요</TITLE>
       <TEXTAREA_OUT>
         <TEXTAREA1
           value={text}
           maxLength="100"
           onChange={handleChange}
-          placeholder="목소리를 입힐 메세지를 입력해주세요!"
+          placeholder="목소리를 입힐 메시지를 입력해주세요!"
         ></TEXTAREA1>
       </TEXTAREA_OUT>
       <TEXTUL>
@@ -114,23 +108,23 @@ function Message({ setMessage, setCardID, resetCard }) {
       ) : null} */}
       <NONDOTUL1>
         {voices.map((voice) => (
-          <li key={voice} onClick={() => setVoice(voice)}>
+          <LSTLI1 key={voice} onClick={() => setVoice(voice)}>
             음성 {voice}
-          </li>
+          </LSTLI1>
         ))}
       </NONDOTUL1>
       <NONDOTUL2>
         {voices.map((voice) => (
-          <li key={voice} onClick={() => setVoice(voice)}>
+          <LSTLI2 key={voice} onClick={() => setVoice(voice)}>
             <img src={`/images/model${voice}.png`} alt="model"></img>
-          </li>
+          </LSTLI2>
         ))}
       </NONDOTUL2>
       <NONDOTUL3>
         {voices.map((voice) => (
-          <li key={voice} onClick={() => playSample(voice)}>
+          <LSTLI3 key={voice} onClick={() => playSample(voice)}>
             <img src="/images/sampleplay.png" alt="sampleplay"></img>
-          </li>
+          </LSTLI3>
         ))}
       </NONDOTUL3>
       <NAV>
@@ -140,69 +134,77 @@ function Message({ setMessage, setCardID, resetCard }) {
   );
 }
 
-
 const TITLE2 = styled.h1`
-  text-align : center;
-  margin : 2em;
+  text-align: center;
+  padding: 2em;
   font-size: 2em;
   font-family: "Gowun Batang";
   font-weight: bold;
 `;
 const TITLE = styled.h2`
-  text-align : center;
-  font-family: 'Gowun Batang';
+  text-align: center;
+  font-family: "Gowun Batang";
   font-weight: bold;
-
 `;
 const TEXTAREA1 = styled.textarea`
-  width : 70%;
-  height : 10em;
+  width: 250px;
+  height: 150px;
   border: none;
   display: flex;
   justify-content: center;
-  outline:none ;
+  outline: none;
   cursor: pointer;
 `;
 
 const TEXTAREA_OUT = styled.div`
   display: flex;
   justify-content: center;
-  margin : 1em 2em 2em;
-  
-`
+  margin: 1em 2em 2em;
+`;
 
 const NONDOTUL1 = styled.ul`
   list-style: none;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   margin: auto;
-  font-family: 'Gowun Batang';
+  font-family: "Gowun Batang";
   font-weight: bold;
-  `
-  const NONDOTUL2 = styled.ul`
+  cursor: pointer;
+`;
+const NONDOTUL2 = styled.ul`
   list-style: none;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   margin: 0.3rem;
-`
+  cursor: pointer;
+`;
 const NONDOTUL3 = styled.ul`
   list-style: none;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   margin: auto;
-`
+  cursor: pointer;
+`;
+const LSTLI1 = styled.li`
+  margin: 0.5em 1.6em;
+`;
+const LSTLI2 = styled.li`
+  margin: 0.5em  1em;
+`;
+const LSTLI3 = styled.li`
+  margin: 0.5em 2.3em;
+`;
 
 const NAV = styled.div`
   display: flex;
   justify-content: center;
-
-`
+`;
 const TEXTUL = styled.ul`
   list-style: none;
-  text-align : center;
-  font-family: 'Gowun Batang';
+  text-align: center;
+  font-family: "Gowun Batang";
   font-weight: bold;
-`
+`;
 const NEXTBUTTON = styled.button`
   box-sizing: border-box;
   appearance: none;
@@ -240,4 +242,4 @@ const NEXTBUTTON = styled.button`
     color: #fff;
     outline: 0
   }
-`
+`;
