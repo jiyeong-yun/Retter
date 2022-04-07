@@ -39,7 +39,6 @@ function Detail() {
     );
   }, [card_id]);
 
-
   useEffect(() => {
     initKakao();
   }, []);
@@ -54,13 +53,13 @@ function Detail() {
       }
     }
     window.Kakao.Link.createCustomButton({
-      container: '#kakao-link-btn',
+      container: "#kakao-link-btn",
       //메시지 템플릿 아이디, [내 애플리케이션 > 카카오링크 > 메시지 템플릿]에서 확인
       templateId: 74531,
       templateArgs: {
         //메시지 템플릿에서 활용할 arguments
         url: `http://j6c202.p.ssafy.io/card/`,
-        key: card_id
+        key: card_id,
       },
     });
   };
@@ -79,7 +78,7 @@ function Detail() {
 
       <Center>
         {video ? (
-          <video controls src={`${BACKEND_URL}/${video}`}></video>
+          <video controls src={`${BACKEND_URL}/${video}`} width="300"></video>
         ) : null}
       </Center>
 
@@ -87,11 +86,7 @@ function Detail() {
         {/* <Link to={new URL(`${BACKEND_URL}/${video}`)} target="_blank" download>
           Download
         </Link> */}
-        <button
-          id="kakao-link-btn"
-          type="button"
-          onClick={onShareKakaoClick}
-        >
+        <button id="kakao-link-btn" type="button" onClick={onShareKakaoClick}>
           <img src="/images/kakao.png" alt="카톡공유" />
         </button>
         {/* <KakaoShare /> */}
