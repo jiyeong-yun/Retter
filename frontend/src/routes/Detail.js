@@ -59,7 +59,7 @@ function Detail() {
       templateId: 74531,
       templateArgs: {
         //메시지 템플릿에서 활용할 arguments
-        url: `http://j6c202.p.ssafy.io/card/`,
+        url: `https://j6c202.q.ssafy.io/card/`,
         key: card_id
       },
     });
