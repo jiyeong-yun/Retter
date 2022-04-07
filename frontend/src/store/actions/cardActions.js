@@ -95,3 +95,11 @@ export const resetCard = () => {
     type: types.RESET_CARD,
   };
 };
+
+export const setTextPos = (x, y) => {
+  return {
+    type: types.SET_TEXT_POS,
+    x,
+    y,
+  };
+};

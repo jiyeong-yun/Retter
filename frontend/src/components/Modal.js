@@ -3,26 +3,21 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import Button from '../components/button';
 import { useCookies } from "react-cookie";
 
 function Modal({ isOpen, onSubmit, onCancel, visible }){
   const content = [
     {
       tab: "내 목소리로 카드 만들기",
-      content: <img src='/images/logo.png'/>
+      content: <img src='/images/record.png'/>
     },
     {
       tab: "다른 목소리로 카드 만들기",
-      content: <img src='/images/letter2.png'/>
+      content: <img src='/images/text.png'/>
     },
     {
       tab: "카드 꾸미기",
-      content: <img src='/images/phonesticker.png'/>
-    },
-    {
-      tab: "결과 공유",
-      content: <img src='/images/people.png'/>
+      content: <img src='/images/preview.png'/>
     },
   ];
 
@@ -81,17 +76,21 @@ function Modal({ isOpen, onSubmit, onCancel, visible }){
   // 우선은 esc나 빈칸눌러도 닫히게 함. key는 여기가 맞나..?
   return (
     <ReactModal setCookie={setCookie} isOpen={isOpen} onRequestClose={onCancel}>
-      <ModalOverlay visible={visible} />
-      <div className="Home">
-        {content.map((section, index) => (
-          <Button onClick={() => changeItem(index)} key={index}>{section.tab}</Button>
-        ))}
-        <div>{currentItem.content}</div>
-        <input type="checkBox" onChange={handleOnChange} checked={isRemember} />오늘 하루 열지 않기
-        {/* <button onClick={onCheck}>{selCheck ? 'Checked' : '오늘 하루 열지 않기'}</button> */}
-        {/* <Button color="white" background="blue" onClick={handleClickSubmit}>확인</Button> */}
-        <button onClick={handleClickCancel}>닫기</button>
-      </div>
+        <Center>
+        <ModalOverlay visible={visible} />
+        <div className="Home">
+          {content.map((section, index) => (
+            <ExButton onClick={() => changeItem(index)} key={index}>{section.tab}</ExButton>
+          ))}
+            <Center ><div>{currentItem.content}</div></Center>
+          <Center>
+            <input type="checkBox" onChange={handleOnChange} checked={isRemember} />오늘 하루 열지 않기
+            {/* <button onClick={onCheck}>{selCheck ? 'Checked' : '오늘 하루 열지 않기'}</button> */}
+            {/* <Button color="white" background="blue" onClick={handleClickSubmit}>확인</Button> */}
+            <button onClick={handleClickCancel}>닫기</button>
+          </Center>
+        </div>
+        </Center>
     </ReactModal>
   );
 };
@@ -100,6 +99,24 @@ function Modal({ isOpen, onSubmit, onCancel, visible }){
 Modal.propTypes = {
   visible: PropTypes.bool,
 }
+
+const Center = styled.div`
+  justify-content: center;
+  display: flex;
+  align-items: center;
+`
+
+const ExButton = styled.button`
+  border: none;
+  width: 200px;
+  height: 30px;
+  margin: 1.5rem;
+  border-radius: 10px;
+  background-color: #64b998;
+  box-shadow: 3px 3px #edb949;
+  font-family: "gowun";
+  font-size: 10pt;
+`
 
 const ModalWrapper = styled.div`
   box-sizing: border-box;
