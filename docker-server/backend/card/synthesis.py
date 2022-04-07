@@ -108,7 +108,7 @@ def synthesis(text, id, voice_num):
   ## 체크포인트 설정
   voice_num = str(voice_num)
   tacotron2_checkpoint = MODEL_ROOT+'/tacotron2/output/' + voice_num
-  waveglow_checkpoint = MODEL_ROOT+'/waveglow/checkpoints/' + voice_num
+  waveglow_checkpoint = MODEL_ROOT+'/waveglow/checkpoints/1'
 
   ## 음성 합성 모듈 생성
   synthesizer = Synthesizer(tacotron2_checkpoint, waveglow_checkpoint)
