@@ -18,8 +18,13 @@ const cardTypes = {
   RESET_CARD: "RESET_CARD",
 };
 
+const selectorTypes = {
+  SET_SELECTOR: "SET_SELECTOR",
+};
+
 const types = {
   ...cardTypes,
+  ...selectorTypes,
 };
 
 export default types;
