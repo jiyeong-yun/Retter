@@ -10,19 +10,15 @@ function Modal({ isOpen, onSubmit, onCancel, visible }){
   const content = [
     {
       tab: "내 목소리로 카드 만들기",
-      content: <img src='/images/logo.png'/>
+      content: <img src='/images/record.png'/>
     },
     {
       tab: "다른 목소리로 카드 만들기",
-      content: <img src='/images/letter2.png'/>
+      content: <img src='/images/text.png'/>
     },
     {
       tab: "카드 꾸미기",
-      content: <img src='/images/phonesticker.png'/>
-    },
-    {
-      tab: "결과 공유",
-      content: <img src='/images/people.png'/>
+      content: <img src='/images/preview.png'/>
     },
   ];
 

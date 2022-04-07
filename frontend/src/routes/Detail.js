@@ -95,7 +95,7 @@ function Detail() {
           <img src="/images/kakao.png" alt="카톡공유" />
         </button>
         {/* <KakaoShare /> */}
-        <CopyToClipboard text={`http://j6c202.p.ssafy.io/card/${card_id}`}>
+        <CopyToClipboard text={`https://j6c202.q.ssafy.io/card/${card_id}`}>
           <CopyButton>url복사</CopyButton>
         </CopyToClipboard>
       </Center>
@@ -105,13 +105,13 @@ function Detail() {
       <Center>
         <FacebookShareButton
           style={{ marginRight: "20px" }}
-          url={`http://j6c202.p.ssafy.io/card/${card_id}`}
+          url={`https://j6c202.q.ssafy.io/card/${card_id}`}
         >
           <FacebookIcon size={48} round={true} borderRadius={24}></FacebookIcon>
         </FacebookShareButton>
         <FacebookMessengerShareButton
           style={{ marginRight: "20px" }}
-          url={`http://j6c202.p.ssafy.io/card/${card_id}`}
+          url={`https://j6c202.q.ssafy.io/card/${card_id}`}
         >
           <FacebookMessengerIcon
             size={48}
@@ -121,19 +121,19 @@ function Detail() {
         </FacebookMessengerShareButton>
         <TwitterShareButton
           style={{ marginRight: "20px" }}
-          url={`http://j6c202.p.ssafy.io/card/${card_id}`}
+          url={`https://j6c202.q.ssafy.io/card/${card_id}`}
         >
           <TwitterIcon size={48} round={true} borderRadius={24}></TwitterIcon>
         </TwitterShareButton>
         <LineShareButton
           style={{ marginRight: "20px" }}
-          url={`http://j6c202.p.ssafy.io/card/${card_id}`}
+          url={`https://j6c202.q.ssafy.io/card/${card_id}`}
         >
           <LineIcon size={48} round={true} borderRadius={24}></LineIcon>
         </LineShareButton>
         <EmailShareButton
           style={{ marginRight: "20px" }}
-          url={`http://j6c202.p.ssafy.io/card/${card_id}`}
+          url={`https://j6c202.q.ssafy.io/card/${card_id}`}
         >
           <EmailIcon size={48} round={true} borderRadius={24}></EmailIcon>
         </EmailShareButton>
