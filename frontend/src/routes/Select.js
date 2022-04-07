@@ -21,7 +21,7 @@ function Select() {
   }, [cookies.noneModal]);
 
   return (
-    <div style={{ height: "100vh", width: "100vw" }}>
+    <Container>
       <div className="Modal">
         {/* <button onClick={handleClickModal}>튜토리얼</button> */}
         <Modal
@@ -50,12 +50,21 @@ function Select() {
           </Link>
         </BUTTONS>
       </div>
-    </div>
+    </Container>
   );
 }
 export default Select;
 
 // background-color: ${props => props.color}
+
+const Container = styled.main`
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 const Button1 = styled.button`
   border: none;
@@ -68,14 +77,16 @@ const Button1 = styled.button`
   box-shadow: 5px 5px #edb949;
   font-family: "gowun";
   font-size: 13pt;
+  color: #8b4513;
 `;
 
 const CONTENT = styled.div`
-  padding: 3em;
+  padding-bottom: 2rem;
   font-size: 19pt;
   font-family: "gowun";
   text-align: center;
   min-width: 230px;
+  line-height: 2rem;
 `;
 
 const BUTTONS = styled.div`

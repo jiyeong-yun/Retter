@@ -208,7 +208,7 @@ const TEXTDIV2 = styled.div`
 const FOOTDIV2 = styled.div`
   // padding-left: 40%;
   border-top: 1px gray solid;
-  padding-top: 2.5%;
+  padding-top: 3%;
   text-align: center;
   line-height: 2.1em;
 `;
@@ -218,14 +218,14 @@ const TeamMember = styled.p`
   font-size: 0.9rem;
   text-align: center;
   line-height: 1.5em;
-  padding-bottom: 2.5%;
+  padding-bottom: 3%;
 `;
 const TeamName = styled.p`
   font-family: "Gowun Batang";
   font-weight: bold;
   font-size: 1.2rem;
   text-align: center;
-  padding: 3% 0;
+  padding: 1% 0 5% 0;
 
   @media screen and (max-width: 1000px) {
     // font-size: 1rem;
