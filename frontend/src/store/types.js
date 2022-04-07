@@ -16,6 +16,8 @@ const cardTypes = {
 
   SET_CARD_ID: "SET_CARD_ID",
   RESET_CARD: "RESET_CARD",
+
+  SET_TEXT_POS: "SET_TEXT_POS",
 };
 
 const selectorTypes = {

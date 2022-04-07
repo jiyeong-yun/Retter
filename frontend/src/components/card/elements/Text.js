@@ -1,58 +1,29 @@
 import styled from "styled-components";
-import { useState, useEffect, useCallback, useRef } from "react";
 import { connect } from "react-redux";
-import { setStickerPos } from "../../../store/actions/cardActions";
-import { setSelector } from "../../../store/actions/selectorActions";
+import { setTextPos } from "../../../store/actions/cardActions";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 function mapStateToProps({ cardReducer }) {
   return {
-    stickers: cardReducer.stickers,
+    text: cardReducer.text,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    setStickerPos: (index, x, y) => dispatch(setStickerPos(index, x, y)),
-    setSelector: (nextSelector) => dispatch(setSelector(nextSelector)),
+    setTextPos: (x, y) => dispatch(setTextPos(x, y)),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sticker);
+export default connect(mapStateToProps, mapDispatchToProps)(Text);
 
-function Sticker({
-  index,
-  card,
-  stickers,
-  setStickerPos,
-  setSelector,
-  setSelIndex,
-}) {
+function Text({ card, text, setTextPos }) {
   const [page, setPage] = useState({
     x: 0,
     y: 0,
   });
-  const [isDragging, setIsDragging] = useState(false);
-  let target = useRef();
-
-  const moveSelector = useCallback(
-    (nextScale) => {
-      const scale = nextScale ? nextScale : 1;
-      const padding = 50;
-      const width = stickers[index].width + padding;
-      const height = stickers[index].height + padding;
-      const y = stickers[index].y - padding / 2;
-      const x = stickers[index].x - padding / 2;
-      setSelector({
-        width,
-        height,
-        y,
-        x,
-        display: "block",
-        scale,
-      });
-    },
-    [stickers, index, setSelector]
-  );
+  const [isDragging, setIsDragging] = useState();
+  const target = useRef();
 
   const moveXY = useCallback(
     (event) => {
@@ -74,10 +45,9 @@ function Sticker({
       if (nextY > cardRef.height - target.current.height)
         nextY = cardRef.height - target.current.height;
 
-      setStickerPos(index, nextX, nextY);
-      moveSelector();
+      setTextPos(nextX, nextY);
     },
-    [page, index, card, setStickerPos, moveSelector]
+    [page, card, setTextPos]
   );
 
   const onDrag = useCallback(
@@ -91,24 +61,19 @@ function Sticker({
     setIsDragging(false);
   }, []);
 
-  const handleMouseDown = useCallback(
-    (event) => {
-      target.current = event.target.getBoundingClientRect();
-      setPage({ x: event.pageX, y: event.pageY });
-      moveSelector();
-    },
-    [moveSelector]
-  );
+  const handleMouseDown = useCallback((event) => {
+    target.current = event.target.getBoundingClientRect();
+    setPage({ x: event.pageX, y: event.pageY });
+  }, []);
 
   const onDragStart = useCallback(
-    (event, index) => {
+    (event) => {
       setIsDragging(true);
-      setSelIndex(index);
       handleMouseDown(
         event.type === "touchstart" ? event.changedTouches[0] : event
       );
     },
-    [handleMouseDown, setSelIndex]
+    [handleMouseDown]
   );
 
   useEffect(() => {
@@ -131,32 +96,24 @@ function Sticker({
 
   return (
     <Container
-      sticker={stickers[index]}
+      text={text}
       onDragStart={() => false}
-      onMouseDown={(event) => onDragStart(event, index)}
-      onTouchStart={(event) => {
-        setSelIndex(index);
-        moveSelector();
-        onDragStart(event, index);
-      }}
-    />
+      onMouseDown={onDragStart}
+      onTouchStart={onDragStart}
+    >
+      {text.message}
+    </Container>
   );
 }
 
 const Container = styled.div.attrs((props) => ({
-  className: "element",
   style: {
     position: "absolute",
-    top: `${props.sticker.y}px`,
-    left: `${props.sticker.x}px`,
-    width: `${props.sticker.width}px`,
-    height: `${props.sticker.height}px`,
-    transform: `scale(${props.sticker.scale})`,
+    top: `${props.text.y}px`,
+    left: `${props.text.x}px`,
   },
 }))`
-  background: url("/images/stickers/${(props) => props.sticker.id}.png") center
-    no-repeat;
-  background-size: contain;
-  z-index: 1;
-  cursor: grab;
+  font-family: "Gowun Batang";
+  font-weight: bold;
+  cursor: pointer;
 `;

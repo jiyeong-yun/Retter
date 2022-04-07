@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import Sticker from "./elements/Sticker";
 import Selector from "./elements/Selector";
+import Text from "./elements/Text";
 
 function mapStateToProps({ cardReducer }) {
   return {
@@ -26,10 +27,10 @@ function CardComponent(props) {
           key={index}
           index={index}
           setSelIndex={setSelIndex}
-        ></Sticker>
+        />
       ))}
       <Selector index={selIndex} />
-      {props.text.isVisible ? props.text.message : null}
+      {props.text.isVisible ? <Text card={card}></Text> : null}
     </Card>
   );
 }
