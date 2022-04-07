@@ -5,7 +5,7 @@ export const BACKEND_URL =
     ? "https://j6c202.q.ssafy.io"
     : "http://127.0.0.1:8000";
 
-const BACKEND_API_URL = `${BACKEND_URL}/api`;
+export const BACKEND_API_URL = `${BACKEND_URL}/api`;
 
 function apiInstance() {
   const instance = axios.create({
