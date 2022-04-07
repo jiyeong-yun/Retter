@@ -63,7 +63,7 @@ def card_detail(request, card_id):
         elif card.myvoice != None:
             if serializer.data['myvoice'].endswith('webm'):
                 print(serializer.data['myvoice'] + "여기가 맞나요!!!!") #/Users/mac/Downloads/speech_command/right/sample-1.wav
-                file_path = str(BASE_DIR) + serializer.data['myvoice']
+                file_path = str(BASE_DIR) + '/' + serializer.data['myvoice'][5:]
                 #file_path = os.path.join('C:', os.sep,'Users', 'SSAFY', 'Desktop', 'webm파일 코드', 'S06P22C202', 'docker-server', 'backend', 'media', '0c251b7eb05c44b19ed4a348b5aef337', 'audio.webm')
                 #file_path = os.path.join('..', 'media', 'fc901a9fc1cf4b46847f44a6fdcc8f64', 'audio.webm')
                 if (os.path.isfile(file_path)) :
@@ -144,7 +144,7 @@ def create_card(request):
     voice_num = serializer.data['voice_num']
     synthesis(text, card_id, voice_num)
 
-    audio = MEDIA_URL + card_id+ '/' + card_id + '.wav'
+    audio = 'media/' + card_id+ '/' + card_id + '.wav'
     card = get_object_or_404(Card, card_id = card_id)
     card.audio = audio
     card.save()
@@ -168,7 +168,7 @@ def record(request, *args, **kwargs):
         if audio_serializer.is_valid(raise_exception=True):
             audio_serializer.save()
 
-            new_path = audio_serializer.data['myvoice'][1:]
+            new_path = audio_serializer.data['myvoice'][5:]
             print("나와라" + new_path)
 
             audio_serializer.data['myvoice'] = new_path

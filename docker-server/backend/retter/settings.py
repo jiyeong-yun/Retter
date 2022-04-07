@@ -33,7 +33,8 @@ ALLOWED_HOSTS = [
     "0.0.0.0",
 
     # SERVER
-    "j6c202.p.ssafy.io"
+    "j6c202.p.ssafy.io",
+    "j6c202.q.ssafy.io"
 ]
 
 
@@ -66,7 +67,8 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
     "http://127.0.0.1:8000",
-    "http://j6c202.p.ssafy.io"
+    "http://j6c202.p.ssafy.io",
+    "https://j6c202.q.ssafy.io"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -164,7 +166,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # AUTH_USER_MODEL = 'account.User'
 
-MEDIA_URL = "media/"
+MEDIA_URL = "api/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MODEL_ROOT = os.path.join(BASE_DIR, "model")
 
