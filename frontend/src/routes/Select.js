@@ -23,7 +23,7 @@ function Select() {
   return (
     <div style={{ height: "100vh", width: "100vw" }}>
       <div className="Modal">
-        <button onClick={handleClickModal}>튜토리얼</button>
+        {/* <button onClick={handleClickModal}>튜토리얼</button> */}
         <Modal
           setCookie={setCookie}
           isOpen={isRemember}

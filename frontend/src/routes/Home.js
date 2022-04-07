@@ -33,10 +33,10 @@ function Home() {
   };
 
   useEffect(() => {
-    const watch = () => {
-      window.addEventListener("scroll", handleFollow);
-    };
-    watch();
+    window.addEventListener("scroll", handleFollow);
+    // const watch = () => {
+    // };
+    // watch();
     return () => {
       window.removeEventListener("scroll", handleFollow);
     };
@@ -75,171 +75,136 @@ function Home() {
   });
 
   return (
-    <>
-      <WRAP>
-        {/* <h1 {...fadeInH1}>Re:tter</h1> */}
-        <div
-          data-aos="fade-right"
-          data-aos-offset="600"
-          data-aos-easing="ease-in-sine"
-        >
-          <br />
-          
-            {/* <TAPE src="images/logo.png"> </TAPE> */}
-            
-            <TAPEDIV>
-              {/* <img src="images/logo.png"></img> */}
-              <TAPE src="images/logo.png"></TAPE>
-            </TAPEDIV>
-            
-            <DIV>
-              <H2>소중한 사람들에게</H2>
-              <H22>마음을 전해요!</H22>
-              <TITLE>
-                <h3>
-                  Re:tter는 인공지능 TTS 서비스로 대신 읽어드리는 음성 메시지
-                  카드입니다
-                </h3>
-                <h3>목소리를 담은 나만의 특별한 메시지를 보내보세요!</h3>
-              </TITLE>
-              
-              <Link to="/select">
-                <SButton primary>카드 만들기</SButton>
-              </Link>
-            </DIV>
-         
-          <br />
-        </div>
+    <WRAP>
+      {/* <h1 {...fadeInH1}>Re:tter</h1> */}
+      <MainContainer
+        data-aos="fade-right"
+        data-aos-offset="600"
+        data-aos-easing="ease-in-sine"
+      >
+        <LOGO />
 
-        <div>
-          <INTRO1>
-            <IMG1 src="images/letter2.png"></IMG1>
-
-            <TEXTDIV>
-              <BIGTEXT>
-                <h1 data-aos="fade-right">말로 하긴 부끄럽고</h1>
-                <h1 data-aos="fade-right">텍스트는 불안할 때</h1>
-              </BIGTEXT>
-
-              <P>
-                <p data-aos="fade-right">
-                  코로나 19로 사회적 거리두기가 강화되면서
-                </p>
-                <p data-aos="fade-right">
-                  마음의 거리두기도 진행되고 있는 지금...
-                </p>
-                <p data-aos="fade-right">
-                  글로만 전하기에는 딱딱하기만 한 마음을
-                </p>
-                <p data-aos="fade-right">여러가지 목소리와 함께 전해보세요</p>
-                <p data-aos="fade-right">편지의 감성과 최신 기술을 이용해</p>
-                <p data-aos="fade-right">나만의 카드를 만들어 보세요!</p>
-              </P>
-            </TEXTDIV>
-          </INTRO1>
-
-          <INTRO2>
-            <TEXTDIV2>
-              <BIGTEXT>
-                <h1 data-aos="fade-right">좋아하는 목소리를</h1>
-                <h1 data-aos="fade-right">고를 수 있어요</h1>
-              </BIGTEXT>
-              <P>
-                <p data-aos="fade-right">
-                  내 목소리 또는 다른 목소리와 함께 내 마음을 전해보세요
-                </p>
-                <p data-aos="fade-right">
-                  글로만 전하는 편지보다 훨씬 특별한 편지가 될 거예요
-                </p>
-              </P>
-            </TEXTDIV2>
-
-            <IMG2 src="images/people.png"></IMG2>
-          </INTRO2>
-
-          <INTRO3>
-            <IMG3 src="images/phonesticker.png"></IMG3>
-            <BIGTEXT>
-              <h1 data-aos="fade-right">개성만점 스티커로</h1>
-              <h1 data-aos="fade-right">편.꾸하자!</h1>
-            </BIGTEXT>
-            <P>
-              <p data-aos="fade-right">다이어리처럼 편지도 꾸밀 수 있어요</p>
-              <p data-aos="fade-right">나만의 스타일로 편지를 꾸며보세요</p>
-            </P>
-          </INTRO3>
+        <MainContent>
+          <TitlePhrase>
+            소중한 사람들에게 <br />
+            마음을 전해요!
+          </TitlePhrase>
+          <TitleDescription>
+            Re:tter는 인공지능 TTS 서비스로 대신 읽어드리는 음성 메시지
+            카드입니다. <br /> 목소리를 담은 나만의 특별한 메시지를 보내보세요!
+          </TitleDescription>
 
           <Link to="/select">
-            <BUTTLOCA>
-              <SButton primary>카드 만들기</SButton>
-            </BUTTLOCA>
+            <SButton primary>카드 만들기</SButton>
           </Link>
+        </MainContent>
+      </MainContainer>
 
-          <br></br>
-          <TBUTTON
-            background="black"
-            size="small"
-            className={BtnStatus ? "topBtn active" : "topBtn"}
-            onClick={handleTop}
-          >
-            TOP
-          </TBUTTON>
+      <div>
+        <INTRO1>
+          <IMG1 src="images/letter2.png"></IMG1>
 
-          <FOOT>
-            <PT>만든 사람들</PT>
-            <PT>사서함 202호</PT>
-            <FOOTDIV>
-              <p>FE 김혜인 성당현</p>
-              <p>BE 김은서 노건우 서예진 윤지영</p>
-              <p>목소리 김혜인 일반여성</p>
-            </FOOTDIV>
-            <FOOTDIV2>
-              <p>이미지 저작권 표시</p>
-              <p>Re:tter는 영리적인 목적으로 서비스를 운영하지 않습니다.</p>
-            </FOOTDIV2>
-          </FOOT>
-        </div>
-      </WRAP>
-    </>
+          <TEXTDIV>
+            <BIGTEXT>
+              <h1 data-aos="fade-right">말로 하긴 부끄럽고</h1>
+              <h1 data-aos="fade-right">텍스트는 불안할 때</h1>
+            </BIGTEXT>
+
+            <P>
+              <p data-aos="fade-right">
+                코로나 19로 사회적 거리두기가 강화되면서
+              </p>
+              <p data-aos="fade-right">
+                마음의 거리두기도 진행되고 있는 지금...
+              </p>
+              <p data-aos="fade-right">
+                글로만 전하기에는 딱딱하기만 한 마음을
+              </p>
+              <p data-aos="fade-right">여러가지 목소리와 함께 전해보세요</p>
+              <p data-aos="fade-right">편지의 감성과 최신 기술을 이용해</p>
+              <p data-aos="fade-right">나만의 카드를 만들어 보세요!</p>
+            </P>
+          </TEXTDIV>
+        </INTRO1>
+
+        <INTRO2>
+          <TEXTDIV2>
+            <BIGTEXT>
+              <h1 data-aos="fade-right">좋아하는 목소리를</h1>
+              <h1 data-aos="fade-right">고를 수 있어요</h1>
+            </BIGTEXT>
+            <P>
+              <p data-aos="fade-right">
+                내 목소리 또는 다른 목소리와 함께 내 마음을 전해보세요
+              </p>
+              <p data-aos="fade-right">
+                글로만 전하는 편지보다 훨씬 특별한 편지가 될 거예요
+              </p>
+            </P>
+          </TEXTDIV2>
+
+          <IMG2 src="images/people.png"></IMG2>
+        </INTRO2>
+
+        <INTRO3>
+          <IMG3 src="images/phonesticker.png"></IMG3>
+          <BIGTEXT>
+            <h1 data-aos="fade-right">개성만점 스티커로</h1>
+            <h1 data-aos="fade-right">편.꾸하자!</h1>
+          </BIGTEXT>
+          <P>
+            <p data-aos="fade-right">다이어리처럼 편지도 꾸밀 수 있어요</p>
+            <p data-aos="fade-right">나만의 스타일로 편지를 꾸며보세요</p>
+          </P>
+        </INTRO3>
+
+        <Link to="/select">
+          <BUTTLOCA>
+            <SButton primary>카드 만들기</SButton>
+          </BUTTLOCA>
+        </Link>
+
+        <br></br>
+        <TBUTTON
+          background="black"
+          size="small"
+          className={BtnStatus ? "topBtn active" : "topBtn"}
+          onClick={handleTop}
+        >
+          TOP
+        </TBUTTON>
+
+        <FOOT>
+          <PT>만든 사람들</PT>
+          <PT>사서함 202호</PT>
+          <FOOTDIV>
+            <p>FE 김혜인 성당현</p>
+            <p>BE 김은서 노건우 서예진 윤지영</p>
+            <p>목소리 김혜인 일반여성</p>
+          </FOOTDIV>
+          <FOOTDIV2>
+            <p>이미지 저작권 표시</p>
+            <p>Re:tter는 영리적인 목적으로 서비스를 운영하지 않습니다.</p>
+          </FOOTDIV2>
+        </FOOT>
+      </div>
+    </WRAP>
   );
 }
 
 export default Home;
 
-const TAPEDIV = styled.div `
-  text-align: center;
-  margin-bottom: -15em;
-  
-  @media screen and (max-width: 1000px) {
-    text-align: center;
-  }
-  
-`
-const TAPE = styled.img `
-  display: none;
-
-  @media screen and (max-width: 1000px) {
-    display: inline;
-    witdh: 1.5em;
-    //height: 15em;
-    padding-top: 10em;
-
-  }
-  
-`
-
-const TITLE = styled.div `
-  line-height: 2em;
+const TitleDescription = styled.h3`
   font-weight: bold;
-  color: white;
+  font-size: 0.9em;
+  text-align: center;
+  line-height: 2em;
+  white-space: pre-line;
+  word-break: keep-all;
+  padding: 0 3rem;
+`;
 
-  @media screen and (max-width: 1000px) {
-    color: #8B4513;
-
-  }
-`
-
-const IMG3 = styled.img `
+const IMG3 = styled.img`
   float: right;
   margin-right: 20%;
   width: 30%;
@@ -247,35 +212,34 @@ const IMG3 = styled.img `
   @media screen and (max-width: 1000px) {
     width: 25%;
   }
- 
-`
-const TEXTDIV2 = styled.div `
+`;
+const TEXTDIV2 = styled.div`
   float: right;
 
   @media screen and (max-width: 1000px) {
     float: left;
   }
-`
-const P2 = styled.div `
+`;
+const P2 = styled.div`
   font-size: 20px;
   line-height: 100%;
   margin-top: 4%;
   font-weight: bold;
   text-align: right;
-`
-const FOOTDIV2 = styled.div `
+`;
+const FOOTDIV2 = styled.div`
   // padding-left: 40%;
   text-align: center;
   line-height: 1.5em;
-`
-const FOOTDIV = styled.div `
+`;
+const FOOTDIV = styled.div`
   // padding-left: 40%;
   word-spacing: 2em;
   margin-top: 2%;
   text-align: center;
   line-height: 1.5em;
-`
-const PT = styled.p `
+`;
+const PT = styled.p`
   font-size: 1.2rem;
   text-align: center;
   line-height: 1.5em;
@@ -284,19 +248,9 @@ const PT = styled.p `
     margin-left: 15%;
     font-size: 1rem;
   }
-  
-`
-const H22 = styled.h2 `
-  font-size: 3em;
-  color: white;
-  margin-bottom: 1.5em;
-  font-weight: bold;
+`;
 
-  @media screen and (max-width: 1000px) {
-    color: #8B4513;
-  }
-`
-const IMG1 = styled.img `
+const IMG1 = styled.img`
   float: right;
   width: 25%;
   margin-right: 20%;
@@ -304,8 +258,8 @@ const IMG1 = styled.img `
   @media screen and (max-width: 1000px) {
     width: 22%;
   }
-`
-const P = styled.div `
+`;
+const P = styled.div`
   // font-family: 'Noto Sans KR', sans-serif;
   font-size: 1.4em;
   line-height: 2em;
@@ -315,40 +269,40 @@ const P = styled.div `
   @media screen and (max-width: 1000px) {
     font-size: 0.9em;
   }
-`
-const FOOT = styled.div `
+`;
+const FOOT = styled.div`
   font-size: 1rem;
   background-color: gray;
   color: white;
-  
+
   padding: 1%;
   margin-top: 7%;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   font-weight: lighter;
   line-height: 100%;
 
   @media screen and (max-width: 1000px) {
     font-size: 0.8rem;
   }
-`
-const TBUTTON = styled.button `
+`;
+const TBUTTON = styled.button`
   border-radius: 50%;
   background-color: white;
-  width:70px;
-  height:70px;
+  width: 70px;
+  height: 70px;
   border: 0;
   outline: 0;
   font-weight: bold;
   font-size: 15px;
   float: right;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   margin-right: 2%;
 
   @media screen and (max-width: 1000px) {
     //  margin-top: 20%;
   }
-`
-const INTRO3 = styled.div `
+`;
+const INTRO3 = styled.div`
   padding-left: 10%;
   margin-bottom: 30%;
   margin-top: 15%;
@@ -356,119 +310,113 @@ const INTRO3 = styled.div `
   @media screen and (max-width: 1000px) {
     margin-bottom: 10%;
   }
-
-`
-const IMG2 = styled.img `
+`;
+const IMG2 = styled.img`
   width: 55%;
   padding-top: 5%;
 
   @media screen and (max-width: 1000px) {
     margin-left: 40%;
   }
-
-`
-const INTRO2 = styled.div `
- margin: 10%;
- margin-bottom: 5%;
-
-`
-const BIGTEXT = styled.div `
-  font-size: 3.8em;
+`;
+const INTRO2 = styled.div`
+  margin: 10%;
+  margin-bottom: 5%;
+`;
+const BIGTEXT = styled.div`
+  font-size: 3em;
   line-height: 120%;
   font-weight: bold;
 
   @media screen and (max-width: 1000px) {
     font-size: 1.3em;
   }
-`
+`;
 
-const BUTTLOCA = styled.div `
+const BUTTLOCA = styled.div`
   text-align: center;
-`
+`;
 
-const TEXTDIV = styled.div `
+const TEXTDIV = styled.div`
   margin-top: 15%;
-`
+`;
 
-const INTRO1 = styled.div `
+const INTRO1 = styled.div`
   padding-left: 10%;
   margin-bottom: 5%;
 
   @media screen and (max-width: 1000px) {
-     margin-top: 25%;
+    margin-top: 25%;
   }
 
   @media screen and (max-width: 500px) {
     margin-top: -10%;
- }
-  
-`
+  }
+`;
 
-const IMG = styled.img `
+const IMG = styled.img`
   object-fit: cover;
   height: 200vh;
   witdh: 50vw;
   text-align: center;
   position: relative;
-`
+`;
 
-const WRAP = styled.div `
-  margin-left: 10%;
-  margin-right: 10%;
-  font-family: 'Gowun Batang', serif;
-  max-width: 80%;
- 
-`
+const WRAP = styled.div`
+  font-family: "Gowun Batang", serif;
+  max-width: 50%;
 
-const SButton = styled.button `
+  @media screen and (max-width: 1000px) {
+    max-width: 100%;
+  }
+`;
+
+const SButton = styled.button`
   margin-top: 1.5em;
   padding: 1rem 8rem;
-  font-size: 40px;
+  // font-size: 40px;
   border-radius: 10px;
-  background-color: #FB6B4C;
+  background-color: #fb6b4c;
   border: 0;
   outline: 0;
   color: white;
-  font-family: 'Gowun Batang', serif;
+  font-family: "Gowun Batang", serif;
   font-weight: bold;
 
   @media screen and (max-width: 1000px) {
-    font-size:1em;
+    font-size: 1em;
     padding: 1rem 4rem;
   }
 `;
 
-
-const H2 = styled.h2 `
-  font-size: 3em;
-  color: white;
-  padding-top: 75%;
-  line-height: 120%;
-  margin: 0;
+const TitlePhrase = styled.h2`
+  font-size: 1.5em;
+  line-height: 1.5em;
   font-weight: bold;
-
-  @media screen and (max-width: 1000px) {
-    color: #8B4513;
-
-  }
-`
-
-const DIV = styled.div `
-  background-image: url('/images/background2.jpg');
-  height: 180vh;
-  background-size: cover;
+  white-space: pre-line;
   text-align: center;
-  //line-height: 2em;
-  font-weight: bold;
-  max-height: 80%;
-  font-size: 1.3em;
-  
+
   @media screen and (max-width: 1000px) {
-    background-image: url('');
-    //background-size: auto;
-    height: 70vh;
-    // widith: 400px;
-    color: #8B4513;
-    font-size: 0.8em;
+    color: #8b4513;
   }
- `
+`;
+
+const LOGO = styled.div`
+  background: url("/images/background3.jpg") bottom no-repeat;
+  background-size: cover;
+
+  height: 40vh;
+`;
+
+const MainContainer = styled.div`
+  height: 90vh;
+  background-color: #edb949;
+`;
+
+const MainContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 45vh;
+`;
