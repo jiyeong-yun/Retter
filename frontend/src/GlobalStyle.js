@@ -94,6 +94,11 @@ const GlobalStyle = createGlobalStyle`
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
         sans-serif;
     }
+
+    a {
+      text-decoration: none;
+      color: #8b4513;
+    }
 `;
 
 export default GlobalStyle;

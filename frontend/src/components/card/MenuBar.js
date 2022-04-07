@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { sendImageURL, deleteCard } from "../../api/message";
 import { resetCard } from "../../store/actions/cardActions";
 import { useNavigate } from "react-router-dom";
-import { BACKEND_URL } from "../../api/index";
+import { BACKEND_API_URL } from "../../api/index";
 
 function mapStateToProps({ cardReducer }) {
   return {
@@ -130,7 +130,7 @@ function Menu({ card_id, audio, resetCard }) {
       </Spin>
       {card_id ? (
         <audio
-          src={`${BACKEND_URL}/${audio}`}
+          src={`${BACKEND_API_URL}/${audio}`}
           ref={audioRef}
           onPlay={() => setIsPlaying(true)}
           onPause={stopAudio}
@@ -156,6 +156,7 @@ const Back = styled.div`
 const Spin = styled.div`
   justify-content: center;
   display: flex;
+  cursor: pointer;
 `;
 
 const Spinner = styled.img`

@@ -1,5 +1,5 @@
 import { getCard } from "../api/message";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -22,7 +22,7 @@ import { setTitle } from "../components/Title";
 // import KakaoShare from "../components/kakao";
 
 function Detail() {
-  useEffect(() => setTitle("移대뱶 蹂닿린?뮉"), []);
+  useEffect(() => setTitle("카드 보기💗"), []);
   const { card_id } = useParams();
   const [video, setVideo] = useState();
 
@@ -39,13 +39,8 @@ function Detail() {
     );
   }, [card_id]);
 
-
-  useEffect(() => {
-    initKakao();
-  }, []);
-
   //?먮컮?ㅽ겕由쏀듃 ?ㅻ줈 移댁뭅??init
-  const initKakao = () => {
+  const initKakao = useCallback(() => {
     if (window.Kakao) {
       const kakao = window.Kakao;
       if (!kakao.isInitialized()) {
@@ -54,16 +49,20 @@ function Detail() {
       }
     }
     window.Kakao.Link.createCustomButton({
-      container: '#kakao-link-btn',
+      container: "#kakao-link-btn",
       //硫붿떆吏 ?쒗뵆由??꾩씠?? [???좏뵆由ъ??댁뀡 > 移댁뭅?ㅻ쭅??> 硫붿떆吏 ?쒗뵆由??먯꽌 ?뺤씤
       templateId: 74531,
       templateArgs: {
         //硫붿떆吏 ?쒗뵆由우뿉???쒖슜??arguments
         url: `https://j6c202.q.ssafy.io/card/`,
-        key: card_id
+        key: card_id,
       },
     });
-  };
+  }, [card_id]);
+
+  useEffect(() => {
+    initKakao();
+  }, [initKakao]);
 
   const onShareKakaoClick = () => {
     Detail(card_id);
@@ -73,7 +72,7 @@ function Detail() {
     <div>
       <LOC>
         <Link to="/">
-          <ToMain>泥섏쓬?쇰줈</ToMain>
+          <ToMain>처음으로</ToMain>
         </Link>
       </LOC>
 
@@ -87,16 +86,12 @@ function Detail() {
         {/* <Link to={new URL(`${BACKEND_URL}/${video}`)} target="_blank" download>
           Download
         </Link> */}
-        <button
-          id="kakao-link-btn"
-          type="button"
-          onClick={onShareKakaoClick}
-        >
-          <img src="/images/kakao.png" alt="移댄넚怨듭쑀" />
+        <button id="kakao-link-btn" type="button" onClick={onShareKakaoClick}>
+          <img src="/images/kakao.png" alt="카톡공유" />
         </button>
         {/* <KakaoShare /> */}
         <CopyToClipboard text={`https://j6c202.q.ssafy.io/card/${card_id}`}>
-          <CopyButton>url蹂듭궗</CopyButton>
+          <CopyButton>url 복사</CopyButton>
         </CopyToClipboard>
       </Center>
 

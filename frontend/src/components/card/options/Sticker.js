@@ -13,7 +13,7 @@ export default connect(null, mapDispatchToProps)(StickerWindow);
 
 function StickerWindow({ addSticker }) {
   const [stickers] = useState(
-    Array.from({ length: 75 }, (value, index) => index + 1)
+    Array.from({ length: 88 }, (value, index) => index + 1)
   );
   const handleClick = useCallback(
     (id) => {

@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 const KakaoShare= () => {
   // const url = window.location.href; //현재 url가져오기
   const { card_id } = useParams();
-  const url = `http://j6c202.p.ssafy.io/card/${card_id}`;
+  const url = `https://j6c202.q.ssafy.io/card/${card_id}`;
   console.log(url);
   useEffect(() => {
     initKakao(); //

@@ -3,6 +3,7 @@ import types from "../types";
 const initialState = {
   id: "",
   audio: "",
+  isRecorded: false,
   menuVisible: {
     sticker: false,
     background: false,
@@ -193,6 +194,7 @@ const cardReducer = (state = initialState, action) => {
         text: { ...state.text },
         id: action.id.replace(/-/g, ""),
         audio: action.audio,
+        isRecorded: action.isRecorded,
       };
     }
 

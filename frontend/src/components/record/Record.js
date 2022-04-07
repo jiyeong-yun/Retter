@@ -10,7 +10,8 @@ import { setTitle } from "../Title";
 
 function mapDispatchToProps(dispatch) {
   return {
-    setCardID: (id, audio) => dispatch(setCardID(id, audio)),
+    setCardID: (id, audio, isRecorded) =>
+      dispatch(setCardID(id, audio, isRecorded)),
     resetCard: () => dispatch(resetCard()),
   };
 }
@@ -76,7 +77,6 @@ function AudioRecord({ setCardID, resetCard }) {
     // dataavailable 이벤트로 Blob 데이터에 대한 응답을 받을 수 있음
     media.ondataavailable = function (e) {
       setAudioUrl(e.data);
-      console.log(e.data);
       setOnRec(true);
     };
 
@@ -104,23 +104,22 @@ function AudioRecord({ setCardID, resetCard }) {
   // file 정보 서버로
   const navigate = useNavigate();
   const handleClick = useCallback(() => {
-    if (audioUrl===undefined) {
-      alert("목소리를 녹음해주세요")
-    }
-    else{
+    if (audioUrl === undefined) {
+      alert("목소리를 녹음해주세요");
+    } else {
       const form = new FormData();
       const sound = new File([audioUrl], "audio.webm", {
         lastModified: new Date().getTime(),
         type: "audio/webm;codecs=opus",
       });
       form.append("file_name", sound);
-    
+
       sendMyVoice(
         form,
         ({ data }) => {
           // 카드 정보가 남아있을 경우 reset
           resetCard();
-          setCardID(data.card_id, data.myvoice);
+          setCardID(data.card_id, data.myvoice, true);
           navigate("/card/edit");
         },
         (error) => {
@@ -129,7 +128,6 @@ function AudioRecord({ setCardID, resetCard }) {
         }
       );
     }
-
   }, [audioUrl, navigate, setCardID, resetCard]);
 
   // //
@@ -188,6 +186,9 @@ function AudioRecord({ setCardID, resetCard }) {
   );
 }
 
+// const Container = styled.main`
+//   height: 100vh;
+// `;
 const RECORD = styled.div`
   margin: 3em;
 `;
