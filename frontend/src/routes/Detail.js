@@ -78,7 +78,7 @@ function Detail() {
 
       <Center>
         {video ? (
-          <video controls src={`${BACKEND_API_URL}/${video}`}></video>
+          <video controls src={`${BACKEND_API_URL}/${video}`} width="300"></video>
         ) : null}
       </Center>
 

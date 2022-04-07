@@ -9,28 +9,28 @@ import { setTitle } from "../components/Title";
 function Select() {
   useEffect(() => setTitle("목소리 선택"), []);
   // 모달생성 처음에 바로 뜨려면 true, 체크하면 오늘 하루 보지 않기
-  const [cookies, setCookie] = useCookies(["noneModal"]);
-  const [isRemember, setRemember] = useState(true);
-  const handleClickModal = () => setRemember(true);
-  const handleModalCancel = () => setRemember(false);
+  // const [cookies, setCookie] = useCookies(["noneModal"]);
+  // const [isRemember, setRemember] = useState(true);
+  // const handleClickModal = () => setRemember(true);
+  // const handleModalCancel = () => setRemember(false);
 
-  useEffect(() => {
-    if (cookies.noneModal !== undefined) {
-      setRemember(false);
-    }
-  }, [cookies.noneModal]);
+  // useEffect(() => {
+  //   if (cookies.noneModal !== undefined) {
+  //     setRemember(false);
+  //   }
+  // }, [cookies.noneModal]);
 
   return (
     <Container>
-      <div className="Modal">
+      {/* <div className="Modal"> */}
         {/* <button onClick={handleClickModal}>튜토리얼</button> */}
-        <Modal
-          setCookie={setCookie}
-          isOpen={isRemember}
-          // onSubmit={handleModalSubmit}
-          onCancel={handleModalCancel}
-        />
-      </div>
+        {/* <Modal */}
+          {/* setCookie={setCookie} */}
+          {/* isOpen={isRemember} */}
+          {/* // onSubmit={handleModalSubmit} */}
+          {/* onCancel={handleModalCancel} */}
+        {/* /> */}
+      {/* </div> */}
       <br />
 
       <CONTENT>
