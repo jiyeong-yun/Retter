@@ -77,7 +77,6 @@ function AudioRecord({ setCardID, resetCard }) {
     // dataavailable 이벤트로 Blob 데이터에 대한 응답을 받을 수 있음
     media.ondataavailable = function (e) {
       setAudioUrl(e.data);
-      console.log(e.data);
       setOnRec(true);
     };
 
@@ -187,6 +186,9 @@ function AudioRecord({ setCardID, resetCard }) {
   );
 }
 
+// const Container = styled.main`
+//   height: 100vh;
+// `;
 const RECORD = styled.div`
   margin: 3em;
 `;
