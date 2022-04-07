@@ -156,6 +156,7 @@ const Back = styled.div`
 const Spin = styled.div`
   justify-content: center;
   display: flex;
+  cursor: pointer;
 `;
 
 const Spinner = styled.img`

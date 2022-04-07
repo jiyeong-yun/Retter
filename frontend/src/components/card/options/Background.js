@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { connect } from "react-redux";
 import {
   setBackgroundColor,
@@ -33,18 +33,31 @@ function Background({
     "#6F5643",
   ]);
 
-  const handleClick = (color) => {
-    if (color === "transparent") removeBackground();
-    else setBackgroundColor(color);
-  };
+  const handleClick = useCallback(
+    (color) => {
+      if (color === "transparent") removeBackground();
+      else setBackgroundColor(color);
+    },
+    [removeBackground, setBackgroundColor]
+  );
 
-  const handleChange = (event) => {
-    if (!event.target.files[0]) return;
+  const handleChange = useCallback(
+    (event) => {
+      if (!event.target.files[0]) return;
 
-    const reader = new FileReader();
-    reader.onload = () => setBackgroundImage(reader.result);
-    reader.readAsDataURL(event.target.files[0]);
-  };
+      const reader = new FileReader();
+      reader.onload = () => setBackgroundImage(reader.result);
+      reader.readAsDataURL(event.target.files[0]);
+    },
+    [setBackgroundImage]
+  );
+
+  const handleColorPicker = useCallback(
+    (event) => {
+      setBackgroundColor(event.target.value);
+    },
+    [setBackgroundColor]
+  );
 
   return (
     <Option>
@@ -76,7 +89,8 @@ function Background({
           ))}
           <ColorPicker
             type="color"
-            onChange={(event) => setBackgroundColor(event.target.value)}
+            onClick={handleColorPicker}
+            onChange={handleColorPicker}
           ></ColorPicker>
         </Palette>
       </div>
