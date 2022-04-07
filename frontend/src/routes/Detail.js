@@ -58,7 +58,7 @@ function Detail() {
       templateId: 74531,
       templateArgs: {
         //메시지 템플릿에서 활용할 arguments
-        url: `http://j6c202.p.ssafy.io/card/`,
+        url: `https://j6c202.q.ssafy.io/card/`,
         key: card_id,
       },
     });
@@ -90,7 +90,7 @@ function Detail() {
           <img src="/images/kakao.png" alt="카톡공유" />
         </button>
         {/* <KakaoShare /> */}
-        <CopyToClipboard text={`http://j6c202.p.ssafy.io/card/${card_id}`}>
+        <CopyToClipboard text={`https://j6c202.q.ssafy.io/card/${card_id}`}>
           <CopyButton>url복사</CopyButton>
         </CopyToClipboard>
       </Center>
@@ -100,13 +100,13 @@ function Detail() {
       <Center>
         <FacebookShareButton
           style={{ marginRight: "20px" }}
-          url={`http://j6c202.p.ssafy.io/card/${card_id}`}
+          url={`https://j6c202.q.ssafy.io/card/${card_id}`}
         >
           <FacebookIcon size={48} round={true} borderRadius={24}></FacebookIcon>
         </FacebookShareButton>
         <FacebookMessengerShareButton
           style={{ marginRight: "20px" }}
-          url={`http://j6c202.p.ssafy.io/card/${card_id}`}
+          url={`https://j6c202.q.ssafy.io/card/${card_id}`}
         >
           <FacebookMessengerIcon
             size={48}
@@ -116,19 +116,19 @@ function Detail() {
         </FacebookMessengerShareButton>
         <TwitterShareButton
           style={{ marginRight: "20px" }}
-          url={`http://j6c202.p.ssafy.io/card/${card_id}`}
+          url={`https://j6c202.q.ssafy.io/card/${card_id}`}
         >
           <TwitterIcon size={48} round={true} borderRadius={24}></TwitterIcon>
         </TwitterShareButton>
         <LineShareButton
           style={{ marginRight: "20px" }}
-          url={`http://j6c202.p.ssafy.io/card/${card_id}`}
+          url={`https://j6c202.q.ssafy.io/card/${card_id}`}
         >
           <LineIcon size={48} round={true} borderRadius={24}></LineIcon>
         </LineShareButton>
         <EmailShareButton
           style={{ marginRight: "20px" }}
-          url={`http://j6c202.p.ssafy.io/card/${card_id}`}
+          url={`https://j6c202.q.ssafy.io/card/${card_id}`}
         >
           <EmailIcon size={48} round={true} borderRadius={24}></EmailIcon>
         </EmailShareButton>
@@ -147,7 +147,8 @@ const ToMain = styled.button`
   border-radius: 10px;
   background-color: #e7e7e7;
   box-shadow: 3px 3px #edb949;
-  font-family: "gowun";
+  font-family: "Gowun Batang";
+  font-weight: bold;
   font-size: 10pt;
   justify-content: right;
 `;
