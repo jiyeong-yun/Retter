@@ -72,11 +72,18 @@ const GlobalStyle = createGlobalStyle`
             height: 0;
           }
     }
+
     body {
         background-color: #EAE2B1;
         font-family: 'Noto Sans KR', 'Gowun Batang', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
         sans-serif;
+        color: #8b4513;
+    }
+
+    #root {
+      display: flex;
+      justify-content: center;
     }
 
     button {
