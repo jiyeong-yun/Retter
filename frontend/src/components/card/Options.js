@@ -10,6 +10,7 @@ import styled from "styled-components";
 
 function mapStateToProps({ cardReducer }) {
   return {
+    isRecorded: cardReducer.isRecorded,
     menuVisible: cardReducer.menuVisible,
   };
 }
@@ -25,6 +26,7 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(Options);
 
 function Options({
+  isRecorded,
   menuVisible,
   setTextIsVisible,
   setMenuStickerIsVisible,
@@ -45,13 +47,16 @@ function Options({
         break;
     }
   };
+
   return (
     <section>
-      <nav style={{width:'100vw'}}>
+      <nav style={{ width: "100vw" }}>
         <Menu>
           <Button onClick={() => handleClick("sticker")}>스티커</Button>
           <Button onClick={() => handleClick("background")}>배경</Button>
-          <Button onClick={() => handleClick("text")}>텍스트</Button>
+          {isRecorded ? null : (
+            <Button onClick={() => handleClick("text")}>텍스트</Button>
+          )}
         </Menu>
       </nav>
       {menuVisible.sticker ? <Sticker /> : null}
@@ -62,9 +67,9 @@ function Options({
 }
 
 const Menu = styled.div`
-  display:flex;
+  display: flex;
   justify-content: space-evenly;
-`
+`;
 const Button = styled.button`
   border: none;
   width: 80px;
@@ -72,10 +77,10 @@ const Button = styled.button`
   height: 30px;
   border-radius: 10px;
   background-color: #e7e7e7;
-  box-shadow: 3px 3px #EDB949;
-  font-family:"Gowun Batang";
+  box-shadow: 3px 3px #edb949;
+  font-family: "Gowun Batang";
   font-weight: bold;
-  font-size:10pt;
-  justify-content:right;
+  font-size: 10pt;
+  justify-content: right;
   cursor: pointer;
-`
+`;
