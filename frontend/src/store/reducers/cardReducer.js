@@ -217,6 +217,21 @@ const cardReducer = (state = initialState, action) => {
         },
       };
     }
+
+    case types.SET_TEXT_POS: {
+      const nextText = {
+        ...state.text,
+        x: action.x,
+        y: action.y,
+      };
+      return {
+        ...state,
+        menuVisible: { ...state.menuVisible },
+        background: { ...state.background },
+        stickers: state.stickers.map((sticker) => sticker),
+        text: nextText,
+      };
+    }
     default:
       return state;
   }
