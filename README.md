@@ -23,4 +23,14 @@ TTS 모델을 활용한 음성카드 만들기 서비스
 
 4. 아키텍처
 
-​	![architecture](README.assets\architecture.PNG)
+​	![architecture](README.assets/architecture.PNG)
+
+5. 주요 기능
+
+   ![009](README.assets/009.png)
+
+​		![010](![011](README.assets/011.png)010.png)	
+
+![011](README.assets/011.png)
+
+![012](![011](README.assets/011.png)012.png)
