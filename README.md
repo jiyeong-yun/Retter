@@ -25,6 +25,7 @@ TTS 모델을 활용한 음성카드 만들기 서비스
 
 ​	![architecture](README.assets/architecture.PNG)
 
+
 5. 주요 기능
 
    ![009](README.assets/009.png)
@@ -34,3 +35,4 @@ TTS 모델을 활용한 음성카드 만들기 서비스
 ![011](README.assets/011.png)
 
 ![012](![011](README.assets/011.png)012.png)
+=======
