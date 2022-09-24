@@ -30,29 +30,19 @@ Team. 사서함 202호 (6명)
 
 ### Front-end
 
-<img src="https://img.shields.io/badge/-React-61DAFB?style=for-the-badge&logo=React&logoColor=black"/>
-<img src="https://img.shields.io/badge/-Javascript-F7DF1E?style=for-the-badge&logo=Javascript&logoColor=black"/>
-<img src="https://img.shields.io/badge/-Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white"/>
-<img src="https://img.shields.io/badge/-styled components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"/>
+<img src="https://img.shields.io/badge/-React-61DAFB?style=for-the-badge&logo=React&logoColor=black"/> <img src="https://img.shields.io/badge/-Javascript-F7DF1E?style=for-the-badge&logo=Javascript&logoColor=black"/> <img src="https://img.shields.io/badge/-Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white"/> <img src="https://img.shields.io/badge/-styled components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"/>
 
 ### Back-end
 
-<img src="https://img.shields.io/badge/-python-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
-<img src="https://img.shields.io/badge/-django-092E20?style=for-the-badge&logo=django&logoColor=white"/>
-<img src="https://img.shields.io/badge/-mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"/>
+<img src="https://img.shields.io/badge/-python-3776AB?style=for-the-badge&logo=python&logoColor=white"/> <img src="https://img.shields.io/badge/-django-092E20?style=for-the-badge&logo=django&logoColor=white"/> <img src="https://img.shields.io/badge/-mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"/>
 
 ### AI
 
-<img src="https://img.shields.io/badge/-python-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
-<img src="https://img.shields.io/badge/-pytorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white"/>
-<img src="https://img.shields.io/badge/-tacotron2-76B900?style=for-the-badge"/>
-<img src="https://img.shields.io/badge/-waveglow-4285F4?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/-python-3776AB?style=for-the-badge&logo=python&logoColor=white"/> <img src="https://img.shields.io/badge/-pytorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white"/> <img src="https://img.shields.io/badge/-tacotron2-76B900?style=for-the-badge"/> <img src="https://img.shields.io/badge/-waveglow-4285F4?style=for-the-badge"/>
 
 ### Infra
 
-<img src="https://img.shields.io/badge/-amazon ec2 server-FF9900?style=for-the-badge&logo=amazon-ec2&logoColor=white"/>
-<img src="https://img.shields.io/badge/-docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"/>
-<img src="https://img.shields.io/badge/-nginx-009639?style=for-the-badge&logo=nginx&logoColor=white"/>
+<img src="https://img.shields.io/badge/-amazon ec2 server-FF9900?style=for-the-badge&logo=amazon-ec2&logoColor=white"/> <img src="https://img.shields.io/badge/-docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"/> <img src="https://img.shields.io/badge/-nginx-009639?style=for-the-badge&logo=nginx&logoColor=white"/>
 
 ### Editor
 
@@ -60,10 +50,7 @@ Team. 사서함 202호 (6명)
 
 ### 협업 툴
 
-<img src="https://img.shields.io/badge/-gitlab-FC6D26?style=for-the-badge&logo=gitlab&logoColor=white"/>
-<img src="https://img.shields.io/badge/-jira-0052CC?style=for-the-badge&logo=jira-software&logoColor=white"/>
-<img src="https://img.shields.io/badge/-mattermost-0058CC?style=for-the-badge&logo=mattermost&logoColor=white"/>
-<img src="https://img.shields.io/badge/-notion-000000?style=for-the-badge&logo=notion&logoColor=white"/>
+<img src="https://img.shields.io/badge/-gitlab-FC6D26?style=for-the-badge&logo=gitlab&logoColor=white"/> <img src="https://img.shields.io/badge/-jira-0052CC?style=for-the-badge&logo=jira-software&logoColor=white"/> <img src="https://img.shields.io/badge/-mattermost-0058CC?style=for-the-badge&logo=mattermost&logoColor=white"/> <img src="https://img.shields.io/badge/-notion-000000?style=for-the-badge&logo=notion&logoColor=white"/>
 
 ## 기능 설명
 
